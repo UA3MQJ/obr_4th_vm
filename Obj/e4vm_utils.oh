@@ -1,0 +1,17 @@
+/* Ofront+ 1.0 -sx3 -21 */
+
+#ifndef e4vm_utils__oh
+#define e4vm_utils__oh
+
+#include "SYSTEM.oh"
+#include "e4vm_type.oh"
+
+
+
+
+import void e4vm_utils_init (e4vm_type_x4thPtr *v);
+import void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v);
+import void *e4vm_utils__init (void);
+
+
+#endif

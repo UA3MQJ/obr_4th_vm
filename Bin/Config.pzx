@@ -1,0 +1,12 @@
+MainMod=
+CodeAdr=45056
+DataAdr=50000
+Options=
+Modules=e4vm_core.rel e4vm_utils.rel
+Include=-I ..\Lib\C -I ..\Lib\Obj
+Libraries=
+Target=TAP
+OfrontPar=-sx3 -21
+Clean=FALSE
+Start=TRUE
+Pause=FALSE

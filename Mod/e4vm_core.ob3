@@ -1,0 +1,64 @@
+MODULE e4vm_core;
+IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type;
+
+PROCEDURE nop*;
+BEGIN
+  C.WriteStrLn("nop");
+END nop;
+
+(*# нет операции *)
+PROCEDURE do_nop* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("nop");
+END do_nop;
+
+(*# Каждое пользовательское слово начинается с команды DoList,
+  # задача которой — сохранить текущий адрес интерпретации на стеке
+  # и установить адрес интерпретации следующего слова. *)
+PROCEDURE do_list* (VAR v: e4vm_type.x4thPtr);
+VAR next_ip : INTEGER;
+BEGIN
+  C.WriteStrLn("do_list");
+	v.rs[v.rs_p] := v.ip; v.rs_p := v.rs_p + 1;
+	v.ip := v.wp + 1;
+END do_list;
+
+
+(*# Суть интерпретации заключается в переходе
+  # по адресу в памяти и в исполнении инструкции,
+  # которая там указана.
+  # Останавливаемся, если адрес 0 *)
+PROCEDURE do_next* (VAR v: e4vm_type.x4thPtr);
+VAR next_wp, next_ip, word_index: INTEGER;
+BEGIN
+  C.WriteStrLn("do_next");
+  (* Останавливаемся, если адрес 0 *)
+	WHILE ~(v.ip=0) DO
+		next_wp := v.mem[v.ip];
+		next_ip := v.ip + 1;
+		v.ip := next_ip;
+		v.wp := next_wp;
+		
+		(* по адресу следующего указателя на слово
+		   выбираем адрес инструкции из памяти *)
+		word_index:=v.mem[next_ip];
+    (* выполняем эту команду *)
+		v.core[word_index](@v);
+	END;
+END do_next;
+
+
+(* команда для выхода из слова
+   восстанавливает адрес указателя инструкций IP со стека возвратов RS *)
+PROCEDURE do_exit* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("do_exit");
+	v.rs_p := v.rs_p - 1;
+	v.ip := v.rs[v.rs_p];
+END do_exit;
+
+
+BEGIN
+   
+	
+END e4vm_core.

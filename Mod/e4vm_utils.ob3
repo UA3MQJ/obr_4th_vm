@@ -1,0 +1,41 @@
+MODULE e4vm_utils;
+IMPORT SYSTEM, C := Console, Platform, B := Basic, 
+
+        e4vm_type,
+        e4vm_core
+;
+
+PROCEDURE init* (VAR v: e4vm_type.x4thPtr);
+VAR i: INTEGER;
+BEGIN
+  v.ip := 0;
+	v.wp := 0;
+	v.hereP := 0;
+	v.cell_bit_size := e4vm_type.alu_bit_width;
+	v.is_eval_mode := TRUE;
+	FOR i:=0 TO (e4vm_type.mem_size-1) DO
+	  v.mem[i] := 0;
+	END;
+	 FOR i:=0 TO (e4vm_type.core_size-1) DO
+	  v.core[i] := e4vm_core.do_nop;
+	END;
+	FOR i:=0 TO (e4vm_type.stack_size-1) DO
+	  v.rs[i] := 0; v.ds[i] := 0;
+	END;
+END init;
+
+PROCEDURE vm_stat* (VAR v: e4vm_type.x4thPtr);
+VAR i: INTEGER;
+BEGIN
+  C.WriteStr("ip:"); C.WriteInt(v.ip);
+  C.WriteStr(" wp:"); C.WriteInt(v.wp); C.WriteStr(" ");
+	C.WriteStrLn("rs: ["); FOR i:=0 TO (e4vm_type.stack_size-1) DO
+	  C.WriteInt(v.rs[i]); C.WriteStr(" ");
+	END; C.WriteStrLn("]");
+	C.WriteStrLn("ds: ["); FOR i:=0 TO (e4vm_type.stack_size-1) DO
+	  C.WriteInt(v.ds[i]); C.WriteStr(" ");
+	END; C.WriteStrLn("]");
+END vm_stat;
+
+	
+END e4vm_utils.
