@@ -1,11 +1,6 @@
 MODULE e4vm_core;
 IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type;
 
-PROCEDURE nop*;
-BEGIN
-  C.WriteStrLn("nop");
-END nop;
-
 (*# нет операции *)
 PROCEDURE do_nop* (VAR v: e4vm_type.x4thPtr);
 BEGIN

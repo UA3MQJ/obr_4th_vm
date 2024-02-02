@@ -3,7 +3,8 @@ IMPORT SYSTEM, C := Console, Platform, B := Basic,
 
         e4vm_type ,
 				e4vm_core,
-				e4vm_utils
+				e4vm_utils,
+				e4vm_stack
 ;
 
 
@@ -13,14 +14,14 @@ VAR
       	    vm: e4vm_type.x4thPtr;
 
 
-PROCEDURE stack_ds_push(x:INTEGER);
+PROCEDURE stack_ds_push(VAR v: e4vm_type.x4thPtr; x:e4vm_type.stack_type);
 BEGIN
-  vm.ds[vm.ds_p]:=x; vm.ds_p := vm.ds_p + 1;
+  v.ds[v.ds_p]:=x; v.ds_p := v.ds_p + 1;
 END stack_ds_push;
 
-PROCEDURE stack_rs_push(x:INTEGER);
+PROCEDURE stack_rs_push(VAR v: e4vm_type.x4thPtr; x:e4vm_type.stack_type);
 BEGIN
-  vm.rs[vm.rs_p]:=x; vm.rs_p := vm.rs_p + 1;
+  v.rs[v.rs_p]:=x; v.rs_p := v.rs_p + 1;
 END stack_rs_push;
 
 (*# Чтобы при интерпретации отличить числовую константу от адреса слова,
@@ -29,7 +30,7 @@ END stack_rs_push;
 PROCEDURE do_lit(VAR v: e4vm_type.x4thPtr);
 BEGIN
   v.ip := v.ip + 1;
-  stack_ds_push(v.mem[v.ip]);
+  stack_ds_push(@v, v.mem[v.ip]);
 END do_lit;
 
 (* Отладочная функция *)
@@ -38,7 +39,7 @@ BEGIN
   C.WriteStrLn("hello!");
 END do_hello;
 
-
+(*
 PROCEDURE test1(VAR v: e4vm_type.x4thPtr);
 BEGIN
   (* проверяется визуально. должно выполнить NoP hello nop*)
@@ -143,6 +144,252 @@ BEGIN
 	END;
 END test_dolit;
 
+PROCEDURE test_drop(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("drop ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_stack.drop;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* тестовая прогремма *)
+	
+	v.mem[ 5] := 2; (* do_list подпрограмма*)
+	v.mem[ 6] := 4; (* drop   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 1);
+	stack_ds_push(@v, 2);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [2, 1] -> [1] *)
+	
+	e4vm_utils.vm_stat(@v);
+	
+END test_drop;
+
+PROCEDURE test_swap(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("swap ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_stack.swap;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* тестовая прогремма *)
+	
+	v.mem[ 5] := 2; (* do_list подпрограмма*)
+	v.mem[ 6] := 4; (* swap   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 1);
+	stack_ds_push(@v, 2);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [2, 1] -> [1, 2] *)
+	
+	e4vm_utils.vm_stat(@v);
+	
+		IF ((v.ds[0] = 2)&(v.ds[1] = 1))  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+END test_swap;
+
+PROCEDURE test_dup(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("dup ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_stack.dup;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* тестовая прогремма *)
+	
+	v.mem[ 5] := 2; (* do_list подпрограмма*)
+	v.mem[ 6] := 4; (* dup   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 1);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [1] -> [1, 1] *)
+	
+	e4vm_utils.vm_stat(@v);
+	
+		IF ((v.ds[0] = v.ds[1])&(v.ds[0] = 1)&(v.ds_p = 2))  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+END test_dup;
+
+PROCEDURE test_over(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("over ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_stack.over;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* тестовая прогремма *)
+	
+	v.mem[ 5] := 2; (* do_list подпрограмма*)
+	v.mem[ 6] := 4; (* over   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 1);
+	stack_ds_push(@v, 2);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [1, 2] -> [1, 2, 1] *)
+	
+	e4vm_utils.vm_stat(@v);
+	
+		IF ((v.ds[0] = 1)&(v.ds[1] = 2)&(v.ds[2] = 1)&(v.ds_p = 3))  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+END test_over;
+
+PROCEDURE test_rot(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("rot ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_stack.rot;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* тестовая прогремма *)
+	
+	v.mem[ 5] := 2; (* do_list подпрограмма*)
+	v.mem[ 6] := 4; (* rot   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 1);
+	stack_ds_push(@v, 2);
+	stack_ds_push(@v, 3);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [1, 2, 3] -> [2, 3, 1] *)
+	
+	e4vm_utils.vm_stat(@v);
+	
+	IF ((v.ds[0] = 2)&(v.ds[1] = 3)&(v.ds[2] = 1))  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+END test_rot; *)
+
+PROCEDURE test_nrot(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("rot ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_stack.nrot;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* тестовая прогремма *)
+	
+	v.mem[ 5] := 2; (* do_list подпрограмма*)
+	v.mem[ 6] := 4; (* nrot   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 1);
+	stack_ds_push(@v, 2);
+	stack_ds_push(@v, 3);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [1, 2, 3] -> [3, 1, 2] *)
+	
+	e4vm_utils.vm_stat(@v);
+	
+	IF ((v.ds[0] = 3)&(v.ds[1] = 1)&(v.ds[2] = 2))  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+END test_nrot;
+
+
 BEGIN
   B.Init;
   C.Clear(C.White);
@@ -150,10 +397,15 @@ BEGIN
 
   vm := SYSTEM.VAL(e4vm_type.x4thPtr, SYSTEM.ADR(vm_static));
 
-	(* test1(@vm); *)
-	(* test2(@vm); *)
-	
+	(* test1(@vm);
+	test2(@vm);
   test_dolit(@vm);
+	test_drop(@vm);
+	test_swap(@vm);
+	test_dup(@vm);
+	test_over(@vm);
+	test_rot(@vm); *)
+	test_nrot(@vm);
 
   B.PAUSE(0);
 	B.Quit;

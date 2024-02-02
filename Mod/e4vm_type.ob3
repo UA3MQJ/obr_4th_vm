@@ -6,6 +6,10 @@ CONST
   mem_size* = 32;
 	core_size* = 32;
 	alu_bit_width* = 16;
+	
+TYPE
+  stack_type* = INTEGER;
+  mem_type* = INTEGER;
 
 TYPE 
   x4thPtr* = POINTER [untagged] TO x4th;
@@ -15,10 +19,10 @@ TYPE
 
   x4th* = RECORD [untagged]
     ip*, wp*: INTEGER;
-    rs*, ds*: ARRAY stack_size OF INTEGER;
+    rs*, ds*: ARRAY stack_size OF stack_type;
     rs_p*, ds_p*: INTEGER; 
     hereP*: INTEGER;
-    mem*: ARRAY mem_size OF INTEGER;
+    mem*: ARRAY mem_size OF mem_type;
 	  cell_bit_size*: INTEGER;
 	  is_eval_mode*: BOOLEAN;
 	  core*: ARRAY core_size OF ProcedureType;

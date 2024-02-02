@@ -1,0 +1,42 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 1.
+Hexadecimal [16-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =  2710 L
+    .__.ABS.                                                    =  0000 G
+    .__.CPU.                                                    =  0000 L
+    .__.H$L.                                                    =  0000 L
+    _Console_WriteLn_COMPACT                                       **** GX
+    _Console_WriteStr_C_COMPACT                                    **** GX
+    ___sdcc_enter_ix                                               **** GX
+  0 ___str_0                                                       0024 R
+  0 ___str_1                                                       00A9 R
+  0 ___str_2                                                       00FE R
+  0 ___str_3                                                       0153 R
+  0 ___str_4                                                       0201 R
+  0 ___str_5                                                       02B0 R
+  0 _e4vm_stack__init                                              02B5 GR
+  0 _e4vm_stack_drop                                               0000 GR
+  0 _e4vm_stack_dup                                                00AE GR
+  0 _e4vm_stack_nrot                                               0205 GR
+  0 _e4vm_stack_over                                               0102 GR
+  0 _e4vm_stack_rot                                                0158 GR
+  0 _e4vm_stack_swap                                               0029 GR
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
+Hexadecimal [16-Bits]
+
+Area Table
+
+   0 _CODE                                      size  2BB   flags    0
+   1 _DATA                                      size    0   flags    0
+   2 _INITIALIZED                               size    0   flags    0
+   3 _DABS                                      size    0   flags    8
+   4 _HOME                                      size    0   flags    0
+   5 _GSINIT                                    size    0   flags    0
+   6 _GSFINAL                                   size    0   flags    0
+   7 _INITIALIZER                               size    0   flags    0
+   8 _CABS                                      size    0   flags    8
+
