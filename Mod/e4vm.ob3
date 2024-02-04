@@ -4,7 +4,8 @@ IMPORT SYSTEM, C := Console, Platform, B := Basic,
         e4vm_type ,
 				e4vm_core,
 				e4vm_utils,
-				e4vm_stack
+				e4vm_stack,
+				e4vm_math
 ;
 
 
@@ -345,7 +346,7 @@ BEGIN
 	ELSE
 	  C.WriteStrLn(" - error");
 	END;
-END test_rot; *)
+END test_rot; 
 
 PROCEDURE test_nrot(VAR v: e4vm_type.x4thPtr);
 BEGIN
@@ -389,6 +390,128 @@ BEGIN
 	END;
 END test_nrot;
 
+PROCEDURE test_minus(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("math - ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_math.minus;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* -   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 1);
+	stack_ds_push(@v, 2);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [1, 2] -> [-1] *)
+	
+	e4vm_utils.vm_stat(@v);
+	
+	IF (v.ds[0] = -1)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+END test_minus;
+
+PROCEDURE test_devide(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("math / ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_math.devide;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* /   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 10);
+	stack_ds_push(@v, 2);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [10, 2] -> [5] *)
+	
+	e4vm_utils.vm_stat(@v);
+	
+	IF (v.ds[0] = 5)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+END test_devide; *)
+
+PROCEDURE test_inc(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("math 1+ ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_math.inc;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* 1+   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 10);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [10, 2] -> [5] *)
+	
+	e4vm_utils.vm_stat(@v);
+	
+	IF (v.ds[0] = 11)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+END test_inc;
+
 
 BEGIN
   B.Init;
@@ -404,8 +527,12 @@ BEGIN
 	test_swap(@vm);
 	test_dup(@vm);
 	test_over(@vm);
-	test_rot(@vm); *)
+	test_rot(@vm); 
 	test_nrot(@vm);
+	test_minus(@vm);
+	test_devide(@vm); *)
+
+	test_inc(@vm);
 
   B.PAUSE(0);
 	B.Quit;

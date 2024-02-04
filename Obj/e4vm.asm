@@ -9,8 +9,9 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _e4vm_math__init
+	.globl _e4vm_math_inc
 	.globl _e4vm_stack__init
-	.globl _e4vm_stack_nrot
 	.globl _e4vm_utils__init
 	.globl _e4vm_utils_vm_stat
 	.globl _e4vm_utils_init
@@ -59,13 +60,13 @@ _e4vm_vm:
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;e4vm.c:26: static void e4vm_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x)
+;e4vm.c:27: static void e4vm_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x)
 ;	---------------------------------
 ; Function e4vm_stack_ds_push
 ; ---------------------------------
 _e4vm_stack_ds_push:
 	call	___sdcc_enter_ix
-;e4vm.c:28: (*v)->ds[(*v)->ds_p] = x;
+;e4vm.c:29: (*v)->ds[(*v)->ds_p] = x;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -95,7 +96,7 @@ _e4vm_stack_ds_push:
 	inc	de
 	ld	a, 7 (ix)
 	ld	(de), a
-;e4vm.c:29: (*v)->ds_p = (*v)->ds_p + 1;
+;e4vm.c:30: (*v)->ds_p = (*v)->ds_p + 1;
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -112,16 +113,16 @@ _e4vm_stack_ds_push:
 	ld	(hl), c
 	inc	hl
 	ld	(hl), a
-;e4vm.c:30: }
+;e4vm.c:31: }
 	pop	ix
 	ret
-;e4vm.c:32: static void e4vm_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x)
+;e4vm.c:33: static void e4vm_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x)
 ;	---------------------------------
 ; Function e4vm_stack_rs_push
 ; ---------------------------------
 _e4vm_stack_rs_push:
 	call	___sdcc_enter_ix
-;e4vm.c:34: (*v)->rs[(*v)->rs_p] = x;
+;e4vm.c:35: (*v)->rs[(*v)->rs_p] = x;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -151,7 +152,7 @@ _e4vm_stack_rs_push:
 	inc	de
 	ld	a, 7 (ix)
 	ld	(de), a
-;e4vm.c:35: (*v)->rs_p = (*v)->rs_p + 1;
+;e4vm.c:36: (*v)->rs_p = (*v)->rs_p + 1;
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -168,16 +169,16 @@ _e4vm_stack_rs_push:
 	ld	(hl), c
 	inc	hl
 	ld	(hl), a
-;e4vm.c:36: }
+;e4vm.c:37: }
 	pop	ix
 	ret
-;e4vm.c:38: static void e4vm_do_lit (e4vm_type_x4thPtr *v)
+;e4vm.c:39: static void e4vm_do_lit (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_do_lit
 ; ---------------------------------
 _e4vm_do_lit:
 	call	___sdcc_enter_ix
-;e4vm.c:40: (*v)->ip = (*v)->ip + 1;
+;e4vm.c:41: (*v)->ip = (*v)->ip + 1;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -195,7 +196,7 @@ _e4vm_do_lit:
 	ld	(hl), e
 	inc	hl
 	ld	(hl), a
-;e4vm.c:41: e4vm_stack_ds_push(v, (*v)->mem[(*v)->ip]);
+;e4vm.c:42: e4vm_stack_ds_push(v, (*v)->mem[(*v)->ip]);
 	ld	l, c
 	ld	h, b
 	ld	a, (hl)
@@ -221,40 +222,40 @@ _e4vm_do_lit:
 	call	_e4vm_stack_ds_push
 	pop	af
 	pop	af
-;e4vm.c:42: }
+;e4vm.c:43: }
 	pop	ix
 	ret
-;e4vm.c:44: static void e4vm_do_hello (e4vm_type_x4thPtr *v)
+;e4vm.c:45: static void e4vm_do_hello (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_do_hello
 ; ---------------------------------
 _e4vm_do_hello:
 	call	___sdcc_enter_ix
-;e4vm.c:46: Console_WriteStrLn((CHAR*)"hello!", 7);
+;e4vm.c:47: Console_WriteStrLn((CHAR*)"hello!", 7);
 	ld	hl, #___str_0
 	call	_Console_WriteStr_C_COMPACT
-;e4vm.c:47: }
+;e4vm.c:48: }
 	pop	ix
 	jp	_Console_WriteLn_COMPACT
 ___str_0:
 	.ascii "hello!"
 	.db 0x00
-;e4vm.c:49: static void e4vm_test_nrot (e4vm_type_x4thPtr *v)
+;e4vm.c:50: static void e4vm_test_inc (e4vm_type_x4thPtr *v)
 ;	---------------------------------
-; Function e4vm_test_nrot
+; Function e4vm_test_inc
 ; ---------------------------------
-_e4vm_test_nrot:
+_e4vm_test_inc:
 	call	___sdcc_enter_ix
-;e4vm.c:51: Console_WriteStr((CHAR*)"rot ", 5);
+;e4vm.c:52: Console_WriteStr((CHAR*)"math 1+ ", 9);
 	ld	hl, #___str_1
 	call	_Console_WriteStr_C_COMPACT
-;e4vm.c:52: e4vm_utils_init(v);
+;e4vm.c:53: e4vm_utils_init(v);
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	push	hl
 	call	_e4vm_utils_init
 	pop	af
-;e4vm.c:53: (*v)->core[0] = e4vm_core_do_nop;
+;e4vm.c:54: (*v)->core[0] = e4vm_core_do_nop;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -270,7 +271,7 @@ _e4vm_test_nrot:
 	inc	de
 	ld	a, #>(_e4vm_core_do_nop)
 	ld	(de), a
-;e4vm.c:54: (*v)->core[1] = e4vm_core_do_next;
+;e4vm.c:55: (*v)->core[1] = e4vm_core_do_next;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -284,7 +285,7 @@ _e4vm_test_nrot:
 	inc	de
 	ld	a, #>(_e4vm_core_do_next)
 	ld	(de), a
-;e4vm.c:55: (*v)->core[2] = e4vm_core_do_list;
+;e4vm.c:56: (*v)->core[2] = e4vm_core_do_list;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -298,7 +299,7 @@ _e4vm_test_nrot:
 	inc	de
 	ld	a, #>(_e4vm_core_do_list)
 	ld	(de), a
-;e4vm.c:56: (*v)->core[3] = e4vm_core_do_exit;
+;e4vm.c:57: (*v)->core[3] = e4vm_core_do_exit;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -312,7 +313,7 @@ _e4vm_test_nrot:
 	inc	de
 	ld	a, #>(_e4vm_core_do_exit)
 	ld	(de), a
-;e4vm.c:57: (*v)->core[4] = e4vm_stack_nrot;
+;e4vm.c:58: (*v)->core[4] = e4vm_math_inc;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -321,12 +322,12 @@ _e4vm_test_nrot:
 	ld	hl, #0x00d5
 	add	hl, de
 	ex	de, hl
-	ld	a, #<(_e4vm_stack_nrot)
+	ld	a, #<(_e4vm_math_inc)
 	ld	(de), a
 	inc	de
-	ld	a, #>(_e4vm_stack_nrot)
+	ld	a, #>(_e4vm_math_inc)
 	ld	(de), a
-;e4vm.c:58: (*v)->mem[0] = 0;
+;e4vm.c:59: (*v)->mem[0] = 0;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -338,7 +339,7 @@ _e4vm_test_nrot:
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;e4vm.c:59: (*v)->mem[1] = 1;
+;e4vm.c:60: (*v)->mem[1] = 1;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -349,7 +350,7 @@ _e4vm_test_nrot:
 	ld	(hl), #0x01
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:60: (*v)->mem[2] = 2;
+;e4vm.c:61: (*v)->mem[2] = 2;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -360,7 +361,7 @@ _e4vm_test_nrot:
 	ld	(hl), #0x02
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:61: (*v)->mem[3] = 3;
+;e4vm.c:62: (*v)->mem[3] = 3;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -371,7 +372,7 @@ _e4vm_test_nrot:
 	ld	(hl), #0x03
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:62: (*v)->mem[4] = 4;
+;e4vm.c:63: (*v)->mem[4] = 4;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -382,7 +383,7 @@ _e4vm_test_nrot:
 	ld	(hl), #0x04
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:63: (*v)->wp = 4;
+;e4vm.c:64: (*v)->wp = 4;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -395,7 +396,7 @@ _e4vm_test_nrot:
 	ld	(hl), #0x04
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:64: (*v)->mem[5] = 2;
+;e4vm.c:65: (*v)->mem[5] = 2;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -406,7 +407,7 @@ _e4vm_test_nrot:
 	ld	(hl), #0x02
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:65: (*v)->mem[6] = 4;
+;e4vm.c:66: (*v)->mem[6] = 4;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -417,7 +418,7 @@ _e4vm_test_nrot:
 	ld	(hl), #0x04
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:66: (*v)->mem[7] = 3;
+;e4vm.c:67: (*v)->mem[7] = 3;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -428,25 +429,11 @@ _e4vm_test_nrot:
 	ld	(hl), #0x03
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:67: e4vm_stack_ds_push(v, 1);
+;e4vm.c:68: e4vm_stack_ds_push(v, 10);
 	push	bc
-	ld	hl, #0x0001
+	ld	hl, #0x000a
 	push	hl
 	push	bc
-	call	_e4vm_stack_ds_push
-	pop	af
-	ld	hl, #0x0002
-	ex	(sp),hl
-	ld	l, 4 (ix)
-	ld	h, 5 (ix)
-	push	hl
-	call	_e4vm_stack_ds_push
-	pop	af
-	ld	hl, #0x0003
-	ex	(sp),hl
-	ld	l, 4 (ix)
-	ld	h, 5 (ix)
-	push	hl
 	call	_e4vm_stack_ds_push
 	pop	af
 	pop	af
@@ -465,60 +452,37 @@ _e4vm_test_nrot:
 	push	hl
 	call	_e4vm_utils_vm_stat
 	pop	af
-;e4vm.c:73: if (((*v)->ds[0] == 3 && (*v)->ds[1] == 1) && (*v)->ds[2] == 2) {
+;e4vm.c:72: if ((*v)->ds[0] == 11) {
 	pop	hl
 	ld	c, (hl)
 	inc	hl
-	ld	b, (hl)
+	ld	h, (hl)
 	ld	l, c
-	ld	h, b
 	ld	de, #0x0044
-	add	hl, de
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	ld	a, e
-	sub	a, #0x03
-	or	a, d
-	jr	NZ,00102$
-	ld	l, c
-	ld	h, b
-	ld	de, #0x0046
-	add	hl, de
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	ld	a, e
-	dec	a
-	or	a, d
-	jr	NZ,00102$
-	ld	l, c
-	ld	h, b
-	ld	de, #0x0048
 	add	hl, de
 	ld	c, (hl)
 	inc	hl
 	ld	b, (hl)
 	ld	a, c
-	sub	a, #0x02
+	sub	a, #0x0b
 	or	a, b
 	jr	NZ,00102$
-;e4vm.c:74: Console_WriteStrLn((CHAR*)" - ok", 6);
+;e4vm.c:73: Console_WriteStrLn((CHAR*)" - ok", 6);
 	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-	jr	00106$
+	jr	00104$
 00102$:
-;e4vm.c:76: Console_WriteStrLn((CHAR*)" - error", 9);
+;e4vm.c:75: Console_WriteStrLn((CHAR*)" - error", 9);
 	ld	hl, #___str_3
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-00106$:
-;e4vm.c:78: }
+00104$:
+;e4vm.c:77: }
 	pop	ix
 	ret
 ___str_1:
-	.ascii "rot "
+	.ascii "math 1+ "
 	.db 0x00
 ___str_2:
 	.ascii " - ok"
@@ -526,13 +490,15 @@ ___str_2:
 ___str_3:
 	.ascii " - error"
 	.db 0x00
-;e4vm.c:81: int main (int argc, char **argv)
+;e4vm.c:80: int main (int argc, char **argv)
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;e4vm.c:86: __IMPORT(e4vm_core__init);
+;e4vm.c:85: __IMPORT(e4vm_core__init);
 	call	_e4vm_core__init
+;e4vm.c:86: __IMPORT(e4vm_math__init);
+	call	_e4vm_math__init
 ;e4vm.c:87: __IMPORT(e4vm_stack__init);
 	call	_e4vm_stack__init
 ;e4vm.c:88: __IMPORT(e4vm_utils__init);
@@ -549,10 +515,10 @@ _main::
 ;e4vm.c:94: e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
 	ld	hl, #_e4vm_vm_static
 	ld	(_e4vm_vm), hl
-;e4vm.c:95: e4vm_test_nrot(&e4vm_vm);
+;e4vm.c:95: e4vm_test_inc(&e4vm_vm);
 	ld	hl, #_e4vm_vm
 	push	hl
-	call	_e4vm_test_nrot
+	call	_e4vm_test_inc
 	pop	af
 ;e4vm.c:96: Basic_PAUSE(0);
 	ld	hl, #0x0000

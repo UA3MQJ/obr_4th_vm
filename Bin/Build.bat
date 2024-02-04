@@ -8,7 +8,7 @@ EXIT
 
 SET CodeAdr=45056
 SET DataAdr=50000
-SET Modules=e4vm_core.rel e4vm_utils.rel e4vm_stack.rel
+SET Modules=e4vm_core.rel e4vm_utils.rel e4vm_stack.rel e4vm_math.rel
 SET Include=-I ..\Lib\C -I ..\Lib\Obj
 SET Target=TAP
 SET Clean=FALSE

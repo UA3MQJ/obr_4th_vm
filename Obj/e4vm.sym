@@ -15,9 +15,9 @@ Symbol Table
     _Console_attrib                                                **** GX
     ___sdcc_enter_ix                                               **** GX
   0 ___str_0                                                       00C8 R
-  0 ___str_1                                                       024C R
-  0 ___str_2                                                       0251 R
-  0 ___str_3                                                       0257 R
+  0 ___str_1                                                       0210 R
+  0 ___str_2                                                       0219 R
+  0 ___str_3                                                       021F R
     _e4vm_core__init                                               **** GX
     _e4vm_core_do_exit                                             **** GX
     _e4vm_core_do_list                                             **** GX
@@ -25,24 +25,26 @@ Symbol Table
     _e4vm_core_do_nop                                              **** GX
   0 _e4vm_do_hello                                                 00BA R
   0 _e4vm_do_lit                                                   0082 R
+    _e4vm_math__init                                               **** GX
+    _e4vm_math_inc                                                 **** GX
     _e4vm_stack__init                                              **** GX
   0 _e4vm_stack_ds_push                                            0000 R
-    _e4vm_stack_nrot                                               **** GX
   0 _e4vm_stack_rs_push                                            0041 R
-  0 _e4vm_test_nrot                                                00CF R
+  0 _e4vm_test_inc                                                 00CF R
     _e4vm_utils__init                                              **** GX
     _e4vm_utils_init                                               **** GX
     _e4vm_utils_vm_stat                                            **** GX
   1 _e4vm_vm                                                       010D R
   1 _e4vm_vm_static                                                0000 R
-  0 _main                                                          0260 GR
+  0 _main                                                          0228 GR
+
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  291   flags    0
+   0 _CODE                                      size  25C   flags    0
    1 _DATA                                      size  10F   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

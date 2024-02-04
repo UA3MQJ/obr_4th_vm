@@ -1,0 +1,22 @@
+/* Ofront+ 1.0 -sx3 -21 */
+
+#ifndef e4vm_math__oh
+#define e4vm_math__oh
+
+#include "SYSTEM.oh"
+#include "e4vm_type.oh"
+
+
+
+
+import void e4vm_math_dec (e4vm_type_x4thPtr *v);
+import void e4vm_math_devide (e4vm_type_x4thPtr *v);
+import void e4vm_math_inc (e4vm_type_x4thPtr *v);
+import void e4vm_math_minus (e4vm_type_x4thPtr *v);
+import void e4vm_math_mod (e4vm_type_x4thPtr *v);
+import void e4vm_math_multiply (e4vm_type_x4thPtr *v);
+import void e4vm_math_plus (e4vm_type_x4thPtr *v);
+import void *e4vm_math__init (void);
+
+
+#endif
