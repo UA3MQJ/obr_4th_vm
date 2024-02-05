@@ -19,18 +19,24 @@ Symbol Table
   0 ___str_5                                                       022E R
   0 ___str_6                                                       0230 R
   0 ___str_7                                                       0236 R
+  0 ___str_8                                                       026B R
+  0 ___str_9                                                       0273 R
     _e4vm_core__init                                               **** GX
     _e4vm_core_do_nop                                              **** GX
-  0 _e4vm_utils__init                                              023C GR
+  0 _e4vm_utils__init                                              0274 GR
+  0 _e4vm_utils_error                                              024E GR
+  0 _e4vm_utils_false_const                                        0245 GR
   0 _e4vm_utils_init                                               0000 GR
+  0 _e4vm_utils_true_const                                         023C GR
   0 _e4vm_utils_vm_stat                                            00E6 GR
+
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  244   flags    0
+   0 _CODE                                      size  27C   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

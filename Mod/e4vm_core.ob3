@@ -13,7 +13,7 @@ END do_nop;
 PROCEDURE do_list* (VAR v: e4vm_type.x4thPtr);
 VAR next_ip : INTEGER;
 BEGIN
-  C.WriteStrLn("do_list");
+  (* C.WriteStrLn("do_list"); *)
 	v.rs[v.rs_p] := v.ip; v.rs_p := v.rs_p + 1;
 	v.ip := v.wp + 1;
 END do_list;
@@ -26,7 +26,7 @@ END do_list;
 PROCEDURE do_next* (VAR v: e4vm_type.x4thPtr);
 VAR next_wp, next_ip, word_index: INTEGER;
 BEGIN
-  C.WriteStrLn("do_next");
+  (* C.WriteStrLn("do_next"); *)
   (* ќстанавливаемс€, если адрес 0 *)
 	WHILE ~(v.ip=0) DO
 		next_wp := v.mem[v.ip];
@@ -47,7 +47,7 @@ END do_next;
    восстанавливает адрес указател€ инструкций IP со стека возвратов RS *)
 PROCEDURE do_exit* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("do_exit");
+  (* C.WriteStrLn("do_exit"); *)
 	v.rs_p := v.rs_p - 1;
 	v.ip := v.rs[v.rs_p];
 END do_exit;

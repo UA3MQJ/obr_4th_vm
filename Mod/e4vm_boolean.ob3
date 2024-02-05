@@ -1,0 +1,39 @@
+MODULE e4vm_boolean;
+IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type, e4vm_utils;
+
+(* true *)
+PROCEDURE true* (VAR v: e4vm_type.x4thPtr);
+BEGIN 
+  C.WriteStrLn("true");
+  v.ds[v.ds_p] := e4vm_utils.true_const(@v);
+  v.ds_p := v.ds_p + 1;
+END true;
+
+(* false *)
+PROCEDURE false* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("false");
+  v.ds[v.ds_p] := e4vm_utils.false_const(@v);
+  v.ds_p := v.ds_p + 1;
+END false;
+
+(* not
+работает только с логическими значениями, в отличие от invert *)
+PROCEDURE not* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("not");
+  IF (v.ds[v.ds_p - 1] = e4vm_utils.true_const(@v)) THEN
+    v.ds[v.ds_p - 1] := e4vm_utils.false_const(@v)
+	ELSE 
+	  IF (v.ds[v.ds_p - 1] = e4vm_utils.false_const(@v)) THEN 
+	    v.ds[v.ds_p - 1] := e4vm_utils.true_const(@v)
+	  ELSE
+	    C.WriteStrLn("not logical");
+	  END
+	END
+END not;
+
+BEGIN
+   
+	
+END e4vm_boolean.

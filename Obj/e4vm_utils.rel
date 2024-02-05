@@ -1,5 +1,5 @@
 XL2
-H 9 areas A global symbols
+H 9 areas D global symbols
 M e4vm_utils
 O -mz80
 S _e4vm_core_do_nop Ref0000
@@ -9,9 +9,12 @@ S .__.ABS. Def0000
 S _Console_WriteInt_COMPACT Ref0000
 S ___sdcc_enter_ix Ref0000
 S _Console_WriteLn_COMPACT Ref0000
-A _CODE size 244 flags 0 addr 0
+A _CODE size 27C flags 0 addr 0
 S _e4vm_utils_vm_stat Def00E6
-S _e4vm_utils__init Def023C
+S _e4vm_utils_true_const Def023C
+S _e4vm_utils_false_const Def0245
+S _e4vm_utils__init Def0274
+S _e4vm_utils_error Def024E
 S _e4vm_utils_init Def0000
 A _DATA size 0 flags 0 addr 0
 A _INITIALIZED size 0 flags 0 addr 0
@@ -183,5 +186,29 @@ T 36 02 64 73 3A 20 5B 00
 R 00 00 00 00
 T 3C 02
 R 00 00 00 00
-T 3C 02 21 3C 02 36 C9 C3 00 00
+T 3C 02 CD 00 00 21 FF FF DD E1 C9
+R 00 00 00 00 02 03 05 00
+T 45 02
+R 00 00 00 00
+T 45 02 CD 00 00 21 00 00 DD E1 C9
+R 00 00 00 00 02 03 05 00
+T 4E 02
+R 00 00 00 00
+T 4E 02 CD 00 00 21 6B 02 CD 00 00 DD 6E 04 DD 66
+R 00 00 00 00 02 03 05 00 00 06 00 00 02 09 02 00
+T 5C 02 05 CD 00 00 21 73 02 CD 00 00 DD E1 C3
+R 00 00 00 00 02 04 02 00 00 07 00 00 02 0A 02 00
+T 69 02 00 00
+R 00 00 00 00 02 02 06 00
+T 6B 02
+R 00 00 00 00
+T 6B 02 45 72 72 6F 72 3A 20 00
+R 00 00 00 00
+T 73 02
+R 00 00 00 00
+T 73 02 00
+R 00 00 00 00
+T 74 02
+R 00 00 00 00
+T 74 02 21 74 02 36 C9 C3 00 00
 R 00 00 00 00 00 03 00 00 02 08 01 00

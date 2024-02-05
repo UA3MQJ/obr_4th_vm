@@ -5,7 +5,8 @@ IMPORT SYSTEM, C := Console, Platform, B := Basic,
 				e4vm_core,
 				e4vm_utils,
 				e4vm_stack,
-				e4vm_math
+				e4vm_math,
+				e4vm_boolean
 ;
 
 
@@ -470,7 +471,7 @@ BEGIN
 	ELSE
 	  C.WriteStrLn(" - error");
 	END;
-END test_devide; *)
+END test_devide; 
 
 PROCEDURE test_inc(VAR v: e4vm_type.x4thPtr);
 BEGIN
@@ -512,6 +513,104 @@ BEGIN
 	END;
 END test_inc;
 
+PROCEDURE test_true(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("true ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_boolean.true;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* true   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [] -> [true] *)
+	
+	e4vm_utils.vm_stat(@v);
+	
+	IF (v.ds[0] = e4vm_utils.true_const(@vm))  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+END test_true;
+
+*)
+
+PROCEDURE test_not(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("not ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_boolean.not;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* not   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, e4vm_utils.true_const(@vm));
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [true] -> [false] *)
+	
+	IF (v.ds[0] = e4vm_utils.false_const(@vm))  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+	v.wp := 4;
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [false] -> [true] *)
+	
+  IF (v.ds[0] = e4vm_utils.true_const(@vm))  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+	v.ds[0] := 2;
+  v.wp := 4;
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	(* המכזםא בûעü מרטבךא *)
+		
+END test_not;
 
 BEGIN
   B.Init;
@@ -530,9 +629,13 @@ BEGIN
 	test_rot(@vm); 
 	test_nrot(@vm);
 	test_minus(@vm);
-	test_devide(@vm); *)
-
+	test_devide(@vm); 
 	test_inc(@vm);
+	test_true(@vm);
+	
+	*)
+	
+	test_not(@vm);
 
   B.PAUSE(0);
 	B.Quit;

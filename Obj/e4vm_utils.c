@@ -10,7 +10,10 @@
 
 
 
+export void e4vm_utils_error (CHAR *err, SHORTINT err__len);
+export SHORTINT e4vm_utils_false_const (e4vm_type_x4thPtr *v);
 export void e4vm_utils_init (e4vm_type_x4thPtr *v);
+export SHORTINT e4vm_utils_true_const (e4vm_type_x4thPtr *v);
 export void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v);
 
 
@@ -73,6 +76,26 @@ void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v)
     i += 1;
   }
   Console_WriteStrLn((CHAR*)"]", 2);
+}
+
+/*----------------------------------------------------------------------------*/
+SHORTINT e4vm_utils_true_const (e4vm_type_x4thPtr *v)
+{
+  return -1;
+}
+
+/*----------------------------------------------------------------------------*/
+SHORTINT e4vm_utils_false_const (e4vm_type_x4thPtr *v)
+{
+  return 0;
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_utils_error (CHAR *err, SHORTINT err__len)
+{
+  Console_WriteStr((CHAR*)"Error: ", 8);
+  Console_WriteStr((void*)err, err__len);
+  Console_WriteStrLn((CHAR*)"", 1);
 }
 
 /*----------------------------------------------------------------------------*/

@@ -9,6 +9,7 @@
 #include "e4vm_utils.oh"
 #include "e4vm_stack.oh"
 #include "e4vm_math.oh"
+#include "e4vm_boolean.oh"
 
 
 static e4vm_type_x4th e4vm_vm_static;
@@ -19,7 +20,7 @@ static void e4vm_do_hello (e4vm_type_x4thPtr *v);
 static void e4vm_do_lit (e4vm_type_x4thPtr *v);
 static void e4vm_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x);
 static void e4vm_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x);
-static void e4vm_test_inc (e4vm_type_x4thPtr *v);
+static void e4vm_test_not (e4vm_type_x4thPtr *v);
 
 
 /*============================================================================*/
@@ -47,15 +48,15 @@ static void e4vm_do_hello (e4vm_type_x4thPtr *v)
   Console_WriteStrLn((CHAR*)"hello!", 7);
 }
 
-static void e4vm_test_inc (e4vm_type_x4thPtr *v)
+static void e4vm_test_not (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStr((CHAR*)"math 1+ ", 9);
+  Console_WriteStr((CHAR*)"not ", 5);
   e4vm_utils_init(v);
   (*v)->core[0] = e4vm_core_do_nop;
   (*v)->core[1] = e4vm_core_do_next;
   (*v)->core[2] = e4vm_core_do_list;
   (*v)->core[3] = e4vm_core_do_exit;
-  (*v)->core[4] = e4vm_math_inc;
+  (*v)->core[4] = e4vm_boolean_not;
   (*v)->mem[0] = 0;
   (*v)->mem[1] = 1;
   (*v)->mem[2] = 2;
@@ -65,15 +66,26 @@ static void e4vm_test_inc (e4vm_type_x4thPtr *v)
   (*v)->mem[5] = 2;
   (*v)->mem[6] = 4;
   (*v)->mem[7] = 3;
-  e4vm_stack_ds_push(v, 10);
+  e4vm_stack_ds_push(v, e4vm_utils_true_const(&e4vm_vm));
   e4vm_core_do_list(v);
   e4vm_core_do_next(v);
-  e4vm_utils_vm_stat(v);
-  if ((*v)->ds[0] == 11) {
+  if ((*v)->ds[0] == e4vm_utils_false_const(&e4vm_vm)) {
     Console_WriteStrLn((CHAR*)" - ok", 6);
   } else {
     Console_WriteStrLn((CHAR*)" - error", 9);
   }
+  (*v)->wp = 4;
+  e4vm_core_do_list(v);
+  e4vm_core_do_next(v);
+  if ((*v)->ds[0] == e4vm_utils_true_const(&e4vm_vm)) {
+    Console_WriteStrLn((CHAR*)" - ok", 6);
+  } else {
+    Console_WriteStrLn((CHAR*)" - error", 9);
+  }
+  (*v)->ds[0] = 2;
+  (*v)->wp = 4;
+  e4vm_core_do_list(v);
+  e4vm_core_do_next(v);
 }
 
 
@@ -82,6 +94,7 @@ int main (int argc, char **argv)
   __INIT(argc, argv);
   __IMPORT(Console__init);
   __IMPORT(Platform__init);
+  __IMPORT(e4vm_boolean__init);
   __IMPORT(e4vm_core__init);
   __IMPORT(e4vm_math__init);
   __IMPORT(e4vm_stack__init);
@@ -92,7 +105,7 @@ int main (int argc, char **argv)
   Console_Clear(7);
   Console_SetColors(56);
   e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
-  e4vm_test_inc(&e4vm_vm);
+  e4vm_test_not(&e4vm_vm);
   Basic_PAUSE(0);
   Basic_Quit();
   __FINI;

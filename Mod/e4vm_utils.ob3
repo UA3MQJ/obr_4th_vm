@@ -39,5 +39,19 @@ BEGIN
 	END; C.WriteStrLn("]");
 END vm_stat;
 
+PROCEDURE true_const* (VAR v: e4vm_type.x4thPtr) : e4vm_type.stack_type;
+BEGIN
+  RETURN -1;
+END true_const;
+
+PROCEDURE false_const* (VAR v: e4vm_type.x4thPtr) : e4vm_type.stack_type;
+BEGIN
+  RETURN 0;
+END false_const;
+
+PROCEDURE error* (err:ARRAY OF CHAR);
+BEGIN
+  C.WriteStr("Error: "); C.WriteStr(err);C.WriteStrLn("");
+END error;
 	
 END e4vm_utils.
