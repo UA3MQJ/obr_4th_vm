@@ -10,7 +10,7 @@
 ;--------------------------------------------------------
 	.globl _main
 	.globl _e4vm_boolean__init
-	.globl _e4vm_boolean_or
+	.globl _e4vm_boolean_xor
 	.globl _e4vm_math__init
 	.globl _e4vm_stack__init
 	.globl _e4vm_utils__init
@@ -241,13 +241,13 @@ _e4vm_do_hello:
 ___str_0:
 	.ascii "hello!"
 	.db 0x00
-;e4vm.c:51: static void e4vm_test_or (e4vm_type_x4thPtr *v)
+;e4vm.c:51: static void e4vm_test_xor (e4vm_type_x4thPtr *v)
 ;	---------------------------------
-; Function e4vm_test_or
+; Function e4vm_test_xor
 ; ---------------------------------
-_e4vm_test_or:
+_e4vm_test_xor:
 	call	___sdcc_enter_ix
-;e4vm.c:53: Console_WriteStr((CHAR*)"or ", 4);
+;e4vm.c:53: Console_WriteStr((CHAR*)"xor ", 5);
 	ld	hl, #___str_1
 	call	_Console_WriteStr_C_COMPACT
 ;e4vm.c:54: e4vm_utils_init(v);
@@ -314,7 +314,7 @@ _e4vm_test_or:
 	inc	de
 	ld	a, #>(_e4vm_core_do_exit)
 	ld	(de), a
-;e4vm.c:59: (*v)->core[4] = e4vm_boolean_or;
+;e4vm.c:59: (*v)->core[4] = e4vm_boolean_xor;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -323,10 +323,10 @@ _e4vm_test_or:
 	ld	hl, #0x00d5
 	add	hl, de
 	ex	de, hl
-	ld	a, #<(_e4vm_boolean_or)
+	ld	a, #<(_e4vm_boolean_xor)
 	ld	(de), a
 	inc	de
-	ld	a, #>(_e4vm_boolean_or)
+	ld	a, #>(_e4vm_boolean_xor)
 	ld	(de), a
 ;e4vm.c:60: (*v)->mem[0] = 0;
 	ld	l, c
@@ -430,14 +430,14 @@ _e4vm_test_or:
 	ld	(hl), #0x03
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:69: e4vm_stack_ds_push(v, 1);
+;e4vm.c:69: e4vm_stack_ds_push(v, 6);
 	push	bc
-	ld	hl, #0x0001
+	ld	hl, #0x0006
 	push	hl
 	push	bc
 	call	_e4vm_stack_ds_push
 	pop	af
-	ld	hl, #0x0002
+	ld	hl, #0x0005
 	ex	(sp),hl
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
@@ -490,7 +490,7 @@ _e4vm_test_or:
 	pop	ix
 	ret
 ___str_1:
-	.ascii "or "
+	.ascii "xor "
 	.db 0x00
 ___str_2:
 	.ascii " - ok"
@@ -525,10 +525,10 @@ _main::
 ;e4vm.c:97: e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
 	ld	hl, #_e4vm_vm_static
 	ld	(_e4vm_vm), hl
-;e4vm.c:98: e4vm_test_or(&e4vm_vm);
+;e4vm.c:98: e4vm_test_xor(&e4vm_vm);
 	ld	hl, #_e4vm_vm
 	push	hl
-	call	_e4vm_test_or
+	call	_e4vm_test_xor
 	pop	af
 ;e4vm.c:99: Basic_PAUSE(0);
 	ld	hl, #0x0000

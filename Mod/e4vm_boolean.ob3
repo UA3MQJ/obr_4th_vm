@@ -34,34 +34,42 @@ BEGIN
 END not;
 
 (* invert *)
+PROCEDURE- BitwiseNot (value: e4vm_type.stack_type): e4vm_type.stack_type "(~(value))";
+
 PROCEDURE invert* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   C.WriteStrLn("invert");
-  v.ds[v.ds_p -1] := -(v.ds[v.ds_p -1]) - 1;
+  v.ds[v.ds_p -1] := BitwiseNot(v.ds[v.ds_p -1]);
 END invert;
 
 
 (* or *)
+PROCEDURE- BitwiseOR (val1, val2: e4vm_type.stack_type): e4vm_type.stack_type "((val1 | val2))";
+
 PROCEDURE or* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   C.WriteStrLn("or");
-  v.ds[v.ds_p - 2] := ORD(SYSTEM.VAL(SET, v.ds[v.ds_p - 1]) + SYSTEM.VAL(SET, v.ds[v.ds_p - 2]));
+  v.ds[v.ds_p - 2] := BitwiseOR(v.ds[v.ds_p - 2], v.ds[v.ds_p - 1]);
   v.ds_p := v.ds_p - 1;
 END or;
 
 (* and *)
+PROCEDURE- BitwiseAND (val1, val2: e4vm_type.stack_type): e4vm_type.stack_type "((val1 & val2))";
+
 PROCEDURE and* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   C.WriteStrLn("and");
-  v.ds[v.ds_p - 2] := ORD(SYSTEM.VAL(SET, v.ds[v.ds_p - 1]) * SYSTEM.VAL(SET, v.ds[v.ds_p - 2]));
+  v.ds[v.ds_p - 2] := BitwiseAND(v.ds[v.ds_p - 2], v.ds[v.ds_p - 1]);
   v.ds_p := v.ds_p - 1;
 END and;
 
 (* xor *)
+PROCEDURE- BitwiseXOR (val1, val2: e4vm_type.stack_type): e4vm_type.stack_type "((val1 ^ val2))";
+
 PROCEDURE xor* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   C.WriteStrLn("xor");
-  v.ds[v.ds_p - 2] := ORD(SYSTEM.VAL(SET, v.ds[v.ds_p - 1]) / SYSTEM.VAL(SET, v.ds[v.ds_p - 2]));
+  v.ds[v.ds_p - 2] := BitwiseXOR(v.ds[v.ds_p - 2], v.ds[v.ds_p - 1]);
   v.ds_p := v.ds_p - 1;
 END xor;
 

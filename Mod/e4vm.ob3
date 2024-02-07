@@ -611,6 +611,7 @@ BEGIN
 		
 END test_not;
 
+
 PROCEDURE test_invert(VAR v: e4vm_type.x4thPtr);
 BEGIN
   C.WriteStr("invert ");
@@ -635,15 +636,15 @@ BEGIN
 	v.mem[ 6] := 4; (* invert   *)
 	v.mem[ 7] := 3; (* exit*)
 	
-	stack_ds_push(@v, 1);
+	stack_ds_push(@v, 15);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
-	(* [1] -> [-2] *)
+	(* [15] -> [-16] *)
 	e4vm_utils.vm_stat(@v);
 	
-	IF (v.ds[0] = -2)  THEN
+	IF (v.ds[0] = -16)  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
@@ -651,7 +652,7 @@ BEGIN
 	
 		
 END test_invert;
-*)
+
 
 PROCEDURE test_or(VAR v: e4vm_type.x4thPtr);
 BEGIN
@@ -695,6 +696,89 @@ BEGIN
 		
 END test_or;
 
+PROCEDURE test_and(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("and ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_boolean.and;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* and   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 3);
+	stack_ds_push(@v, 6);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [3, 6] -> [2] *)
+	e4vm_utils.vm_stat(@v);
+	
+	IF (v.ds[0] = 2)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+		
+END test_and; *)
+
+PROCEDURE test_xor(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("xor ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_boolean.xor;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* xor   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 6);
+	stack_ds_push(@v, 5);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [6, 5] -> [3] *)
+	e4vm_utils.vm_stat(@v);
+	
+	IF (v.ds[0] = 3)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+		
+END test_xor;
 
 BEGIN
   B.Init;
@@ -718,9 +802,12 @@ BEGIN
 	test_true(@vm);
 	test_not(@vm);
 	test_invert(@vm);
+	test_or(@vm);
+	test_and(@vm);
+	test_xor(@vm);
 	*)
 	
-	test_or(@vm);
+	test_xor(@vm);
 
   B.PAUSE(0);
 	B.Quit;
