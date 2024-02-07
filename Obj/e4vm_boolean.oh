@@ -9,9 +9,13 @@
 
 
 
+import void e4vm_boolean_and (e4vm_type_x4thPtr *v);
 import void e4vm_boolean_false (e4vm_type_x4thPtr *v);
+import void e4vm_boolean_invert (e4vm_type_x4thPtr *v);
 import void e4vm_boolean_not (e4vm_type_x4thPtr *v);
+import void e4vm_boolean_or (e4vm_type_x4thPtr *v);
 import void e4vm_boolean_true (e4vm_type_x4thPtr *v);
+import void e4vm_boolean_xor (e4vm_type_x4thPtr *v);
 import void *e4vm_boolean__init (void);
 
 

@@ -10,13 +10,12 @@
 ;--------------------------------------------------------
 	.globl _main
 	.globl _e4vm_boolean__init
-	.globl _e4vm_boolean_not
+	.globl _e4vm_boolean_or
 	.globl _e4vm_math__init
 	.globl _e4vm_stack__init
 	.globl _e4vm_utils__init
-	.globl _e4vm_utils_true_const
+	.globl _e4vm_utils_vm_stat
 	.globl _e4vm_utils_init
-	.globl _e4vm_utils_false_const
 	.globl _e4vm_core__init
 	.globl _e4vm_core_do_nop
 	.globl _e4vm_core_do_next
@@ -242,14 +241,13 @@ _e4vm_do_hello:
 ___str_0:
 	.ascii "hello!"
 	.db 0x00
-;e4vm.c:51: static void e4vm_test_not (e4vm_type_x4thPtr *v)
+;e4vm.c:51: static void e4vm_test_or (e4vm_type_x4thPtr *v)
 ;	---------------------------------
-; Function e4vm_test_not
+; Function e4vm_test_or
 ; ---------------------------------
-_e4vm_test_not:
+_e4vm_test_or:
 	call	___sdcc_enter_ix
-	push	af
-;e4vm.c:53: Console_WriteStr((CHAR*)"not ", 5);
+;e4vm.c:53: Console_WriteStr((CHAR*)"or ", 4);
 	ld	hl, #___str_1
 	call	_Console_WriteStr_C_COMPACT
 ;e4vm.c:54: e4vm_utils_init(v);
@@ -316,7 +314,7 @@ _e4vm_test_not:
 	inc	de
 	ld	a, #>(_e4vm_core_do_exit)
 	ld	(de), a
-;e4vm.c:59: (*v)->core[4] = e4vm_boolean_not;
+;e4vm.c:59: (*v)->core[4] = e4vm_boolean_or;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -325,10 +323,10 @@ _e4vm_test_not:
 	ld	hl, #0x00d5
 	add	hl, de
 	ex	de, hl
-	ld	a, #<(_e4vm_boolean_not)
+	ld	a, #<(_e4vm_boolean_or)
 	ld	(de), a
 	inc	de
-	ld	a, #>(_e4vm_boolean_not)
+	ld	a, #>(_e4vm_boolean_or)
 	ld	(de), a
 ;e4vm.c:60: (*v)->mem[0] = 0;
 	ld	l, c
@@ -432,17 +430,18 @@ _e4vm_test_not:
 	ld	(hl), #0x03
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:69: e4vm_stack_ds_push(v, e4vm_utils_true_const(&e4vm_vm));
+;e4vm.c:69: e4vm_stack_ds_push(v, 1);
 	push	bc
-	ld	hl, #_e4vm_vm
+	ld	hl, #0x0001
 	push	hl
-	call	_e4vm_utils_true_const
+	push	bc
+	call	_e4vm_stack_ds_push
 	pop	af
-	ex	de,hl
-	pop	bc
-	push	bc
-	push	de
-	push	bc
+	ld	hl, #0x0002
+	ex	(sp),hl
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
 	call	_e4vm_stack_ds_push
 	pop	af
 	pop	af
@@ -456,155 +455,42 @@ _e4vm_test_not:
 	push	hl
 	call	_e4vm_core_do_next
 	pop	af
-	pop	bc
-;e4vm.c:72: if ((*v)->ds[0] == e4vm_utils_false_const(&e4vm_vm)) {
-	ld	l, c
-	ld	h, b
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	push	bc
-	push	de
-	ld	hl, #_e4vm_vm
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
 	push	hl
-	call	_e4vm_utils_false_const
+	call	_e4vm_utils_vm_stat
 	pop	af
-	ld	-2 (ix), l
-	ld	-1 (ix), h
-	pop	de
-	pop	bc
-	ex	de,hl
+;e4vm.c:74: if ((*v)->ds[0] == 3) {
+	pop	hl
+	ld	c, (hl)
+	inc	hl
+	ld	h, (hl)
+	ld	l, c
 	ld	de, #0x0044
 	add	hl, de
-	ld	e, (hl)
+	ld	c, (hl)
 	inc	hl
-	ld	d, (hl)
-	pop	hl
-	push	hl
-	cp	a, a
-	sbc	hl, de
+	ld	b, (hl)
+	ld	a, c
+	sub	a, #0x03
+	or	a, b
 	jr	NZ,00102$
-;e4vm.c:73: Console_WriteStrLn((CHAR*)" - ok", 6);
-	push	bc
+;e4vm.c:75: Console_WriteStrLn((CHAR*)" - ok", 6);
 	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-	pop	bc
-	jr	00103$
+	jr	00104$
 00102$:
-;e4vm.c:75: Console_WriteStrLn((CHAR*)" - error", 9);
-	push	bc
+;e4vm.c:77: Console_WriteStrLn((CHAR*)" - error", 9);
 	ld	hl, #___str_3
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-	pop	bc
-00103$:
-;e4vm.c:77: (*v)->wp = 4;
-	ld	l, c
-	ld	h, b
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	inc	de
-	inc	de
-	ld	h, d
-	ld	l, e
-	ld	(hl), #0x04
-	inc	hl
-	ld	(hl), #0x00
-;e4vm.c:78: e4vm_core_do_list(v);
-	push	bc
-	push	bc
-	call	_e4vm_core_do_list
-	pop	af
-	ld	l, 4 (ix)
-	ld	h, 5 (ix)
-	push	hl
-	call	_e4vm_core_do_next
-	pop	af
-	pop	bc
-;e4vm.c:80: if ((*v)->ds[0] == e4vm_utils_true_const(&e4vm_vm)) {
-	ld	l, c
-	ld	h, b
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	push	bc
-	push	de
-	ld	hl, #_e4vm_vm
-	push	hl
-	call	_e4vm_utils_true_const
-	pop	af
-	ld	-2 (ix), l
-	ld	-1 (ix), h
-	pop	de
-	pop	bc
-	ex	de,hl
-	ld	de, #0x0044
-	add	hl, de
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	pop	hl
-	push	hl
-	cp	a, a
-	sbc	hl, de
-	jr	NZ,00105$
-;e4vm.c:81: Console_WriteStrLn((CHAR*)" - ok", 6);
-	push	bc
-	ld	hl, #___str_2
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-	pop	bc
-	jr	00106$
-00105$:
-;e4vm.c:83: Console_WriteStrLn((CHAR*)" - error", 9);
-	push	bc
-	ld	hl, #___str_3
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-	pop	bc
-00106$:
-;e4vm.c:85: (*v)->ds[0] = 2;
-	ld	l, c
-	ld	h, b
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	ld	hl, #0x0044
-	add	hl, de
-	ld	(hl), #0x02
-	inc	hl
-	ld	(hl), #0x00
-;e4vm.c:86: (*v)->wp = 4;
-	ld	l, c
-	ld	h, b
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	inc	de
-	inc	de
-	ld	h, d
-	ld	l, e
-	ld	(hl), #0x04
-	inc	hl
-	ld	(hl), #0x00
-;e4vm.c:87: e4vm_core_do_list(v);
-	push	bc
-	call	_e4vm_core_do_list
-	pop	af
-;e4vm.c:88: e4vm_core_do_next(v);
-	ld	l, 4 (ix)
-	ld	h, 5 (ix)
-	push	hl
-	call	_e4vm_core_do_next
-	pop	af
-;e4vm.c:89: }
-	pop	af
+00104$:
+;e4vm.c:79: }
 	pop	ix
 	ret
 ___str_1:
-	.ascii "not "
+	.ascii "or "
 	.db 0x00
 ___str_2:
 	.ascii " - ok"
@@ -612,44 +498,44 @@ ___str_2:
 ___str_3:
 	.ascii " - error"
 	.db 0x00
-;e4vm.c:92: int main (int argc, char **argv)
+;e4vm.c:82: int main (int argc, char **argv)
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;e4vm.c:97: __IMPORT(e4vm_boolean__init);
+;e4vm.c:87: __IMPORT(e4vm_boolean__init);
 	call	_e4vm_boolean__init
-;e4vm.c:98: __IMPORT(e4vm_core__init);
+;e4vm.c:88: __IMPORT(e4vm_core__init);
 	call	_e4vm_core__init
-;e4vm.c:99: __IMPORT(e4vm_math__init);
+;e4vm.c:89: __IMPORT(e4vm_math__init);
 	call	_e4vm_math__init
-;e4vm.c:100: __IMPORT(e4vm_stack__init);
+;e4vm.c:90: __IMPORT(e4vm_stack__init);
 	call	_e4vm_stack__init
-;e4vm.c:101: __IMPORT(e4vm_utils__init);
+;e4vm.c:91: __IMPORT(e4vm_utils__init);
 	call	_e4vm_utils__init
-;e4vm.c:104: Basic_Init();
+;e4vm.c:94: Basic_Init();
 	res	4,1(iy) 
 	call 0x1642 
-;e4vm.c:105: Console_Clear(7);
+;e4vm.c:95: Console_Clear(7);
 	ld	l, #0x07
 	call	_Console_Clear_COMPACT
-;e4vm.c:106: Console_SetColors(56);
+;e4vm.c:96: Console_SetColors(56);
 	ld	hl, #_Console_attrib
 	ld	(hl), #0x38
-;e4vm.c:107: e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
+;e4vm.c:97: e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
 	ld	hl, #_e4vm_vm_static
 	ld	(_e4vm_vm), hl
-;e4vm.c:108: e4vm_test_not(&e4vm_vm);
+;e4vm.c:98: e4vm_test_or(&e4vm_vm);
 	ld	hl, #_e4vm_vm
 	push	hl
-	call	_e4vm_test_not
+	call	_e4vm_test_or
 	pop	af
-;e4vm.c:109: Basic_PAUSE(0);
+;e4vm.c:99: Basic_PAUSE(0);
 	ld	hl, #0x0000
 	call	_Basic_PAUSE_EI
-;e4vm.c:110: Basic_Quit();
-;e4vm.c:111: __FINI;
-;e4vm.c:112: }
+;e4vm.c:100: Basic_Quit();
+;e4vm.c:101: __FINI;
+;e4vm.c:102: }
 	jp  _Basic_Quit_IM1
 	.area _CODE
 	.area _INITIALIZER

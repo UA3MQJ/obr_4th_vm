@@ -33,6 +33,38 @@ BEGIN
 	END
 END not;
 
+(* invert *)
+PROCEDURE invert* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("invert");
+  v.ds[v.ds_p -1] := -(v.ds[v.ds_p -1]) - 1;
+END invert;
+
+
+(* or *)
+PROCEDURE or* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("or");
+  v.ds[v.ds_p - 2] := ORD(SYSTEM.VAL(SET, v.ds[v.ds_p - 1]) + SYSTEM.VAL(SET, v.ds[v.ds_p - 2]));
+  v.ds_p := v.ds_p - 1;
+END or;
+
+(* and *)
+PROCEDURE and* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("and");
+  v.ds[v.ds_p - 2] := ORD(SYSTEM.VAL(SET, v.ds[v.ds_p - 1]) * SYSTEM.VAL(SET, v.ds[v.ds_p - 2]));
+  v.ds_p := v.ds_p - 1;
+END and;
+
+(* xor *)
+PROCEDURE xor* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("xor");
+  v.ds[v.ds_p - 2] := ORD(SYSTEM.VAL(SET, v.ds[v.ds_p - 1]) / SYSTEM.VAL(SET, v.ds[v.ds_p - 2]));
+  v.ds_p := v.ds_p - 1;
+END xor;
+
 BEGIN
    
 	

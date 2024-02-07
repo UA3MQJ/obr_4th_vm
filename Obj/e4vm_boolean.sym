@@ -14,20 +14,29 @@ Symbol Table
   0 ___str_1                                                       00B9 R
   0 ___str_2                                                       019B R
   0 ___str_3                                                       019F R
-  0 _e4vm_boolean__init                                            01AB GR
+  0 ___str_4                                                       01E4 R
+  0 ___str_5                                                       0246 R
+  0 ___str_6                                                       02A4 R
+  0 ___str_7                                                       0303 R
+  0 _e4vm_boolean__init                                            0307 GR
+  0 _e4vm_boolean_and                                              0249 GR
   0 _e4vm_boolean_false                                            005F GR
+  0 _e4vm_boolean_invert                                           01AB GR
   0 _e4vm_boolean_not                                              00BF GR
+  0 _e4vm_boolean_or                                               01EB GR
   0 _e4vm_boolean_true                                             0000 GR
+  0 _e4vm_boolean_xor                                              02A8 GR
     _e4vm_utils__init                                              **** GX
     _e4vm_utils_false_const                                        **** GX
     _e4vm_utils_true_const                                         **** GX
+
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  1B3   flags    0
+   0 _CODE                                      size  30F   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

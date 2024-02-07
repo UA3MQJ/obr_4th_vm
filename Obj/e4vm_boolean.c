@@ -10,9 +10,13 @@
 
 
 
+export void e4vm_boolean_and (e4vm_type_x4thPtr *v);
 export void e4vm_boolean_false (e4vm_type_x4thPtr *v);
+export void e4vm_boolean_invert (e4vm_type_x4thPtr *v);
 export void e4vm_boolean_not (e4vm_type_x4thPtr *v);
+export void e4vm_boolean_or (e4vm_type_x4thPtr *v);
 export void e4vm_boolean_true (e4vm_type_x4thPtr *v);
+export void e4vm_boolean_xor (e4vm_type_x4thPtr *v);
 
 
 /*============================================================================*/
@@ -45,6 +49,37 @@ void e4vm_boolean_not (e4vm_type_x4thPtr *v)
       Console_WriteStrLn((CHAR*)"not logical", 12);
     }
   }
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_boolean_invert (e4vm_type_x4thPtr *v)
+{
+  Console_WriteStrLn((CHAR*)"invert", 7);
+  (*v)->ds[(*v)->ds_p - 1] = -(*v)->ds[(*v)->ds_p - 1] - 1;
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_boolean_or (e4vm_type_x4thPtr *v)
+{
+  Console_WriteStrLn((CHAR*)"or", 3);
+  (*v)->ds[(*v)->ds_p - 2] = (BYTE)((SET)(*v)->ds[(*v)->ds_p - 1] | (SET)(*v)->ds[(*v)->ds_p - 2]);
+  (*v)->ds_p = (*v)->ds_p - 1;
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_boolean_and (e4vm_type_x4thPtr *v)
+{
+  Console_WriteStrLn((CHAR*)"and", 4);
+  (*v)->ds[(*v)->ds_p - 2] = (BYTE)((SET)(*v)->ds[(*v)->ds_p - 1] & (SET)(*v)->ds[(*v)->ds_p - 2]);
+  (*v)->ds_p = (*v)->ds_p - 1;
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_boolean_xor (e4vm_type_x4thPtr *v)
+{
+  Console_WriteStrLn((CHAR*)"xor", 4);
+  (*v)->ds[(*v)->ds_p - 2] = (BYTE)((SET)(*v)->ds[(*v)->ds_p - 1] ^ (SET)(*v)->ds[(*v)->ds_p - 2]);
+  (*v)->ds_p = (*v)->ds_p - 1;
 }
 
 /*----------------------------------------------------------------------------*/

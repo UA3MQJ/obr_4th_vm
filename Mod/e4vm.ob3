@@ -551,7 +551,6 @@ BEGIN
 	END;
 END test_true;
 
-*)
 
 PROCEDURE test_not(VAR v: e4vm_type.x4thPtr);
 BEGIN
@@ -612,6 +611,91 @@ BEGIN
 		
 END test_not;
 
+PROCEDURE test_invert(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("invert ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_boolean.invert;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* invert   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 1);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [1] -> [-2] *)
+	e4vm_utils.vm_stat(@v);
+	
+	IF (v.ds[0] = -2)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+		
+END test_invert;
+*)
+
+PROCEDURE test_or(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("or ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_boolean.or;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* or   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	stack_ds_push(@v, 1);
+	stack_ds_push(@v, 2);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [1, 2] -> [3] *)
+	e4vm_utils.vm_stat(@v);
+	
+	IF (v.ds[0] = 3)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+		
+END test_or;
+
+
 BEGIN
   B.Init;
   C.Clear(C.White);
@@ -632,10 +716,11 @@ BEGIN
 	test_devide(@vm); 
 	test_inc(@vm);
 	test_true(@vm);
-	
+	test_not(@vm);
+	test_invert(@vm);
 	*)
 	
-	test_not(@vm);
+	test_or(@vm);
 
   B.PAUSE(0);
 	B.Quit;
