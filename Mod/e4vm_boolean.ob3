@@ -73,6 +73,73 @@ BEGIN
   v.ds_p := v.ds_p - 1;
 END xor;
 
+(* eql =*)
+PROCEDURE eql* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("eql");
+
+  IF (v.ds[v.ds_p - 2] = v.ds[v.ds_p - 1]) 
+	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
+	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
+
+  v.ds_p := v.ds_p - 1;
+END eql;
+
+(* not_eql <>*)
+PROCEDURE not_eql* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("not_eql");
+  IF ~(v.ds[v.ds_p - 2] = v.ds[v.ds_p - 1])
+	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
+	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
+
+  v.ds_p := v.ds_p - 1;
+END not_eql;
+
+(* less <*)
+PROCEDURE less* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("less");
+  IF (v.ds[v.ds_p - 2] < v.ds[v.ds_p - 1])
+	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
+	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
+
+  v.ds_p := v.ds_p - 1;
+END less;
+
+(* greater >*)
+PROCEDURE greater* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("greater");
+  IF (v.ds[v.ds_p - 2] > v.ds[v.ds_p - 1])
+	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
+	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
+
+  v.ds_p := v.ds_p - 1;
+END greater;
+
+(* less_eql <=*)
+PROCEDURE less_eql* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("less_eql");
+  IF (v.ds[v.ds_p - 2] <= v.ds[v.ds_p - 1])
+	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
+	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
+
+  v.ds_p := v.ds_p - 1;
+END less_eql;
+
+(* greater_eql >*)
+PROCEDURE greater_eql* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("greater_eql");
+  IF (v.ds[v.ds_p - 2] >= v.ds[v.ds_p - 1])
+	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
+	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
+
+  v.ds_p := v.ds_p - 1;
+END greater_eql;
+
 BEGIN
    
 	
