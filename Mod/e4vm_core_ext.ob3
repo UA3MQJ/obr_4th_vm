@@ -1,0 +1,24 @@
+MODULE e4vm_core_ext;
+IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type, e4vm_utils;
+
+(*# нет операции *)
+PROCEDURE quit* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  B.Quit; (* вроде бы не работает*)
+END quit;
+
+
+(*# Чтобы при интерпретации отличить числовую константу от адреса слова,
+  # при компиляции перед каждой константой компилируется вызов слова doLit,
+  # которое считывает следующее значение в памяти и размещает его на стеке данных.*)
+PROCEDURE do_lit* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  (* C.WriteStrLn("do_lit!"); *)
+  v.ip := v.ip + 1;
+  e4vm_utils.stack_ds_push(@v, v.mem[v.ip]);  
+END do_lit;
+
+BEGIN
+   
+	
+END e4vm_core_ext.

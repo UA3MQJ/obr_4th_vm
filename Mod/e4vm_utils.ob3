@@ -53,5 +53,15 @@ PROCEDURE error* (err:ARRAY OF CHAR);
 BEGIN
   C.WriteStr("Error: "); C.WriteStr(err);C.WriteStrLn("");
 END error;
+
+PROCEDURE stack_ds_push* (VAR v: e4vm_type.x4thPtr; x:e4vm_type.stack_type);
+BEGIN
+  v.ds[v.ds_p]:=x; v.ds_p := v.ds_p + 1;
+END stack_ds_push;
+
+PROCEDURE stack_rs_push* (VAR v: e4vm_type.x4thPtr; x:e4vm_type.stack_type);
+BEGIN
+  v.rs[v.rs_p]:=x; v.rs_p := v.rs_p + 1;
+END stack_rs_push;
 	
 END e4vm_utils.

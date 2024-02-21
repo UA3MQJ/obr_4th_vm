@@ -18,7 +18,7 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  s__CABS                         
      00000000  s__DABS                         
      0000010F  l__DATA                         
-     00001121  l__CODE                         
+     00001342  l__CODE                         
      00005C8F  _Console_attrib                    Console_001
      0000B000  s__CODE                         
      0000C350  s__DATA                         
@@ -33,84 +33,94 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               0000B000    00001121 =        4385. bytes (REL,CON)
+_CODE                               0000B000    00001342 =        4930. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000B236  _main                              e4vm
-     0000B26D  _e4vm_core_do_nop                  e4vm_core
-     0000B27F  _e4vm_core_do_list                 e4vm_core
-     0000B2DA  _e4vm_core_do_next                 e4vm_core
-     0000B375  _e4vm_core_do_exit                 e4vm_core
-     0000B3B2  _e4vm_core__init                   e4vm_core
-     0000B3B8  _e4vm_utils_init                   e4vm_utils
-     0000B49E  _e4vm_utils_vm_stat                e4vm_utils
-     0000B5F4  _e4vm_utils_true_const             e4vm_utils
-     0000B5FD  _e4vm_utils_false_const            e4vm_utils
-     0000B606  _e4vm_utils_error                  e4vm_utils
-     0000B62C  _e4vm_utils__init                  e4vm_utils
-     0000B634  _e4vm_stack_drop                   e4vm_stack
-     0000B65D  _e4vm_stack_swap                   e4vm_stack
-     0000B6E2  _e4vm_stack_dup                    e4vm_stack
-     0000B736  _e4vm_stack_over                   e4vm_stack
-     0000B78C  _e4vm_stack_rot                    e4vm_stack
-     0000B839  _e4vm_stack_nrot                   e4vm_stack
-     0000B8E9  _e4vm_stack__init                  e4vm_stack
-     0000B8EF  _e4vm_math_minus                   e4vm_math
-     0000B948  _e4vm_math_plus                    e4vm_math
-     0000B99E  _e4vm_math_multiply                e4vm_math
-     0000B9FD  _e4vm_math_devide                  e4vm_math
-     0000BA5C  _e4vm_math_mod                     e4vm_math
-     0000BABD  _e4vm_math_inc                     e4vm_math
-     0000BAF3  _e4vm_math_dec                     e4vm_math
-     0000BB28  _e4vm_math__init                   e4vm_math
-     0000BB2E  _e4vm_boolean_true                 e4vm_boolean
-     0000BB8D  _e4vm_boolean_false                e4vm_boolean
-     0000BBED  _e4vm_boolean_not                  e4vm_boolean
-     0000BCD9  _e4vm_boolean_invert               e4vm_boolean
-     0000BD15  _e4vm_boolean_or                   e4vm_boolean
-     0000BD79  _e4vm_boolean_and                  e4vm_boolean
-     0000BDED  _e4vm_boolean_xor                  e4vm_boolean
-     0000BE54  _e4vm_boolean__init                e4vm_boolean
-     0000BE5C  _Basic_PAUSE_EI                    Basic_034
-     0000BE6E  _SYSTEM_MODS                       SYSTEM_017
-     0000BF00  __mulint                           
-     0000BF06  __mul16                            
-     0000BF1A  _SYSTEM_DIVS                       SYSTEM_014
-     0000BFA9  _Console_WriteStr_C_COMPACT        Console_014
-     0000BFB4  _Console_Clear_COMPACT             Console_028
-     0000BFD1  ___sdcc_call_hl                    
-     0000BFD2  _Basic_Quit_IM1                    Basic_066
-     0000BFD7  _Console_WriteCh_COMPACT           Console_005
-     0000BFE2  _ATTR_ADR_C                        Console_005
-     0000C006  _Console_WriteInt_COMPACT          Console_020
-     0000C01B  _Console_WriteLn_COMPACT           Console_012
-     0000C028  _INC_HBYTE_C                       Console_012
-     0000C039  ___sdcc_enter_ix                   
+     0000B171  _main                              e4vm
+     0000B1AB  _e4vm_core_do_nop                  e4vm_core
+     0000B1B0  _e4vm_core_do_list                 e4vm_core
+     0000B20B  _e4vm_core_do_next                 e4vm_core
+     0000B2A6  _e4vm_core_do_exit                 e4vm_core
+     0000B2E3  _e4vm_core__init                   e4vm_core
+     0000B2E9  _e4vm_core_ext_quit                e4vm_core_ext
+     0000B2F1  _e4vm_core_ext_do_lit              e4vm_core_ext
+     0000B33A  _e4vm_core_ext__init               e4vm_core_ext
+     0000B342  _e4vm_utils_init                   e4vm_utils
+     0000B428  _e4vm_utils_vm_stat                e4vm_utils
+     0000B57E  _e4vm_utils_true_const             e4vm_utils
+     0000B587  _e4vm_utils_false_const            e4vm_utils
+     0000B590  _e4vm_utils_error                  e4vm_utils
+     0000B5B6  _e4vm_utils_stack_ds_push          e4vm_utils
+     0000B5F7  _e4vm_utils_stack_rs_push          e4vm_utils
+     0000B638  _e4vm_utils__init                  e4vm_utils
+     0000B640  _e4vm_stack_drop                   e4vm_stack
+     0000B65B  _e4vm_stack_swap                   e4vm_stack
+     0000B6D2  _e4vm_stack_dup                    e4vm_stack
+     0000B719  _e4vm_stack_over                   e4vm_stack
+     0000B761  _e4vm_stack_rot                    e4vm_stack
+     0000B801  _e4vm_stack_nrot                   e4vm_stack
+     0000B8A3  _e4vm_stack__init                  e4vm_stack
+     0000B8A9  _e4vm_math_minus                   e4vm_math
+     0000B8F6  _e4vm_math_plus                    e4vm_math
+     0000B941  _e4vm_math_multiply                e4vm_math
+     0000B994  _e4vm_math_devide                  e4vm_math
+     0000B9E7  _e4vm_math_mod                     e4vm_math
+     0000BA3A  _e4vm_math_inc                     e4vm_math
+     0000BA64  _e4vm_math_dec                     e4vm_math
+     0000BA8D  _e4vm_math__init                   e4vm_math
+     0000BA93  _e4vm_boolean_true                 e4vm_boolean
+     0000BAE4  _e4vm_boolean_false                e4vm_boolean
+     0000BB35  _e4vm_boolean_not                  e4vm_boolean
+     0000BC14  _e4vm_boolean_invert               e4vm_boolean
+     0000BC40  _e4vm_boolean_or                   e4vm_boolean
+     0000BC98  _e4vm_boolean_and                  e4vm_boolean
+     0000BCFF  _e4vm_boolean_xor                  e4vm_boolean
+     0000BD59  _e4vm_boolean_eql                  e4vm_boolean
+     0000BDDB  _e4vm_boolean_not_eql              e4vm_boolean
+     0000BE5D  _e4vm_boolean_less                 e4vm_boolean
+     0000BEE4  _e4vm_boolean_greater              e4vm_boolean
+     0000BF69  _e4vm_boolean_less_eql             e4vm_boolean
+     0000BFEE  _e4vm_boolean_greater_eql          e4vm_boolean
+     0000C075  _e4vm_boolean__init                e4vm_boolean
+     0000C07D  _Basic_PAUSE_EI                    Basic_034
+     0000C08F  _SYSTEM_MODS                       SYSTEM_017
+     0000C121  __mulint                           
+     0000C127  __mul16                            
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               0000B000    00001121 =        4385. bytes (REL,CON)
+_CODE                               0000B000    00001342 =        4930. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000C043  __modschar                         
-     0000C050  __modsint                          
-     0000C05C  __divsint                          
-     0000C065  __divschar                         
-     0000C06C  __div8                             
-     0000C070  __div_signexte                     
-     0000C074  __div16                            
-     0000C09A  __get_remainder                    
-     0000C0A4  _SYSTEM_HALT_m1                    SYSTEM_001
-     0000C0B0  __divuint                          
-     0000C0B8  __divuchar                         
-     0000C0BF  __divu8                            
-     0000C0C2  __divu16                           
-     0000C0F1  _Console_WriteUShort_COMPACT       Console_019
-
+     0000C13B  _SYSTEM_DIVS                       SYSTEM_014
+     0000C1CA  _Console_WriteStr_C_COMPACT        Console_014
+     0000C1D5  _Console_Clear_COMPACT             Console_028
+     0000C1F2  ___sdcc_call_hl                    
+     0000C1F3  _Basic_Quit_IM1                    Basic_066
+     0000C1F8  _Console_WriteCh_COMPACT           Console_005
+     0000C203  _ATTR_ADR_C                        Console_005
+     0000C227  _Console_WriteInt_COMPACT          Console_020
+     0000C23C  _Console_WriteLn_COMPACT           Console_012
+     0000C249  _INC_HBYTE_C                       Console_012
+     0000C25A  ___sdcc_enter_ix                   
+     0000C264  __modschar                         
+     0000C271  __modsint                          
+     0000C27D  __divsint                          
+     0000C286  __divschar                         
+     0000C28D  __div8                             
+     0000C291  __div_signexte                     
+     0000C295  __div16                            
+     0000C2BB  __get_remainder                    
+     0000C2C5  _SYSTEM_HALT_m1                    SYSTEM_001
+     0000C2D1  __divuint                          
+     0000C2D9  __divuchar                         
+     0000C2E0  __divu8                            
+     0000C2E3  __divu16                           
+     0000C312  _Console_WriteUShort_COMPACT       Console_019
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -127,6 +137,7 @@ Files Linked                              [ module(s) ]
 C:\xdev\ZXDev\Lib\crt0.rel                [ crt0 ]
 e4vm.rel                                  [ e4vm ]
 e4vm_core.rel                             [ e4vm_core ]
+e4vm_core_ext.rel                         [ e4vm_core_ext ]
 e4vm_utils.rel                            [ e4vm_utils ]
 e4vm_stack.rel                            [ e4vm_stack ]
 e4vm_math.rel                             [ e4vm_math ]

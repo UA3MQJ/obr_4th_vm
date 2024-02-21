@@ -4,7 +4,7 @@ IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type, e4vm_utils;
 (* true *)
 PROCEDURE true* (VAR v: e4vm_type.x4thPtr);
 BEGIN 
-  C.WriteStrLn("true");
+  (* C.WriteStrLn("true"); *)
   v.ds[v.ds_p] := e4vm_utils.true_const(@v);
   v.ds_p := v.ds_p + 1;
 END true;
@@ -12,7 +12,7 @@ END true;
 (* false *)
 PROCEDURE false* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("false");
+  (* C.WriteStrLn("false"); *)
   v.ds[v.ds_p] := e4vm_utils.false_const(@v);
   v.ds_p := v.ds_p + 1;
 END false;
@@ -21,7 +21,7 @@ END false;
 работает только с логическими значениями, в отличие от invert *)
 PROCEDURE not* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("not");
+  (* C.WriteStrLn("not"); *)
   IF (v.ds[v.ds_p - 1] = e4vm_utils.true_const(@v)) THEN
     v.ds[v.ds_p - 1] := e4vm_utils.false_const(@v)
 	ELSE 
@@ -38,7 +38,7 @@ PROCEDURE- BitwiseNot (value: e4vm_type.stack_type): e4vm_type.stack_type "(~(va
 
 PROCEDURE invert* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("invert");
+  (* C.WriteStrLn("invert"); *)
   v.ds[v.ds_p -1] := BitwiseNot(v.ds[v.ds_p -1]);
 END invert;
 
@@ -48,7 +48,7 @@ PROCEDURE- BitwiseOR (val1, val2: e4vm_type.stack_type): e4vm_type.stack_type "(
 
 PROCEDURE or* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("or");
+  (* C.WriteStrLn("or"); *)
   v.ds[v.ds_p - 2] := BitwiseOR(v.ds[v.ds_p - 2], v.ds[v.ds_p - 1]);
   v.ds_p := v.ds_p - 1;
 END or;
@@ -58,7 +58,7 @@ PROCEDURE- BitwiseAND (val1, val2: e4vm_type.stack_type): e4vm_type.stack_type "
 
 PROCEDURE and* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("and");
+  (* C.WriteStrLn("and"); *)
   v.ds[v.ds_p - 2] := BitwiseAND(v.ds[v.ds_p - 2], v.ds[v.ds_p - 1]);
   v.ds_p := v.ds_p - 1;
 END and;
@@ -68,7 +68,7 @@ PROCEDURE- BitwiseXOR (val1, val2: e4vm_type.stack_type): e4vm_type.stack_type "
 
 PROCEDURE xor* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("xor");
+  (* C.WriteStrLn("xor"); *)
   v.ds[v.ds_p - 2] := BitwiseXOR(v.ds[v.ds_p - 2], v.ds[v.ds_p - 1]);
   v.ds_p := v.ds_p - 1;
 END xor;
@@ -76,8 +76,7 @@ END xor;
 (* eql =*)
 PROCEDURE eql* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("eql");
-
+  (* C.WriteStrLn("eql"); *)
   IF (v.ds[v.ds_p - 2] = v.ds[v.ds_p - 1]) 
 	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
 	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
@@ -88,7 +87,7 @@ END eql;
 (* not_eql <>*)
 PROCEDURE not_eql* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("not_eql");
+  (* C.WriteStrLn("not_eql"); *)
   IF ~(v.ds[v.ds_p - 2] = v.ds[v.ds_p - 1])
 	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
 	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
@@ -99,7 +98,7 @@ END not_eql;
 (* less <*)
 PROCEDURE less* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("less");
+  (* C.WriteStrLn("less"); *)
   IF (v.ds[v.ds_p - 2] < v.ds[v.ds_p - 1])
 	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
 	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
@@ -110,7 +109,7 @@ END less;
 (* greater >*)
 PROCEDURE greater* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("greater");
+  (* C.WriteStrLn("greater"); *)
   IF (v.ds[v.ds_p - 2] > v.ds[v.ds_p - 1])
 	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
 	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
@@ -121,7 +120,7 @@ END greater;
 (* less_eql <=*)
 PROCEDURE less_eql* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("less_eql");
+  (* C.WriteStrLn("less_eql"); *)
   IF (v.ds[v.ds_p - 2] <= v.ds[v.ds_p - 1])
 	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
 	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;
@@ -132,7 +131,7 @@ END less_eql;
 (* greater_eql >*)
 PROCEDURE greater_eql* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("greater_eql");
+  (* C.WriteStrLn("greater_eql"); *)
   IF (v.ds[v.ds_p - 2] >= v.ds[v.ds_p - 1])
 	THEN v.ds[v.ds_p - 2] := e4vm_utils.true_const(@v)
 	ELSE v.ds[v.ds_p - 2] := e4vm_utils.false_const(@v) END;

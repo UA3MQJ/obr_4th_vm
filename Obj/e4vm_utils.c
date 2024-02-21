@@ -13,6 +13,8 @@
 export void e4vm_utils_error (CHAR *err, SHORTINT err__len);
 export SHORTINT e4vm_utils_false_const (e4vm_type_x4thPtr *v);
 export void e4vm_utils_init (e4vm_type_x4thPtr *v);
+export void e4vm_utils_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x);
+export void e4vm_utils_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x);
 export SHORTINT e4vm_utils_true_const (e4vm_type_x4thPtr *v);
 export void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v);
 
@@ -96,6 +98,20 @@ void e4vm_utils_error (CHAR *err, SHORTINT err__len)
   Console_WriteStr((CHAR*)"Error: ", 8);
   Console_WriteStr((void*)err, err__len);
   Console_WriteStrLn((CHAR*)"", 1);
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_utils_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x)
+{
+  (*v)->ds[(*v)->ds_p] = x;
+  (*v)->ds_p = (*v)->ds_p + 1;
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_utils_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x)
+{
+  (*v)->rs[(*v)->rs_p] = x;
+  (*v)->rs_p = (*v)->rs_p + 1;
 }
 
 /*----------------------------------------------------------------------------*/

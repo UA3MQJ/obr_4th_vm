@@ -22,7 +22,6 @@ export void e4vm_math_plus (e4vm_type_x4thPtr *v);
 
 void e4vm_math_minus (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"-", 2);
   (*v)->ds_p = (*v)->ds_p - 1;
   (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] - (*v)->ds[(*v)->ds_p];
 }
@@ -30,7 +29,6 @@ void e4vm_math_minus (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_math_plus (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"+", 2);
   (*v)->ds_p = (*v)->ds_p - 1;
   (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] + (*v)->ds[(*v)->ds_p];
 }
@@ -38,7 +36,6 @@ void e4vm_math_plus (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_math_multiply (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"*", 2);
   (*v)->ds_p = (*v)->ds_p - 1;
   (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] * (*v)->ds[(*v)->ds_p];
 }
@@ -46,7 +43,6 @@ void e4vm_math_multiply (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_math_devide (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"/", 2);
   (*v)->ds_p = (*v)->ds_p - 1;
   (*v)->ds[(*v)->ds_p - 1] = __DIVFS((*v)->ds[(*v)->ds_p - 1], (*v)->ds[(*v)->ds_p]);
 }
@@ -54,7 +50,6 @@ void e4vm_math_devide (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_math_mod (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"mod", 4);
   (*v)->ds_p = (*v)->ds_p - 1;
   (*v)->ds[(*v)->ds_p - 1] = __MODFS((*v)->ds[(*v)->ds_p - 1], (*v)->ds[(*v)->ds_p]);
 }
@@ -62,14 +57,12 @@ void e4vm_math_mod (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_math_inc (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"1+", 3);
   (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] + 1;
 }
 
 /*----------------------------------------------------------------------------*/
 void e4vm_math_dec (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"1-", 3);
   (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] - 1;
 }
 

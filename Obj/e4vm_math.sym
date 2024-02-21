@@ -7,27 +7,18 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-    _Console_WriteLn_COMPACT                                       **** GX
-    _Console_WriteStr_C_COMPACT                                    **** GX
     _SYSTEM_DIVS                                                   **** GX
     _SYSTEM_MODS                                                   **** GX
     ___sdcc_enter_ix                                               **** GX
-  0 ___str_0                                                       0057 R
-  0 ___str_1                                                       00AD R
-  0 ___str_2                                                       010C R
-  0 ___str_3                                                       016B R
-  0 ___str_4                                                       01CA R
-  0 ___str_5                                                       0201 R
-  0 ___str_6                                                       0236 R
     __mulint                                                       **** GX
-  0 _e4vm_math__init                                               0239 GR
-  0 _e4vm_math_dec                                                 0204 GR
-  0 _e4vm_math_devide                                              010E GR
-  0 _e4vm_math_inc                                                 01CE GR
+  0 _e4vm_math__init                                               01E4 GR
+  0 _e4vm_math_dec                                                 01BB GR
+  0 _e4vm_math_devide                                              00EB GR
+  0 _e4vm_math_inc                                                 0191 GR
   0 _e4vm_math_minus                                               0000 GR
-  0 _e4vm_math_mod                                                 016D GR
-  0 _e4vm_math_multiply                                            00AF GR
-  0 _e4vm_math_plus                                                0059 GR
+  0 _e4vm_math_mod                                                 013E GR
+  0 _e4vm_math_multiply                                            0098 GR
+  0 _e4vm_math_plus                                                004D GR
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
@@ -35,7 +26,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  23F   flags    0
+   0 _CODE                                      size  1EA   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

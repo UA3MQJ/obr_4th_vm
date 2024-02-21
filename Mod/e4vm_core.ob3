@@ -4,7 +4,7 @@ IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type;
 (*# нет операции *)
 PROCEDURE do_nop* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("nop");
+  (* C.WriteStrLn("nop"); *)
 END do_nop;
 
 (*# Каждое пользовательское слово начинается с команды DoList,

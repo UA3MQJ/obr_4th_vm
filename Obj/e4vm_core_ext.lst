@@ -1,0 +1,134 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.9.3 #11378 (MINGW32)
+                              4 ;--------------------------------------------------------
+                              5 	.module e4vm_core_ext
+                              6 	.optsdcc -mz80
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _e4vm_core_ext__init
+                             12 	.globl _e4vm_utils__init
+                             13 	.globl _e4vm_utils_stack_ds_push
+                             14 	.globl _Basic_Quit_IM1
+                             15 	.globl _Console_WriteStr_C_COMPACT
+                             16 	.globl _Console_WriteLn_COMPACT
+                             17 	.globl _e4vm_core_ext_quit
+                             18 	.globl _e4vm_core_ext_do_lit
+                             19 ;--------------------------------------------------------
+                             20 ; special function registers
+                             21 ;--------------------------------------------------------
+                             22 ;--------------------------------------------------------
+                             23 ; ram data
+                             24 ;--------------------------------------------------------
+                             25 	.area _DATA
+                             26 ;--------------------------------------------------------
+                             27 ; ram data
+                             28 ;--------------------------------------------------------
+                             29 	.area _INITIALIZED
+                             30 ;--------------------------------------------------------
+                             31 ; absolute external ram data
+                             32 ;--------------------------------------------------------
+                             33 	.area _DABS (ABS)
+                             34 ;--------------------------------------------------------
+                             35 ; global & static initialisations
+                             36 ;--------------------------------------------------------
+                             37 	.area _HOME
+                             38 	.area _GSINIT
+                             39 	.area _GSFINAL
+                             40 	.area _GSINIT
+                             41 ;--------------------------------------------------------
+                             42 ; Home
+                             43 ;--------------------------------------------------------
+                             44 	.area _HOME
+                             45 	.area _HOME
+                             46 ;--------------------------------------------------------
+                             47 ; code
+                             48 ;--------------------------------------------------------
+                             49 	.area _CODE
+                             50 ;e4vm_core_ext.c:19: void e4vm_core_ext_quit (e4vm_type_x4thPtr *v)
+                             51 ;	---------------------------------
+                             52 ; Function e4vm_core_ext_quit
+                             53 ; ---------------------------------
+   0000                      54 _e4vm_core_ext_quit::
+   0000 CDr00r00      [17]   55 	call	___sdcc_enter_ix
+                             56 ;e4vm_core_ext.c:21: Basic_Quit();
+                             57 ;e4vm_core_ext.c:22: }
+   0003 DD E1         [14]   58 	pop	ix
+   0005 C3r00r00      [10]   59 	jp	_Basic_Quit_IM1
+                             60 ;e4vm_core_ext.c:25: void e4vm_core_ext_do_lit (e4vm_type_x4thPtr *v)
+                             61 ;	---------------------------------
+                             62 ; Function e4vm_core_ext_do_lit
+                             63 ; ---------------------------------
+   0008                      64 _e4vm_core_ext_do_lit::
+   0008 CDr00r00      [17]   65 	call	___sdcc_enter_ix
+                             66 ;e4vm_core_ext.c:27: Console_WriteStrLn((CHAR*)"do_lit!", 8);
+   000B 21r49r00      [10]   67 	ld	hl, #___str_0
+   000E CDr00r00      [17]   68 	call	_Console_WriteStr_C_COMPACT
+   0011 CDr00r00      [17]   69 	call	_Console_WriteLn_COMPACT
+                             70 ;e4vm_core_ext.c:28: (*v)->ip = (*v)->ip + 1;
+   0014 DD 4E 04      [19]   71 	ld	c, 4 (ix)
+   0017 DD 46 05      [19]   72 	ld	b, 5 (ix)
+   001A 69            [ 4]   73 	ld	l, c
+   001B 60            [ 4]   74 	ld	h, b
+   001C 7E            [ 7]   75 	ld	a, (hl)
+   001D 23            [ 6]   76 	inc	hl
+   001E 66            [ 7]   77 	ld	h, (hl)
+   001F 6F            [ 4]   78 	ld	l, a
+   0020 5E            [ 7]   79 	ld	e, (hl)
+   0021 23            [ 6]   80 	inc	hl
+   0022 56            [ 7]   81 	ld	d, (hl)
+   0023 2B            [ 6]   82 	dec	hl
+   0024 13            [ 6]   83 	inc	de
+   0025 7A            [ 4]   84 	ld	a, d
+   0026 73            [ 7]   85 	ld	(hl), e
+   0027 23            [ 6]   86 	inc	hl
+   0028 77            [ 7]   87 	ld	(hl), a
+                             88 ;e4vm_core_ext.c:29: e4vm_utils_stack_ds_push(v, (*v)->mem[(*v)->ip]);
+   0029 69            [ 4]   89 	ld	l, c
+   002A 60            [ 4]   90 	ld	h, b
+   002B 7E            [ 7]   91 	ld	a, (hl)
+   002C 23            [ 6]   92 	inc	hl
+   002D 66            [ 7]   93 	ld	h, (hl)
+   002E 6F            [ 4]   94 	ld	l, a
+   002F C6 8A         [ 7]   95 	add	a, #0x8a
+   0031 5F            [ 4]   96 	ld	e, a
+   0032 7C            [ 4]   97 	ld	a, h
+   0033 CE 00         [ 7]   98 	adc	a, #0x00
+   0035 57            [ 4]   99 	ld	d, a
+   0036 7E            [ 7]  100 	ld	a, (hl)
+   0037 23            [ 6]  101 	inc	hl
+   0038 66            [ 7]  102 	ld	h, (hl)
+   0039 6F            [ 4]  103 	ld	l, a
+   003A 29            [11]  104 	add	hl, hl
+   003B 19            [11]  105 	add	hl, de
+   003C 5E            [ 7]  106 	ld	e, (hl)
+   003D 23            [ 6]  107 	inc	hl
+   003E 56            [ 7]  108 	ld	d, (hl)
+   003F D5            [11]  109 	push	de
+   0040 C5            [11]  110 	push	bc
+   0041 CDr00r00      [17]  111 	call	_e4vm_utils_stack_ds_push
+   0044 F1            [10]  112 	pop	af
+   0045 F1            [10]  113 	pop	af
+                            114 ;e4vm_core_ext.c:30: }
+   0046 DD E1         [14]  115 	pop	ix
+   0048 C9            [10]  116 	ret
+   0049                     117 ___str_0:
+   0049 64 6F 5F 6C 69 74   118 	.ascii "do_lit!"
+        21
+   0050 00                  119 	.db 0x00
+                            120 ;e4vm_core_ext.c:34: export void *e4vm_core_ext__init (void)
+                            121 ;	---------------------------------
+                            122 ; Function e4vm_core_ext__init
+                            123 ; ---------------------------------
+   0051                     124 _e4vm_core_ext__init::
+                            125 ;e4vm_core_ext.c:36: __DEFMOD;
+   0051 21r51r00      [10]  126 	LD	HL,#. 
+   0054 36 C9         [10]  127 	LD (HL),#0xC9 
+                            128 ;e4vm_core_ext.c:39: __IMPORT(e4vm_utils__init);
+                            129 ;e4vm_core_ext.c:43: }
+   0056 C3r00r00      [10]  130 	jp  _e4vm_utils__init
+                            131 	.area _CODE
+                            132 	.area _INITIALIZER
+                            133 	.area _CABS (ABS)

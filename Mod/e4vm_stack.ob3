@@ -1,12 +1,10 @@
 MODULE e4vm_stack;
 IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type;
 
-
-
 (* удалить слово со стека ( x -- ) *)
 PROCEDURE drop* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("drop");
+  (* C.WriteStrLn("drop"); *)
   v.ds_p := v.ds_p - 1;
 END drop;
 
@@ -14,7 +12,7 @@ END drop;
 PROCEDURE swap* (VAR v: e4vm_type.x4thPtr);
 VAR T:e4vm_type.stack_type;
 BEGIN
-  C.WriteStrLn("swap");
+  (* C.WriteStrLn("swap"); *)
   T := v.ds[v.ds_p - 1];
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 2];
   v.ds[v.ds_p - 2] := T;
@@ -23,7 +21,7 @@ END swap;
 (* дублировать слово на вершине стека ( x -- x x ) *)
 PROCEDURE dup* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("dup");
+  (* C.WriteStrLn("dup"); *)
   v.ds_p := v.ds_p + 1;
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 2];
 END dup;
@@ -32,7 +30,7 @@ END dup;
   ( x1 x2 -- x1 x2 x1 ) *)
 PROCEDURE over* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("over");
+  (* C.WriteStrLn("over"); *)
   v.ds_p := v.ds_p + 1;
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 3];
 END over;
@@ -42,7 +40,7 @@ END over;
 PROCEDURE rot* (VAR v: e4vm_type.x4thPtr);
 VAR T:e4vm_type.stack_type;
 BEGIN
-  C.WriteStrLn("rot");
+  (* C.WriteStrLn("rot"); *)
   T := v.ds[v.ds_p - 3];
   v.ds[v.ds_p - 3] := v.ds[v.ds_p - 2];
   v.ds[v.ds_p - 2] := v.ds[v.ds_p - 1];
@@ -54,15 +52,13 @@ END rot;
 PROCEDURE nrot* (VAR v: e4vm_type.x4thPtr);
 VAR T:e4vm_type.stack_type;
 BEGIN
-  C.WriteStrLn("nrot");
+  (* C.WriteStrLn("nrot"); *)
   T := v.ds[v.ds_p - 1];
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 2];
   v.ds[v.ds_p - 2] := v.ds[v.ds_p - 3]
   v.ds[v.ds_p - 3] := T;
 END nrot;
 
-
 BEGIN
-   
 	
 END e4vm_stack.

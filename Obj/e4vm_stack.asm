@@ -9,8 +9,6 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _e4vm_stack__init
-	.globl _Console_WriteStr_C_COMPACT
-	.globl _Console_WriteLn_COMPACT
 	.globl _e4vm_stack_drop
 	.globl _e4vm_stack_swap
 	.globl _e4vm_stack_dup
@@ -54,11 +52,7 @@
 ; ---------------------------------
 _e4vm_stack_drop::
 	call	___sdcc_enter_ix
-;e4vm_stack.c:24: Console_WriteStrLn((CHAR*)"drop", 5);
-	ld	hl, #___str_0
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-;e4vm_stack.c:25: (*v)->ds_p = (*v)->ds_p - 1;
+;e4vm_stack.c:24: (*v)->ds_p = (*v)->ds_p - 1;
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	ld	c, (hl)
@@ -74,13 +68,10 @@ _e4vm_stack_drop::
 	ld	(hl), c
 	inc	hl
 	ld	(hl), b
-;e4vm_stack.c:26: }
+;e4vm_stack.c:25: }
 	pop	ix
 	ret
-___str_0:
-	.ascii "drop"
-	.db 0x00
-;e4vm_stack.c:29: void e4vm_stack_swap (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:28: void e4vm_stack_swap (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_swap
 ; ---------------------------------
@@ -89,11 +80,7 @@ _e4vm_stack_swap::
 	push	af
 	push	af
 	push	af
-;e4vm_stack.c:32: Console_WriteStrLn((CHAR*)"swap", 5);
-	ld	hl, #___str_1
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-;e4vm_stack.c:33: T = (*v)->ds[(*v)->ds_p - 1];
+;e4vm_stack.c:31: T = (*v)->ds[(*v)->ds_p - 1];
 	ld	a, 4 (ix)
 	ld	-6 (ix), a
 	ld	a, 5 (ix)
@@ -126,7 +113,7 @@ _e4vm_stack_swap::
 	inc	hl
 	ld	a, (hl)
 	ld	-1 (ix), a
-;e4vm_stack.c:34: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
+;e4vm_stack.c:32: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
 	ld	a, c
 	dec	a
 	dec	a
@@ -144,7 +131,7 @@ _e4vm_stack_swap::
 	ld	(hl), c
 	inc	hl
 	ld	(hl), b
-;e4vm_stack.c:35: (*v)->ds[(*v)->ds_p - 2] = T;
+;e4vm_stack.c:33: (*v)->ds[(*v)->ds_p - 2] = T;
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -169,24 +156,17 @@ _e4vm_stack_swap::
 	inc	hl
 	ld	a, -1 (ix)
 	ld	(hl), a
-;e4vm_stack.c:36: }
+;e4vm_stack.c:34: }
 	ld	sp, ix
 	pop	ix
 	ret
-___str_1:
-	.ascii "swap"
-	.db 0x00
-;e4vm_stack.c:39: void e4vm_stack_dup (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:37: void e4vm_stack_dup (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_dup
 ; ---------------------------------
 _e4vm_stack_dup::
 	call	___sdcc_enter_ix
-;e4vm_stack.c:41: Console_WriteStrLn((CHAR*)"dup", 4);
-	ld	hl, #___str_2
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-;e4vm_stack.c:42: (*v)->ds_p = (*v)->ds_p + 1;
+;e4vm_stack.c:39: (*v)->ds_p = (*v)->ds_p + 1;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -205,7 +185,7 @@ _e4vm_stack_dup::
 	ld	(hl), e
 	inc	hl
 	ld	(hl), a
-;e4vm_stack.c:43: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
+;e4vm_stack.c:40: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -240,23 +220,16 @@ _e4vm_stack_dup::
 	inc	bc
 	ld	a, d
 	ld	(bc), a
-;e4vm_stack.c:44: }
+;e4vm_stack.c:41: }
 	pop	ix
 	ret
-___str_2:
-	.ascii "dup"
-	.db 0x00
-;e4vm_stack.c:47: void e4vm_stack_over (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:44: void e4vm_stack_over (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_over
 ; ---------------------------------
 _e4vm_stack_over::
 	call	___sdcc_enter_ix
-;e4vm_stack.c:49: Console_WriteStrLn((CHAR*)"over", 5);
-	ld	hl, #___str_3
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-;e4vm_stack.c:50: (*v)->ds_p = (*v)->ds_p + 1;
+;e4vm_stack.c:46: (*v)->ds_p = (*v)->ds_p + 1;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -275,7 +248,7 @@ _e4vm_stack_over::
 	ld	(hl), e
 	inc	hl
 	ld	(hl), a
-;e4vm_stack.c:51: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 3];
+;e4vm_stack.c:47: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 3];
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -311,13 +284,10 @@ _e4vm_stack_over::
 	inc	bc
 	ld	a, d
 	ld	(bc), a
-;e4vm_stack.c:52: }
+;e4vm_stack.c:48: }
 	pop	ix
 	ret
-___str_3:
-	.ascii "over"
-	.db 0x00
-;e4vm_stack.c:55: void e4vm_stack_rot (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:51: void e4vm_stack_rot (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_rot
 ; ---------------------------------
@@ -326,11 +296,7 @@ _e4vm_stack_rot::
 	push	af
 	push	af
 	push	af
-;e4vm_stack.c:58: Console_WriteStrLn((CHAR*)"rot", 4);
-	ld	hl, #___str_4
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-;e4vm_stack.c:59: T = (*v)->ds[(*v)->ds_p - 3];
+;e4vm_stack.c:54: T = (*v)->ds[(*v)->ds_p - 3];
 	ld	a, 4 (ix)
 	ld	-6 (ix), a
 	ld	a, 5 (ix)
@@ -363,7 +329,7 @@ _e4vm_stack_rot::
 	inc	hl
 	ld	a, (hl)
 	ld	-1 (ix), a
-;e4vm_stack.c:60: (*v)->ds[(*v)->ds_p - 3] = (*v)->ds[(*v)->ds_p - 2];
+;e4vm_stack.c:55: (*v)->ds[(*v)->ds_p - 3] = (*v)->ds[(*v)->ds_p - 2];
 	ld	a, c
 	dec	a
 	dec	a
@@ -381,7 +347,7 @@ _e4vm_stack_rot::
 	ld	(hl), c
 	inc	hl
 	ld	(hl), b
-;e4vm_stack.c:61: (*v)->ds[(*v)->ds_p - 2] = (*v)->ds[(*v)->ds_p - 1];
+;e4vm_stack.c:56: (*v)->ds[(*v)->ds_p - 2] = (*v)->ds[(*v)->ds_p - 1];
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -416,7 +382,7 @@ _e4vm_stack_rot::
 	inc	bc
 	ld	a, d
 	ld	(bc), a
-;e4vm_stack.c:62: (*v)->ds[(*v)->ds_p - 1] = T;
+;e4vm_stack.c:57: (*v)->ds[(*v)->ds_p - 1] = T;
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -440,14 +406,11 @@ _e4vm_stack_rot::
 	inc	hl
 	ld	a, -1 (ix)
 	ld	(hl), a
-;e4vm_stack.c:63: }
+;e4vm_stack.c:58: }
 	ld	sp, ix
 	pop	ix
 	ret
-___str_4:
-	.ascii "rot"
-	.db 0x00
-;e4vm_stack.c:66: void e4vm_stack_nrot (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:61: void e4vm_stack_nrot (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_nrot
 ; ---------------------------------
@@ -456,11 +419,7 @@ _e4vm_stack_nrot::
 	push	af
 	push	af
 	push	af
-;e4vm_stack.c:69: Console_WriteStrLn((CHAR*)"nrot", 5);
-	ld	hl, #___str_5
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-;e4vm_stack.c:70: T = (*v)->ds[(*v)->ds_p - 1];
+;e4vm_stack.c:64: T = (*v)->ds[(*v)->ds_p - 1];
 	ld	a, 4 (ix)
 	ld	-6 (ix), a
 	ld	a, 5 (ix)
@@ -493,7 +452,7 @@ _e4vm_stack_nrot::
 	inc	hl
 	ld	a, (hl)
 	ld	-1 (ix), a
-;e4vm_stack.c:71: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
+;e4vm_stack.c:65: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
 	ld	a, c
 	dec	a
 	dec	a
@@ -511,7 +470,7 @@ _e4vm_stack_nrot::
 	ld	(hl), c
 	inc	hl
 	ld	(hl), b
-;e4vm_stack.c:72: (*v)->ds[(*v)->ds_p - 2] = (*v)->ds[(*v)->ds_p - 3];
+;e4vm_stack.c:66: (*v)->ds[(*v)->ds_p - 2] = (*v)->ds[(*v)->ds_p - 3];
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -548,7 +507,7 @@ _e4vm_stack_nrot::
 	inc	bc
 	ld	a, d
 	ld	(bc), a
-;e4vm_stack.c:73: (*v)->ds[(*v)->ds_p - 3] = T;
+;e4vm_stack.c:67: (*v)->ds[(*v)->ds_p - 3] = T;
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -572,22 +531,19 @@ _e4vm_stack_nrot::
 	inc	hl
 	ld	a, -1 (ix)
 	ld	(hl), a
-;e4vm_stack.c:74: }
+;e4vm_stack.c:68: }
 	ld	sp, ix
 	pop	ix
 	ret
-___str_5:
-	.ascii "nrot"
-	.db 0x00
-;e4vm_stack.c:78: export void *e4vm_stack__init (void)
+;e4vm_stack.c:72: export void *e4vm_stack__init (void)
 ;	---------------------------------
 ; Function e4vm_stack__init
 ; ---------------------------------
 _e4vm_stack__init::
-;e4vm_stack.c:80: __DEFMOD;
+;e4vm_stack.c:74: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_stack.c:86: }
+;e4vm_stack.c:80: }
 	ret
 	.area _CODE
 	.area _INITIALIZER

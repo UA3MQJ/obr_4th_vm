@@ -9,549 +9,494 @@
                               9 ; Public variables in this module
                              10 ;--------------------------------------------------------
                              11 	.globl _e4vm_math__init
-                             12 	.globl _Console_WriteStr_C_COMPACT
-                             13 	.globl _Console_WriteLn_COMPACT
-                             14 	.globl _SYSTEM_MODS
-                             15 	.globl _SYSTEM_DIVS
-                             16 	.globl _e4vm_math_minus
-                             17 	.globl _e4vm_math_plus
-                             18 	.globl _e4vm_math_multiply
-                             19 	.globl _e4vm_math_devide
-                             20 	.globl _e4vm_math_mod
-                             21 	.globl _e4vm_math_inc
-                             22 	.globl _e4vm_math_dec
+                             12 	.globl _SYSTEM_MODS
+                             13 	.globl _SYSTEM_DIVS
+                             14 	.globl _e4vm_math_minus
+                             15 	.globl _e4vm_math_plus
+                             16 	.globl _e4vm_math_multiply
+                             17 	.globl _e4vm_math_devide
+                             18 	.globl _e4vm_math_mod
+                             19 	.globl _e4vm_math_inc
+                             20 	.globl _e4vm_math_dec
+                             21 ;--------------------------------------------------------
+                             22 ; special function registers
                              23 ;--------------------------------------------------------
-                             24 ; special function registers
-                             25 ;--------------------------------------------------------
+                             24 ;--------------------------------------------------------
+                             25 ; ram data
                              26 ;--------------------------------------------------------
-                             27 ; ram data
+                             27 	.area _DATA
                              28 ;--------------------------------------------------------
-                             29 	.area _DATA
+                             29 ; ram data
                              30 ;--------------------------------------------------------
-                             31 ; ram data
+                             31 	.area _INITIALIZED
                              32 ;--------------------------------------------------------
-                             33 	.area _INITIALIZED
+                             33 ; absolute external ram data
                              34 ;--------------------------------------------------------
-                             35 ; absolute external ram data
+                             35 	.area _DABS (ABS)
                              36 ;--------------------------------------------------------
-                             37 	.area _DABS (ABS)
+                             37 ; global & static initialisations
                              38 ;--------------------------------------------------------
-                             39 ; global & static initialisations
-                             40 ;--------------------------------------------------------
-                             41 	.area _HOME
+                             39 	.area _HOME
+                             40 	.area _GSINIT
+                             41 	.area _GSFINAL
                              42 	.area _GSINIT
-                             43 	.area _GSFINAL
-                             44 	.area _GSINIT
+                             43 ;--------------------------------------------------------
+                             44 ; Home
                              45 ;--------------------------------------------------------
-                             46 ; Home
-                             47 ;--------------------------------------------------------
-                             48 	.area _HOME
-                             49 	.area _HOME
+                             46 	.area _HOME
+                             47 	.area _HOME
+                             48 ;--------------------------------------------------------
+                             49 ; code
                              50 ;--------------------------------------------------------
-                             51 ; code
-                             52 ;--------------------------------------------------------
-                             53 	.area _CODE
-                             54 ;e4vm_math.c:23: void e4vm_math_minus (e4vm_type_x4thPtr *v)
-                             55 ;	---------------------------------
-                             56 ; Function e4vm_math_minus
-                             57 ; ---------------------------------
-   0000                      58 _e4vm_math_minus::
-   0000 CDr00r00      [17]   59 	call	___sdcc_enter_ix
-                             60 ;e4vm_math.c:25: Console_WriteStrLn((CHAR*)"-", 2);
-   0003 21r57r00      [10]   61 	ld	hl, #___str_0
-   0006 CDr00r00      [17]   62 	call	_Console_WriteStr_C_COMPACT
-   0009 CDr00r00      [17]   63 	call	_Console_WriteLn_COMPACT
-                             64 ;e4vm_math.c:26: (*v)->ds_p = (*v)->ds_p - 1;
-   000C DD 4E 04      [19]   65 	ld	c, 4 (ix)
-   000F DD 46 05      [19]   66 	ld	b, 5 (ix)
-   0012 69            [ 4]   67 	ld	l, c
-   0013 60            [ 4]   68 	ld	h, b
-   0014 5E            [ 7]   69 	ld	e, (hl)
-   0015 23            [ 6]   70 	inc	hl
-   0016 56            [ 7]   71 	ld	d, (hl)
-   0017 21 86 00      [10]   72 	ld	hl, #0x0086
-   001A 19            [11]   73 	add	hl, de
-   001B 5E            [ 7]   74 	ld	e, (hl)
-   001C 23            [ 6]   75 	inc	hl
-   001D 56            [ 7]   76 	ld	d, (hl)
-   001E 2B            [ 6]   77 	dec	hl
-   001F 1B            [ 6]   78 	dec	de
-   0020 73            [ 7]   79 	ld	(hl), e
-   0021 23            [ 6]   80 	inc	hl
-   0022 72            [ 7]   81 	ld	(hl), d
-                             82 ;e4vm_math.c:27: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] - (*v)->ds[(*v)->ds_p];
-   0023 69            [ 4]   83 	ld	l, c
-   0024 60            [ 4]   84 	ld	h, b
-   0025 4E            [ 7]   85 	ld	c, (hl)
-   0026 23            [ 6]   86 	inc	hl
-   0027 46            [ 7]   87 	ld	b, (hl)
-   0028 21 44 00      [10]   88 	ld	hl, #0x0044
-   002B 09            [11]   89 	add	hl, bc
-   002C EB            [ 4]   90 	ex	de, hl
-   002D 69            [ 4]   91 	ld	l, c
-   002E 60            [ 4]   92 	ld	h, b
-   002F 01 86 00      [10]   93 	ld	bc, #0x0086
-   0032 09            [11]   94 	add	hl, bc
-   0033 7E            [ 7]   95 	ld	a, (hl)
-   0034 23            [ 6]   96 	inc	hl
-   0035 66            [ 7]   97 	ld	h, (hl)
-   0036 6F            [ 4]   98 	ld	l, a
-   0037 3D            [ 4]   99 	dec	a
-   0038 87            [ 4]  100 	add	a, a
-   0039 83            [ 4]  101 	add	a, e
-   003A 4F            [ 4]  102 	ld	c, a
-   003B 3E 00         [ 7]  103 	ld	a, #0x00
-   003D 8A            [ 4]  104 	adc	a, d
-   003E 47            [ 4]  105 	ld	b, a
-   003F 29            [11]  106 	add	hl, hl
-   0040 19            [11]  107 	add	hl, de
-   0041 5E            [ 7]  108 	ld	e, (hl)
-   0042 23            [ 6]  109 	inc	hl
-   0043 56            [ 7]  110 	ld	d, (hl)
-   0044 69            [ 4]  111 	ld	l, c
-   0045 60            [ 4]  112 	ld	h, b
-   0046 7E            [ 7]  113 	ld	a, (hl)
-   0047 23            [ 6]  114 	inc	hl
-   0048 66            [ 7]  115 	ld	h, (hl)
-   0049 6F            [ 4]  116 	ld	l, a
-   004A 93            [ 4]  117 	sub	a, e
-   004B 5F            [ 4]  118 	ld	e, a
-   004C 7C            [ 4]  119 	ld	a, h
-   004D 9A            [ 4]  120 	sbc	a, d
-   004E 57            [ 4]  121 	ld	d, a
-   004F 7B            [ 4]  122 	ld	a, e
-   0050 02            [ 7]  123 	ld	(bc), a
-   0051 03            [ 6]  124 	inc	bc
-   0052 7A            [ 4]  125 	ld	a, d
-   0053 02            [ 7]  126 	ld	(bc), a
-                            127 ;e4vm_math.c:28: }
-   0054 DD E1         [14]  128 	pop	ix
-   0056 C9            [10]  129 	ret
-   0057                     130 ___str_0:
-   0057 2D                  131 	.ascii "-"
-   0058 00                  132 	.db 0x00
-                            133 ;e4vm_math.c:31: void e4vm_math_plus (e4vm_type_x4thPtr *v)
-                            134 ;	---------------------------------
-                            135 ; Function e4vm_math_plus
-                            136 ; ---------------------------------
-   0059                     137 _e4vm_math_plus::
-   0059 CDr00r00      [17]  138 	call	___sdcc_enter_ix
-                            139 ;e4vm_math.c:33: Console_WriteStrLn((CHAR*)"+", 2);
-   005C 21rADr00      [10]  140 	ld	hl, #___str_1
-   005F CDr00r00      [17]  141 	call	_Console_WriteStr_C_COMPACT
-   0062 CDr00r00      [17]  142 	call	_Console_WriteLn_COMPACT
-                            143 ;e4vm_math.c:34: (*v)->ds_p = (*v)->ds_p - 1;
-   0065 DD 4E 04      [19]  144 	ld	c, 4 (ix)
-   0068 DD 46 05      [19]  145 	ld	b, 5 (ix)
-   006B 69            [ 4]  146 	ld	l, c
-   006C 60            [ 4]  147 	ld	h, b
-   006D 5E            [ 7]  148 	ld	e, (hl)
-   006E 23            [ 6]  149 	inc	hl
-   006F 56            [ 7]  150 	ld	d, (hl)
-   0070 21 86 00      [10]  151 	ld	hl, #0x0086
-   0073 19            [11]  152 	add	hl, de
-   0074 5E            [ 7]  153 	ld	e, (hl)
-   0075 23            [ 6]  154 	inc	hl
-   0076 56            [ 7]  155 	ld	d, (hl)
-   0077 2B            [ 6]  156 	dec	hl
-   0078 1B            [ 6]  157 	dec	de
-   0079 73            [ 7]  158 	ld	(hl), e
-   007A 23            [ 6]  159 	inc	hl
-   007B 72            [ 7]  160 	ld	(hl), d
-                            161 ;e4vm_math.c:35: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] + (*v)->ds[(*v)->ds_p];
-   007C 69            [ 4]  162 	ld	l, c
-   007D 60            [ 4]  163 	ld	h, b
-   007E 4E            [ 7]  164 	ld	c, (hl)
-   007F 23            [ 6]  165 	inc	hl
-   0080 46            [ 7]  166 	ld	b, (hl)
-   0081 21 44 00      [10]  167 	ld	hl, #0x0044
-   0084 09            [11]  168 	add	hl, bc
-   0085 EB            [ 4]  169 	ex	de, hl
-   0086 69            [ 4]  170 	ld	l, c
-   0087 60            [ 4]  171 	ld	h, b
-   0088 01 86 00      [10]  172 	ld	bc, #0x0086
-   008B 09            [11]  173 	add	hl, bc
-   008C 7E            [ 7]  174 	ld	a, (hl)
-   008D 23            [ 6]  175 	inc	hl
-   008E 66            [ 7]  176 	ld	h, (hl)
-   008F 6F            [ 4]  177 	ld	l, a
-   0090 3D            [ 4]  178 	dec	a
-   0091 87            [ 4]  179 	add	a, a
-   0092 83            [ 4]  180 	add	a, e
-   0093 4F            [ 4]  181 	ld	c, a
-   0094 3E 00         [ 7]  182 	ld	a, #0x00
-   0096 8A            [ 4]  183 	adc	a, d
-   0097 47            [ 4]  184 	ld	b, a
-   0098 29            [11]  185 	add	hl, hl
-   0099 19            [11]  186 	add	hl, de
-   009A 5E            [ 7]  187 	ld	e, (hl)
-   009B 23            [ 6]  188 	inc	hl
-   009C 56            [ 7]  189 	ld	d, (hl)
-   009D 69            [ 4]  190 	ld	l, c
-   009E 60            [ 4]  191 	ld	h, b
-   009F 7E            [ 7]  192 	ld	a, (hl)
-   00A0 23            [ 6]  193 	inc	hl
-   00A1 66            [ 7]  194 	ld	h, (hl)
-   00A2 6F            [ 4]  195 	ld	l, a
-   00A3 19            [11]  196 	add	hl, de
-   00A4 EB            [ 4]  197 	ex	de, hl
-   00A5 7B            [ 4]  198 	ld	a, e
-   00A6 02            [ 7]  199 	ld	(bc), a
-   00A7 03            [ 6]  200 	inc	bc
-   00A8 7A            [ 4]  201 	ld	a, d
-   00A9 02            [ 7]  202 	ld	(bc), a
-                            203 ;e4vm_math.c:36: }
-   00AA DD E1         [14]  204 	pop	ix
-   00AC C9            [10]  205 	ret
-   00AD                     206 ___str_1:
-   00AD 2B                  207 	.ascii "+"
-   00AE 00                  208 	.db 0x00
-                            209 ;e4vm_math.c:39: void e4vm_math_multiply (e4vm_type_x4thPtr *v)
-                            210 ;	---------------------------------
-                            211 ; Function e4vm_math_multiply
-                            212 ; ---------------------------------
-   00AF                     213 _e4vm_math_multiply::
-   00AF CDr00r00      [17]  214 	call	___sdcc_enter_ix
-                            215 ;e4vm_math.c:41: Console_WriteStrLn((CHAR*)"*", 2);
-   00B2 21r0Cr01      [10]  216 	ld	hl, #___str_2
-   00B5 CDr00r00      [17]  217 	call	_Console_WriteStr_C_COMPACT
-   00B8 CDr00r00      [17]  218 	call	_Console_WriteLn_COMPACT
-                            219 ;e4vm_math.c:42: (*v)->ds_p = (*v)->ds_p - 1;
-   00BB DD 4E 04      [19]  220 	ld	c, 4 (ix)
-   00BE DD 46 05      [19]  221 	ld	b, 5 (ix)
-   00C1 69            [ 4]  222 	ld	l, c
-   00C2 60            [ 4]  223 	ld	h, b
-   00C3 5E            [ 7]  224 	ld	e, (hl)
-   00C4 23            [ 6]  225 	inc	hl
-   00C5 56            [ 7]  226 	ld	d, (hl)
-   00C6 21 86 00      [10]  227 	ld	hl, #0x0086
-   00C9 19            [11]  228 	add	hl, de
-   00CA 5E            [ 7]  229 	ld	e, (hl)
-   00CB 23            [ 6]  230 	inc	hl
-   00CC 56            [ 7]  231 	ld	d, (hl)
-   00CD 2B            [ 6]  232 	dec	hl
-   00CE 1B            [ 6]  233 	dec	de
-   00CF 73            [ 7]  234 	ld	(hl), e
-   00D0 23            [ 6]  235 	inc	hl
-   00D1 72            [ 7]  236 	ld	(hl), d
-                            237 ;e4vm_math.c:43: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] * (*v)->ds[(*v)->ds_p];
-   00D2 69            [ 4]  238 	ld	l, c
-   00D3 60            [ 4]  239 	ld	h, b
-   00D4 4E            [ 7]  240 	ld	c, (hl)
-   00D5 23            [ 6]  241 	inc	hl
-   00D6 46            [ 7]  242 	ld	b, (hl)
-   00D7 21 44 00      [10]  243 	ld	hl, #0x0044
-   00DA 09            [11]  244 	add	hl, bc
-   00DB EB            [ 4]  245 	ex	de, hl
-   00DC 69            [ 4]  246 	ld	l, c
-   00DD 60            [ 4]  247 	ld	h, b
-   00DE 01 86 00      [10]  248 	ld	bc, #0x0086
-   00E1 09            [11]  249 	add	hl, bc
-   00E2 7E            [ 7]  250 	ld	a, (hl)
-   00E3 23            [ 6]  251 	inc	hl
-   00E4 66            [ 7]  252 	ld	h, (hl)
-   00E5 6F            [ 4]  253 	ld	l, a
-   00E6 3D            [ 4]  254 	dec	a
-   00E7 87            [ 4]  255 	add	a, a
-   00E8 83            [ 4]  256 	add	a, e
-   00E9 4F            [ 4]  257 	ld	c, a
-   00EA 3E 00         [ 7]  258 	ld	a, #0x00
-   00EC 8A            [ 4]  259 	adc	a, d
-   00ED 47            [ 4]  260 	ld	b, a
-   00EE 29            [11]  261 	add	hl, hl
-   00EF 19            [11]  262 	add	hl, de
-   00F0 5E            [ 7]  263 	ld	e, (hl)
-   00F1 23            [ 6]  264 	inc	hl
-   00F2 56            [ 7]  265 	ld	d, (hl)
-   00F3 69            [ 4]  266 	ld	l, c
-   00F4 60            [ 4]  267 	ld	h, b
-   00F5 7E            [ 7]  268 	ld	a, (hl)
-   00F6 23            [ 6]  269 	inc	hl
-   00F7 66            [ 7]  270 	ld	h, (hl)
-   00F8 6F            [ 4]  271 	ld	l, a
-   00F9 C5            [11]  272 	push	bc
-   00FA D5            [11]  273 	push	de
-   00FB E5            [11]  274 	push	hl
-   00FC CDr00r00      [17]  275 	call	__mulint
-   00FF F1            [10]  276 	pop	af
-   0100 F1            [10]  277 	pop	af
-   0101 5D            [ 4]  278 	ld	e, l
-   0102 54            [ 4]  279 	ld	d, h
-   0103 C1            [10]  280 	pop	bc
-   0104 7B            [ 4]  281 	ld	a, e
-   0105 02            [ 7]  282 	ld	(bc), a
-   0106 03            [ 6]  283 	inc	bc
-   0107 7A            [ 4]  284 	ld	a, d
-   0108 02            [ 7]  285 	ld	(bc), a
-                            286 ;e4vm_math.c:44: }
-   0109 DD E1         [14]  287 	pop	ix
-   010B C9            [10]  288 	ret
-   010C                     289 ___str_2:
-   010C 2A                  290 	.ascii "*"
-   010D 00                  291 	.db 0x00
-                            292 ;e4vm_math.c:47: void e4vm_math_devide (e4vm_type_x4thPtr *v)
-                            293 ;	---------------------------------
-                            294 ; Function e4vm_math_devide
-                            295 ; ---------------------------------
-   010E                     296 _e4vm_math_devide::
-   010E CDr00r00      [17]  297 	call	___sdcc_enter_ix
-                            298 ;e4vm_math.c:49: Console_WriteStrLn((CHAR*)"/", 2);
-   0111 21r6Br01      [10]  299 	ld	hl, #___str_3
-   0114 CDr00r00      [17]  300 	call	_Console_WriteStr_C_COMPACT
-   0117 CDr00r00      [17]  301 	call	_Console_WriteLn_COMPACT
-                            302 ;e4vm_math.c:50: (*v)->ds_p = (*v)->ds_p - 1;
-   011A DD 4E 04      [19]  303 	ld	c, 4 (ix)
-   011D DD 46 05      [19]  304 	ld	b, 5 (ix)
-   0120 69            [ 4]  305 	ld	l, c
-   0121 60            [ 4]  306 	ld	h, b
-   0122 5E            [ 7]  307 	ld	e, (hl)
-   0123 23            [ 6]  308 	inc	hl
-   0124 56            [ 7]  309 	ld	d, (hl)
-   0125 21 86 00      [10]  310 	ld	hl, #0x0086
-   0128 19            [11]  311 	add	hl, de
-   0129 5E            [ 7]  312 	ld	e, (hl)
-   012A 23            [ 6]  313 	inc	hl
-   012B 56            [ 7]  314 	ld	d, (hl)
-   012C 2B            [ 6]  315 	dec	hl
-   012D 1B            [ 6]  316 	dec	de
-   012E 73            [ 7]  317 	ld	(hl), e
-   012F 23            [ 6]  318 	inc	hl
-   0130 72            [ 7]  319 	ld	(hl), d
-                            320 ;e4vm_math.c:51: (*v)->ds[(*v)->ds_p - 1] = __DIVFS((*v)->ds[(*v)->ds_p - 1], (*v)->ds[(*v)->ds_p]);
-   0131 69            [ 4]  321 	ld	l, c
-   0132 60            [ 4]  322 	ld	h, b
-   0133 4E            [ 7]  323 	ld	c, (hl)
-   0134 23            [ 6]  324 	inc	hl
-   0135 46            [ 7]  325 	ld	b, (hl)
-   0136 21 44 00      [10]  326 	ld	hl, #0x0044
-   0139 09            [11]  327 	add	hl, bc
-   013A EB            [ 4]  328 	ex	de, hl
-   013B 69            [ 4]  329 	ld	l, c
-   013C 60            [ 4]  330 	ld	h, b
-   013D 01 86 00      [10]  331 	ld	bc, #0x0086
-   0140 09            [11]  332 	add	hl, bc
-   0141 7E            [ 7]  333 	ld	a, (hl)
-   0142 23            [ 6]  334 	inc	hl
-   0143 66            [ 7]  335 	ld	h, (hl)
-   0144 6F            [ 4]  336 	ld	l, a
-   0145 3D            [ 4]  337 	dec	a
-   0146 87            [ 4]  338 	add	a, a
-   0147 83            [ 4]  339 	add	a, e
-   0148 4F            [ 4]  340 	ld	c, a
-   0149 3E 00         [ 7]  341 	ld	a, #0x00
-   014B 8A            [ 4]  342 	adc	a, d
-   014C 47            [ 4]  343 	ld	b, a
-   014D 29            [11]  344 	add	hl, hl
-   014E 19            [11]  345 	add	hl, de
-   014F 5E            [ 7]  346 	ld	e, (hl)
-   0150 23            [ 6]  347 	inc	hl
-   0151 56            [ 7]  348 	ld	d, (hl)
-   0152 69            [ 4]  349 	ld	l, c
-   0153 60            [ 4]  350 	ld	h, b
-   0154 7E            [ 7]  351 	ld	a, (hl)
-   0155 23            [ 6]  352 	inc	hl
-   0156 66            [ 7]  353 	ld	h, (hl)
-   0157 6F            [ 4]  354 	ld	l, a
-   0158 C5            [11]  355 	push	bc
-   0159 D5            [11]  356 	push	de
-   015A E5            [11]  357 	push	hl
-   015B CDr00r00      [17]  358 	call	_SYSTEM_DIVS
-   015E F1            [10]  359 	pop	af
-   015F F1            [10]  360 	pop	af
-   0160 5D            [ 4]  361 	ld	e, l
-   0161 54            [ 4]  362 	ld	d, h
-   0162 C1            [10]  363 	pop	bc
-   0163 7B            [ 4]  364 	ld	a, e
-   0164 02            [ 7]  365 	ld	(bc), a
-   0165 03            [ 6]  366 	inc	bc
-   0166 7A            [ 4]  367 	ld	a, d
-   0167 02            [ 7]  368 	ld	(bc), a
-                            369 ;e4vm_math.c:52: }
-   0168 DD E1         [14]  370 	pop	ix
-   016A C9            [10]  371 	ret
-   016B                     372 ___str_3:
-   016B 2F                  373 	.ascii "/"
-   016C 00                  374 	.db 0x00
-                            375 ;e4vm_math.c:55: void e4vm_math_mod (e4vm_type_x4thPtr *v)
-                            376 ;	---------------------------------
-                            377 ; Function e4vm_math_mod
-                            378 ; ---------------------------------
-   016D                     379 _e4vm_math_mod::
-   016D CDr00r00      [17]  380 	call	___sdcc_enter_ix
-                            381 ;e4vm_math.c:57: Console_WriteStrLn((CHAR*)"mod", 4);
-   0170 21rCAr01      [10]  382 	ld	hl, #___str_4
-   0173 CDr00r00      [17]  383 	call	_Console_WriteStr_C_COMPACT
-   0176 CDr00r00      [17]  384 	call	_Console_WriteLn_COMPACT
-                            385 ;e4vm_math.c:58: (*v)->ds_p = (*v)->ds_p - 1;
-   0179 DD 4E 04      [19]  386 	ld	c, 4 (ix)
-   017C DD 46 05      [19]  387 	ld	b, 5 (ix)
-   017F 69            [ 4]  388 	ld	l, c
-   0180 60            [ 4]  389 	ld	h, b
-   0181 5E            [ 7]  390 	ld	e, (hl)
-   0182 23            [ 6]  391 	inc	hl
-   0183 56            [ 7]  392 	ld	d, (hl)
-   0184 21 86 00      [10]  393 	ld	hl, #0x0086
-   0187 19            [11]  394 	add	hl, de
-   0188 5E            [ 7]  395 	ld	e, (hl)
-   0189 23            [ 6]  396 	inc	hl
-   018A 56            [ 7]  397 	ld	d, (hl)
-   018B 2B            [ 6]  398 	dec	hl
-   018C 1B            [ 6]  399 	dec	de
-   018D 73            [ 7]  400 	ld	(hl), e
-   018E 23            [ 6]  401 	inc	hl
-   018F 72            [ 7]  402 	ld	(hl), d
-                            403 ;e4vm_math.c:59: (*v)->ds[(*v)->ds_p - 1] = __MODFS((*v)->ds[(*v)->ds_p - 1], (*v)->ds[(*v)->ds_p]);
-   0190 69            [ 4]  404 	ld	l, c
-   0191 60            [ 4]  405 	ld	h, b
-   0192 4E            [ 7]  406 	ld	c, (hl)
-   0193 23            [ 6]  407 	inc	hl
-   0194 46            [ 7]  408 	ld	b, (hl)
-   0195 21 44 00      [10]  409 	ld	hl, #0x0044
-   0198 09            [11]  410 	add	hl, bc
-   0199 EB            [ 4]  411 	ex	de, hl
-   019A 69            [ 4]  412 	ld	l, c
-   019B 60            [ 4]  413 	ld	h, b
-   019C 01 86 00      [10]  414 	ld	bc, #0x0086
-   019F 09            [11]  415 	add	hl, bc
-   01A0 7E            [ 7]  416 	ld	a, (hl)
-   01A1 23            [ 6]  417 	inc	hl
-   01A2 66            [ 7]  418 	ld	h, (hl)
-   01A3 6F            [ 4]  419 	ld	l, a
-   01A4 3D            [ 4]  420 	dec	a
-   01A5 87            [ 4]  421 	add	a, a
-   01A6 83            [ 4]  422 	add	a, e
-   01A7 4F            [ 4]  423 	ld	c, a
-   01A8 3E 00         [ 7]  424 	ld	a, #0x00
-   01AA 8A            [ 4]  425 	adc	a, d
-   01AB 47            [ 4]  426 	ld	b, a
-   01AC 29            [11]  427 	add	hl, hl
-   01AD 19            [11]  428 	add	hl, de
-   01AE 5E            [ 7]  429 	ld	e, (hl)
-   01AF 23            [ 6]  430 	inc	hl
-   01B0 56            [ 7]  431 	ld	d, (hl)
-   01B1 69            [ 4]  432 	ld	l, c
-   01B2 60            [ 4]  433 	ld	h, b
-   01B3 7E            [ 7]  434 	ld	a, (hl)
-   01B4 23            [ 6]  435 	inc	hl
-   01B5 66            [ 7]  436 	ld	h, (hl)
-   01B6 6F            [ 4]  437 	ld	l, a
-   01B7 C5            [11]  438 	push	bc
-   01B8 D5            [11]  439 	push	de
-   01B9 E5            [11]  440 	push	hl
-   01BA CDr00r00      [17]  441 	call	_SYSTEM_MODS
-   01BD F1            [10]  442 	pop	af
-   01BE F1            [10]  443 	pop	af
-   01BF 5D            [ 4]  444 	ld	e, l
-   01C0 54            [ 4]  445 	ld	d, h
-   01C1 C1            [10]  446 	pop	bc
-   01C2 7B            [ 4]  447 	ld	a, e
-   01C3 02            [ 7]  448 	ld	(bc), a
-   01C4 03            [ 6]  449 	inc	bc
-   01C5 7A            [ 4]  450 	ld	a, d
-   01C6 02            [ 7]  451 	ld	(bc), a
-                            452 ;e4vm_math.c:60: }
-   01C7 DD E1         [14]  453 	pop	ix
-   01C9 C9            [10]  454 	ret
-   01CA                     455 ___str_4:
-   01CA 6D 6F 64            456 	.ascii "mod"
-   01CD 00                  457 	.db 0x00
-                            458 ;e4vm_math.c:63: void e4vm_math_inc (e4vm_type_x4thPtr *v)
-                            459 ;	---------------------------------
-                            460 ; Function e4vm_math_inc
-                            461 ; ---------------------------------
-   01CE                     462 _e4vm_math_inc::
-   01CE CDr00r00      [17]  463 	call	___sdcc_enter_ix
-                            464 ;e4vm_math.c:65: Console_WriteStrLn((CHAR*)"1+", 3);
-   01D1 21r01r02      [10]  465 	ld	hl, #___str_5
-   01D4 CDr00r00      [17]  466 	call	_Console_WriteStr_C_COMPACT
-   01D7 CDr00r00      [17]  467 	call	_Console_WriteLn_COMPACT
-                            468 ;e4vm_math.c:66: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] + 1;
-   01DA DD 6E 04      [19]  469 	ld	l, 4 (ix)
-   01DD DD 66 05      [19]  470 	ld	h, 5 (ix)
-   01E0 4E            [ 7]  471 	ld	c, (hl)
-   01E1 23            [ 6]  472 	inc	hl
-   01E2 46            [ 7]  473 	ld	b, (hl)
-   01E3 21 44 00      [10]  474 	ld	hl, #0x0044
-   01E6 09            [11]  475 	add	hl, bc
-   01E7 EB            [ 4]  476 	ex	de, hl
-   01E8 69            [ 4]  477 	ld	l, c
-   01E9 60            [ 4]  478 	ld	h, b
-   01EA 01 86 00      [10]  479 	ld	bc, #0x0086
-   01ED 09            [11]  480 	add	hl, bc
-   01EE 7E            [ 7]  481 	ld	a, (hl)
-   01EF 3D            [ 4]  482 	dec	a
-   01F0 87            [ 4]  483 	add	a, a
-   01F1 6F            [ 4]  484 	ld	l, a
-   01F2 26 00         [ 7]  485 	ld	h, #0x00
-   01F4 19            [11]  486 	add	hl, de
-   01F5 4E            [ 7]  487 	ld	c, (hl)
-   01F6 23            [ 6]  488 	inc	hl
-   01F7 46            [ 7]  489 	ld	b, (hl)
-   01F8 2B            [ 6]  490 	dec	hl
-   01F9 03            [ 6]  491 	inc	bc
-   01FA 78            [ 4]  492 	ld	a, b
-   01FB 71            [ 7]  493 	ld	(hl), c
-   01FC 23            [ 6]  494 	inc	hl
-   01FD 77            [ 7]  495 	ld	(hl), a
-                            496 ;e4vm_math.c:67: }
-   01FE DD E1         [14]  497 	pop	ix
-   0200 C9            [10]  498 	ret
-   0201                     499 ___str_5:
-   0201 31 2B               500 	.ascii "1+"
-   0203 00                  501 	.db 0x00
-                            502 ;e4vm_math.c:70: void e4vm_math_dec (e4vm_type_x4thPtr *v)
-                            503 ;	---------------------------------
-                            504 ; Function e4vm_math_dec
-                            505 ; ---------------------------------
-   0204                     506 _e4vm_math_dec::
-   0204 CDr00r00      [17]  507 	call	___sdcc_enter_ix
-                            508 ;e4vm_math.c:72: Console_WriteStrLn((CHAR*)"1-", 3);
-   0207 21r36r02      [10]  509 	ld	hl, #___str_6
-   020A CDr00r00      [17]  510 	call	_Console_WriteStr_C_COMPACT
-   020D CDr00r00      [17]  511 	call	_Console_WriteLn_COMPACT
-                            512 ;e4vm_math.c:73: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] - 1;
-   0210 DD 6E 04      [19]  513 	ld	l, 4 (ix)
-   0213 DD 66 05      [19]  514 	ld	h, 5 (ix)
-   0216 4E            [ 7]  515 	ld	c, (hl)
-   0217 23            [ 6]  516 	inc	hl
-   0218 46            [ 7]  517 	ld	b, (hl)
-   0219 21 44 00      [10]  518 	ld	hl, #0x0044
-   021C 09            [11]  519 	add	hl, bc
-   021D EB            [ 4]  520 	ex	de, hl
-   021E 69            [ 4]  521 	ld	l, c
-   021F 60            [ 4]  522 	ld	h, b
-   0220 01 86 00      [10]  523 	ld	bc, #0x0086
-   0223 09            [11]  524 	add	hl, bc
-   0224 7E            [ 7]  525 	ld	a, (hl)
-   0225 3D            [ 4]  526 	dec	a
-   0226 87            [ 4]  527 	add	a, a
-   0227 6F            [ 4]  528 	ld	l, a
-   0228 26 00         [ 7]  529 	ld	h, #0x00
-   022A 19            [11]  530 	add	hl, de
-   022B 4E            [ 7]  531 	ld	c, (hl)
-   022C 23            [ 6]  532 	inc	hl
-   022D 46            [ 7]  533 	ld	b, (hl)
-   022E 2B            [ 6]  534 	dec	hl
-   022F 0B            [ 6]  535 	dec	bc
-   0230 71            [ 7]  536 	ld	(hl), c
-   0231 23            [ 6]  537 	inc	hl
-   0232 70            [ 7]  538 	ld	(hl), b
-                            539 ;e4vm_math.c:74: }
-   0233 DD E1         [14]  540 	pop	ix
-   0235 C9            [10]  541 	ret
-   0236                     542 ___str_6:
-   0236 31 2D               543 	.ascii "1-"
-   0238 00                  544 	.db 0x00
-                            545 ;e4vm_math.c:78: export void *e4vm_math__init (void)
-                            546 ;	---------------------------------
-                            547 ; Function e4vm_math__init
-                            548 ; ---------------------------------
-   0239                     549 _e4vm_math__init::
-                            550 ;e4vm_math.c:80: __DEFMOD;
-   0239 21r39r02      [10]  551 	LD	HL,#. 
-   023C 36 C9         [10]  552 	LD (HL),#0xC9 
-                            553 ;e4vm_math.c:86: }
-   023E C9            [10]  554 	ret
-                            555 	.area _CODE
-                            556 	.area _INITIALIZER
-                            557 	.area _CABS (ABS)
+                             51 	.area _CODE
+                             52 ;e4vm_math.c:23: void e4vm_math_minus (e4vm_type_x4thPtr *v)
+                             53 ;	---------------------------------
+                             54 ; Function e4vm_math_minus
+                             55 ; ---------------------------------
+   0000                      56 _e4vm_math_minus::
+   0000 CDr00r00      [17]   57 	call	___sdcc_enter_ix
+                             58 ;e4vm_math.c:25: (*v)->ds_p = (*v)->ds_p - 1;
+   0003 DD 4E 04      [19]   59 	ld	c, 4 (ix)
+   0006 DD 46 05      [19]   60 	ld	b, 5 (ix)
+   0009 69            [ 4]   61 	ld	l, c
+   000A 60            [ 4]   62 	ld	h, b
+   000B 5E            [ 7]   63 	ld	e, (hl)
+   000C 23            [ 6]   64 	inc	hl
+   000D 56            [ 7]   65 	ld	d, (hl)
+   000E 21 86 00      [10]   66 	ld	hl, #0x0086
+   0011 19            [11]   67 	add	hl, de
+   0012 5E            [ 7]   68 	ld	e, (hl)
+   0013 23            [ 6]   69 	inc	hl
+   0014 56            [ 7]   70 	ld	d, (hl)
+   0015 2B            [ 6]   71 	dec	hl
+   0016 1B            [ 6]   72 	dec	de
+   0017 73            [ 7]   73 	ld	(hl), e
+   0018 23            [ 6]   74 	inc	hl
+   0019 72            [ 7]   75 	ld	(hl), d
+                             76 ;e4vm_math.c:26: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] - (*v)->ds[(*v)->ds_p];
+   001A 69            [ 4]   77 	ld	l, c
+   001B 60            [ 4]   78 	ld	h, b
+   001C 4E            [ 7]   79 	ld	c, (hl)
+   001D 23            [ 6]   80 	inc	hl
+   001E 46            [ 7]   81 	ld	b, (hl)
+   001F 21 44 00      [10]   82 	ld	hl, #0x0044
+   0022 09            [11]   83 	add	hl, bc
+   0023 EB            [ 4]   84 	ex	de, hl
+   0024 69            [ 4]   85 	ld	l, c
+   0025 60            [ 4]   86 	ld	h, b
+   0026 01 86 00      [10]   87 	ld	bc, #0x0086
+   0029 09            [11]   88 	add	hl, bc
+   002A 7E            [ 7]   89 	ld	a, (hl)
+   002B 23            [ 6]   90 	inc	hl
+   002C 66            [ 7]   91 	ld	h, (hl)
+   002D 6F            [ 4]   92 	ld	l, a
+   002E 3D            [ 4]   93 	dec	a
+   002F 87            [ 4]   94 	add	a, a
+   0030 83            [ 4]   95 	add	a, e
+   0031 4F            [ 4]   96 	ld	c, a
+   0032 3E 00         [ 7]   97 	ld	a, #0x00
+   0034 8A            [ 4]   98 	adc	a, d
+   0035 47            [ 4]   99 	ld	b, a
+   0036 29            [11]  100 	add	hl, hl
+   0037 19            [11]  101 	add	hl, de
+   0038 5E            [ 7]  102 	ld	e, (hl)
+   0039 23            [ 6]  103 	inc	hl
+   003A 56            [ 7]  104 	ld	d, (hl)
+   003B 69            [ 4]  105 	ld	l, c
+   003C 60            [ 4]  106 	ld	h, b
+   003D 7E            [ 7]  107 	ld	a, (hl)
+   003E 23            [ 6]  108 	inc	hl
+   003F 66            [ 7]  109 	ld	h, (hl)
+   0040 93            [ 4]  110 	sub	a, e
+   0041 5F            [ 4]  111 	ld	e, a
+   0042 7C            [ 4]  112 	ld	a, h
+   0043 9A            [ 4]  113 	sbc	a, d
+   0044 57            [ 4]  114 	ld	d, a
+   0045 7B            [ 4]  115 	ld	a, e
+   0046 02            [ 7]  116 	ld	(bc), a
+   0047 03            [ 6]  117 	inc	bc
+   0048 7A            [ 4]  118 	ld	a, d
+   0049 02            [ 7]  119 	ld	(bc), a
+                            120 ;e4vm_math.c:27: }
+   004A DD E1         [14]  121 	pop	ix
+   004C C9            [10]  122 	ret
+                            123 ;e4vm_math.c:30: void e4vm_math_plus (e4vm_type_x4thPtr *v)
+                            124 ;	---------------------------------
+                            125 ; Function e4vm_math_plus
+                            126 ; ---------------------------------
+   004D                     127 _e4vm_math_plus::
+   004D CDr00r00      [17]  128 	call	___sdcc_enter_ix
+                            129 ;e4vm_math.c:32: (*v)->ds_p = (*v)->ds_p - 1;
+   0050 DD 4E 04      [19]  130 	ld	c, 4 (ix)
+   0053 DD 46 05      [19]  131 	ld	b, 5 (ix)
+   0056 69            [ 4]  132 	ld	l, c
+   0057 60            [ 4]  133 	ld	h, b
+   0058 5E            [ 7]  134 	ld	e, (hl)
+   0059 23            [ 6]  135 	inc	hl
+   005A 56            [ 7]  136 	ld	d, (hl)
+   005B 21 86 00      [10]  137 	ld	hl, #0x0086
+   005E 19            [11]  138 	add	hl, de
+   005F 5E            [ 7]  139 	ld	e, (hl)
+   0060 23            [ 6]  140 	inc	hl
+   0061 56            [ 7]  141 	ld	d, (hl)
+   0062 2B            [ 6]  142 	dec	hl
+   0063 1B            [ 6]  143 	dec	de
+   0064 73            [ 7]  144 	ld	(hl), e
+   0065 23            [ 6]  145 	inc	hl
+   0066 72            [ 7]  146 	ld	(hl), d
+                            147 ;e4vm_math.c:33: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] + (*v)->ds[(*v)->ds_p];
+   0067 69            [ 4]  148 	ld	l, c
+   0068 60            [ 4]  149 	ld	h, b
+   0069 4E            [ 7]  150 	ld	c, (hl)
+   006A 23            [ 6]  151 	inc	hl
+   006B 46            [ 7]  152 	ld	b, (hl)
+   006C 21 44 00      [10]  153 	ld	hl, #0x0044
+   006F 09            [11]  154 	add	hl, bc
+   0070 EB            [ 4]  155 	ex	de, hl
+   0071 69            [ 4]  156 	ld	l, c
+   0072 60            [ 4]  157 	ld	h, b
+   0073 01 86 00      [10]  158 	ld	bc, #0x0086
+   0076 09            [11]  159 	add	hl, bc
+   0077 7E            [ 7]  160 	ld	a, (hl)
+   0078 23            [ 6]  161 	inc	hl
+   0079 66            [ 7]  162 	ld	h, (hl)
+   007A 6F            [ 4]  163 	ld	l, a
+   007B 3D            [ 4]  164 	dec	a
+   007C 87            [ 4]  165 	add	a, a
+   007D 83            [ 4]  166 	add	a, e
+   007E 4F            [ 4]  167 	ld	c, a
+   007F 3E 00         [ 7]  168 	ld	a, #0x00
+   0081 8A            [ 4]  169 	adc	a, d
+   0082 47            [ 4]  170 	ld	b, a
+   0083 29            [11]  171 	add	hl, hl
+   0084 19            [11]  172 	add	hl, de
+   0085 5E            [ 7]  173 	ld	e, (hl)
+   0086 23            [ 6]  174 	inc	hl
+   0087 56            [ 7]  175 	ld	d, (hl)
+   0088 69            [ 4]  176 	ld	l, c
+   0089 60            [ 4]  177 	ld	h, b
+   008A 7E            [ 7]  178 	ld	a, (hl)
+   008B 23            [ 6]  179 	inc	hl
+   008C 66            [ 7]  180 	ld	h, (hl)
+   008D 6F            [ 4]  181 	ld	l, a
+   008E 19            [11]  182 	add	hl, de
+   008F EB            [ 4]  183 	ex	de, hl
+   0090 7B            [ 4]  184 	ld	a, e
+   0091 02            [ 7]  185 	ld	(bc), a
+   0092 03            [ 6]  186 	inc	bc
+   0093 7A            [ 4]  187 	ld	a, d
+   0094 02            [ 7]  188 	ld	(bc), a
+                            189 ;e4vm_math.c:34: }
+   0095 DD E1         [14]  190 	pop	ix
+   0097 C9            [10]  191 	ret
+                            192 ;e4vm_math.c:37: void e4vm_math_multiply (e4vm_type_x4thPtr *v)
+                            193 ;	---------------------------------
+                            194 ; Function e4vm_math_multiply
+                            195 ; ---------------------------------
+   0098                     196 _e4vm_math_multiply::
+   0098 CDr00r00      [17]  197 	call	___sdcc_enter_ix
+                            198 ;e4vm_math.c:39: (*v)->ds_p = (*v)->ds_p - 1;
+   009B DD 4E 04      [19]  199 	ld	c, 4 (ix)
+   009E DD 46 05      [19]  200 	ld	b, 5 (ix)
+   00A1 69            [ 4]  201 	ld	l, c
+   00A2 60            [ 4]  202 	ld	h, b
+   00A3 5E            [ 7]  203 	ld	e, (hl)
+   00A4 23            [ 6]  204 	inc	hl
+   00A5 56            [ 7]  205 	ld	d, (hl)
+   00A6 21 86 00      [10]  206 	ld	hl, #0x0086
+   00A9 19            [11]  207 	add	hl, de
+   00AA 5E            [ 7]  208 	ld	e, (hl)
+   00AB 23            [ 6]  209 	inc	hl
+   00AC 56            [ 7]  210 	ld	d, (hl)
+   00AD 2B            [ 6]  211 	dec	hl
+   00AE 1B            [ 6]  212 	dec	de
+   00AF 73            [ 7]  213 	ld	(hl), e
+   00B0 23            [ 6]  214 	inc	hl
+   00B1 72            [ 7]  215 	ld	(hl), d
+                            216 ;e4vm_math.c:40: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] * (*v)->ds[(*v)->ds_p];
+   00B2 69            [ 4]  217 	ld	l, c
+   00B3 60            [ 4]  218 	ld	h, b
+   00B4 4E            [ 7]  219 	ld	c, (hl)
+   00B5 23            [ 6]  220 	inc	hl
+   00B6 46            [ 7]  221 	ld	b, (hl)
+   00B7 21 44 00      [10]  222 	ld	hl, #0x0044
+   00BA 09            [11]  223 	add	hl, bc
+   00BB EB            [ 4]  224 	ex	de, hl
+   00BC 69            [ 4]  225 	ld	l, c
+   00BD 60            [ 4]  226 	ld	h, b
+   00BE 01 86 00      [10]  227 	ld	bc, #0x0086
+   00C1 09            [11]  228 	add	hl, bc
+   00C2 7E            [ 7]  229 	ld	a, (hl)
+   00C3 23            [ 6]  230 	inc	hl
+   00C4 66            [ 7]  231 	ld	h, (hl)
+   00C5 6F            [ 4]  232 	ld	l, a
+   00C6 3D            [ 4]  233 	dec	a
+   00C7 87            [ 4]  234 	add	a, a
+   00C8 83            [ 4]  235 	add	a, e
+   00C9 4F            [ 4]  236 	ld	c, a
+   00CA 3E 00         [ 7]  237 	ld	a, #0x00
+   00CC 8A            [ 4]  238 	adc	a, d
+   00CD 47            [ 4]  239 	ld	b, a
+   00CE 29            [11]  240 	add	hl, hl
+   00CF 19            [11]  241 	add	hl, de
+   00D0 5E            [ 7]  242 	ld	e, (hl)
+   00D1 23            [ 6]  243 	inc	hl
+   00D2 56            [ 7]  244 	ld	d, (hl)
+   00D3 69            [ 4]  245 	ld	l, c
+   00D4 60            [ 4]  246 	ld	h, b
+   00D5 7E            [ 7]  247 	ld	a, (hl)
+   00D6 23            [ 6]  248 	inc	hl
+   00D7 66            [ 7]  249 	ld	h, (hl)
+   00D8 6F            [ 4]  250 	ld	l, a
+   00D9 C5            [11]  251 	push	bc
+   00DA D5            [11]  252 	push	de
+   00DB E5            [11]  253 	push	hl
+   00DC CDr00r00      [17]  254 	call	__mulint
+   00DF F1            [10]  255 	pop	af
+   00E0 F1            [10]  256 	pop	af
+   00E1 EB            [ 4]  257 	ex	de,hl
+   00E2 C1            [10]  258 	pop	bc
+   00E3 7B            [ 4]  259 	ld	a, e
+   00E4 02            [ 7]  260 	ld	(bc), a
+   00E5 03            [ 6]  261 	inc	bc
+   00E6 7A            [ 4]  262 	ld	a, d
+   00E7 02            [ 7]  263 	ld	(bc), a
+                            264 ;e4vm_math.c:41: }
+   00E8 DD E1         [14]  265 	pop	ix
+   00EA C9            [10]  266 	ret
+                            267 ;e4vm_math.c:44: void e4vm_math_devide (e4vm_type_x4thPtr *v)
+                            268 ;	---------------------------------
+                            269 ; Function e4vm_math_devide
+                            270 ; ---------------------------------
+   00EB                     271 _e4vm_math_devide::
+   00EB CDr00r00      [17]  272 	call	___sdcc_enter_ix
+                            273 ;e4vm_math.c:46: (*v)->ds_p = (*v)->ds_p - 1;
+   00EE DD 4E 04      [19]  274 	ld	c, 4 (ix)
+   00F1 DD 46 05      [19]  275 	ld	b, 5 (ix)
+   00F4 69            [ 4]  276 	ld	l, c
+   00F5 60            [ 4]  277 	ld	h, b
+   00F6 5E            [ 7]  278 	ld	e, (hl)
+   00F7 23            [ 6]  279 	inc	hl
+   00F8 56            [ 7]  280 	ld	d, (hl)
+   00F9 21 86 00      [10]  281 	ld	hl, #0x0086
+   00FC 19            [11]  282 	add	hl, de
+   00FD 5E            [ 7]  283 	ld	e, (hl)
+   00FE 23            [ 6]  284 	inc	hl
+   00FF 56            [ 7]  285 	ld	d, (hl)
+   0100 2B            [ 6]  286 	dec	hl
+   0101 1B            [ 6]  287 	dec	de
+   0102 73            [ 7]  288 	ld	(hl), e
+   0103 23            [ 6]  289 	inc	hl
+   0104 72            [ 7]  290 	ld	(hl), d
+                            291 ;e4vm_math.c:47: (*v)->ds[(*v)->ds_p - 1] = __DIVFS((*v)->ds[(*v)->ds_p - 1], (*v)->ds[(*v)->ds_p]);
+   0105 69            [ 4]  292 	ld	l, c
+   0106 60            [ 4]  293 	ld	h, b
+   0107 4E            [ 7]  294 	ld	c, (hl)
+   0108 23            [ 6]  295 	inc	hl
+   0109 46            [ 7]  296 	ld	b, (hl)
+   010A 21 44 00      [10]  297 	ld	hl, #0x0044
+   010D 09            [11]  298 	add	hl, bc
+   010E EB            [ 4]  299 	ex	de, hl
+   010F 69            [ 4]  300 	ld	l, c
+   0110 60            [ 4]  301 	ld	h, b
+   0111 01 86 00      [10]  302 	ld	bc, #0x0086
+   0114 09            [11]  303 	add	hl, bc
+   0115 7E            [ 7]  304 	ld	a, (hl)
+   0116 23            [ 6]  305 	inc	hl
+   0117 66            [ 7]  306 	ld	h, (hl)
+   0118 6F            [ 4]  307 	ld	l, a
+   0119 3D            [ 4]  308 	dec	a
+   011A 87            [ 4]  309 	add	a, a
+   011B 83            [ 4]  310 	add	a, e
+   011C 4F            [ 4]  311 	ld	c, a
+   011D 3E 00         [ 7]  312 	ld	a, #0x00
+   011F 8A            [ 4]  313 	adc	a, d
+   0120 47            [ 4]  314 	ld	b, a
+   0121 29            [11]  315 	add	hl, hl
+   0122 19            [11]  316 	add	hl, de
+   0123 5E            [ 7]  317 	ld	e, (hl)
+   0124 23            [ 6]  318 	inc	hl
+   0125 56            [ 7]  319 	ld	d, (hl)
+   0126 69            [ 4]  320 	ld	l, c
+   0127 60            [ 4]  321 	ld	h, b
+   0128 7E            [ 7]  322 	ld	a, (hl)
+   0129 23            [ 6]  323 	inc	hl
+   012A 66            [ 7]  324 	ld	h, (hl)
+   012B 6F            [ 4]  325 	ld	l, a
+   012C C5            [11]  326 	push	bc
+   012D D5            [11]  327 	push	de
+   012E E5            [11]  328 	push	hl
+   012F CDr00r00      [17]  329 	call	_SYSTEM_DIVS
+   0132 F1            [10]  330 	pop	af
+   0133 F1            [10]  331 	pop	af
+   0134 EB            [ 4]  332 	ex	de,hl
+   0135 C1            [10]  333 	pop	bc
+   0136 7B            [ 4]  334 	ld	a, e
+   0137 02            [ 7]  335 	ld	(bc), a
+   0138 03            [ 6]  336 	inc	bc
+   0139 7A            [ 4]  337 	ld	a, d
+   013A 02            [ 7]  338 	ld	(bc), a
+                            339 ;e4vm_math.c:48: }
+   013B DD E1         [14]  340 	pop	ix
+   013D C9            [10]  341 	ret
+                            342 ;e4vm_math.c:51: void e4vm_math_mod (e4vm_type_x4thPtr *v)
+                            343 ;	---------------------------------
+                            344 ; Function e4vm_math_mod
+                            345 ; ---------------------------------
+   013E                     346 _e4vm_math_mod::
+   013E CDr00r00      [17]  347 	call	___sdcc_enter_ix
+                            348 ;e4vm_math.c:53: (*v)->ds_p = (*v)->ds_p - 1;
+   0141 DD 4E 04      [19]  349 	ld	c, 4 (ix)
+   0144 DD 46 05      [19]  350 	ld	b, 5 (ix)
+   0147 69            [ 4]  351 	ld	l, c
+   0148 60            [ 4]  352 	ld	h, b
+   0149 5E            [ 7]  353 	ld	e, (hl)
+   014A 23            [ 6]  354 	inc	hl
+   014B 56            [ 7]  355 	ld	d, (hl)
+   014C 21 86 00      [10]  356 	ld	hl, #0x0086
+   014F 19            [11]  357 	add	hl, de
+   0150 5E            [ 7]  358 	ld	e, (hl)
+   0151 23            [ 6]  359 	inc	hl
+   0152 56            [ 7]  360 	ld	d, (hl)
+   0153 2B            [ 6]  361 	dec	hl
+   0154 1B            [ 6]  362 	dec	de
+   0155 73            [ 7]  363 	ld	(hl), e
+   0156 23            [ 6]  364 	inc	hl
+   0157 72            [ 7]  365 	ld	(hl), d
+                            366 ;e4vm_math.c:54: (*v)->ds[(*v)->ds_p - 1] = __MODFS((*v)->ds[(*v)->ds_p - 1], (*v)->ds[(*v)->ds_p]);
+   0158 69            [ 4]  367 	ld	l, c
+   0159 60            [ 4]  368 	ld	h, b
+   015A 4E            [ 7]  369 	ld	c, (hl)
+   015B 23            [ 6]  370 	inc	hl
+   015C 46            [ 7]  371 	ld	b, (hl)
+   015D 21 44 00      [10]  372 	ld	hl, #0x0044
+   0160 09            [11]  373 	add	hl, bc
+   0161 EB            [ 4]  374 	ex	de, hl
+   0162 69            [ 4]  375 	ld	l, c
+   0163 60            [ 4]  376 	ld	h, b
+   0164 01 86 00      [10]  377 	ld	bc, #0x0086
+   0167 09            [11]  378 	add	hl, bc
+   0168 7E            [ 7]  379 	ld	a, (hl)
+   0169 23            [ 6]  380 	inc	hl
+   016A 66            [ 7]  381 	ld	h, (hl)
+   016B 6F            [ 4]  382 	ld	l, a
+   016C 3D            [ 4]  383 	dec	a
+   016D 87            [ 4]  384 	add	a, a
+   016E 83            [ 4]  385 	add	a, e
+   016F 4F            [ 4]  386 	ld	c, a
+   0170 3E 00         [ 7]  387 	ld	a, #0x00
+   0172 8A            [ 4]  388 	adc	a, d
+   0173 47            [ 4]  389 	ld	b, a
+   0174 29            [11]  390 	add	hl, hl
+   0175 19            [11]  391 	add	hl, de
+   0176 5E            [ 7]  392 	ld	e, (hl)
+   0177 23            [ 6]  393 	inc	hl
+   0178 56            [ 7]  394 	ld	d, (hl)
+   0179 69            [ 4]  395 	ld	l, c
+   017A 60            [ 4]  396 	ld	h, b
+   017B 7E            [ 7]  397 	ld	a, (hl)
+   017C 23            [ 6]  398 	inc	hl
+   017D 66            [ 7]  399 	ld	h, (hl)
+   017E 6F            [ 4]  400 	ld	l, a
+   017F C5            [11]  401 	push	bc
+   0180 D5            [11]  402 	push	de
+   0181 E5            [11]  403 	push	hl
+   0182 CDr00r00      [17]  404 	call	_SYSTEM_MODS
+   0185 F1            [10]  405 	pop	af
+   0186 F1            [10]  406 	pop	af
+   0187 EB            [ 4]  407 	ex	de,hl
+   0188 C1            [10]  408 	pop	bc
+   0189 7B            [ 4]  409 	ld	a, e
+   018A 02            [ 7]  410 	ld	(bc), a
+   018B 03            [ 6]  411 	inc	bc
+   018C 7A            [ 4]  412 	ld	a, d
+   018D 02            [ 7]  413 	ld	(bc), a
+                            414 ;e4vm_math.c:55: }
+   018E DD E1         [14]  415 	pop	ix
+   0190 C9            [10]  416 	ret
+                            417 ;e4vm_math.c:58: void e4vm_math_inc (e4vm_type_x4thPtr *v)
+                            418 ;	---------------------------------
+                            419 ; Function e4vm_math_inc
+                            420 ; ---------------------------------
+   0191                     421 _e4vm_math_inc::
+   0191 CDr00r00      [17]  422 	call	___sdcc_enter_ix
+                            423 ;e4vm_math.c:60: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] + 1;
+   0194 DD 6E 04      [19]  424 	ld	l, 4 (ix)
+   0197 DD 66 05      [19]  425 	ld	h, 5 (ix)
+   019A 4E            [ 7]  426 	ld	c, (hl)
+   019B 23            [ 6]  427 	inc	hl
+   019C 46            [ 7]  428 	ld	b, (hl)
+   019D 21 44 00      [10]  429 	ld	hl, #0x0044
+   01A0 09            [11]  430 	add	hl, bc
+   01A1 EB            [ 4]  431 	ex	de, hl
+   01A2 69            [ 4]  432 	ld	l, c
+   01A3 60            [ 4]  433 	ld	h, b
+   01A4 01 86 00      [10]  434 	ld	bc, #0x0086
+   01A7 09            [11]  435 	add	hl, bc
+   01A8 7E            [ 7]  436 	ld	a, (hl)
+   01A9 3D            [ 4]  437 	dec	a
+   01AA 87            [ 4]  438 	add	a, a
+   01AB 6F            [ 4]  439 	ld	l, a
+   01AC 26 00         [ 7]  440 	ld	h, #0x00
+   01AE 19            [11]  441 	add	hl, de
+   01AF 4E            [ 7]  442 	ld	c, (hl)
+   01B0 23            [ 6]  443 	inc	hl
+   01B1 46            [ 7]  444 	ld	b, (hl)
+   01B2 2B            [ 6]  445 	dec	hl
+   01B3 03            [ 6]  446 	inc	bc
+   01B4 78            [ 4]  447 	ld	a, b
+   01B5 71            [ 7]  448 	ld	(hl), c
+   01B6 23            [ 6]  449 	inc	hl
+   01B7 77            [ 7]  450 	ld	(hl), a
+                            451 ;e4vm_math.c:61: }
+   01B8 DD E1         [14]  452 	pop	ix
+   01BA C9            [10]  453 	ret
+                            454 ;e4vm_math.c:64: void e4vm_math_dec (e4vm_type_x4thPtr *v)
+                            455 ;	---------------------------------
+                            456 ; Function e4vm_math_dec
+                            457 ; ---------------------------------
+   01BB                     458 _e4vm_math_dec::
+   01BB CDr00r00      [17]  459 	call	___sdcc_enter_ix
+                            460 ;e4vm_math.c:66: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] - 1;
+   01BE DD 6E 04      [19]  461 	ld	l, 4 (ix)
+   01C1 DD 66 05      [19]  462 	ld	h, 5 (ix)
+   01C4 4E            [ 7]  463 	ld	c, (hl)
+   01C5 23            [ 6]  464 	inc	hl
+   01C6 46            [ 7]  465 	ld	b, (hl)
+   01C7 21 44 00      [10]  466 	ld	hl, #0x0044
+   01CA 09            [11]  467 	add	hl, bc
+   01CB EB            [ 4]  468 	ex	de, hl
+   01CC 69            [ 4]  469 	ld	l, c
+   01CD 60            [ 4]  470 	ld	h, b
+   01CE 01 86 00      [10]  471 	ld	bc, #0x0086
+   01D1 09            [11]  472 	add	hl, bc
+   01D2 7E            [ 7]  473 	ld	a, (hl)
+   01D3 3D            [ 4]  474 	dec	a
+   01D4 87            [ 4]  475 	add	a, a
+   01D5 6F            [ 4]  476 	ld	l, a
+   01D6 26 00         [ 7]  477 	ld	h, #0x00
+   01D8 19            [11]  478 	add	hl, de
+   01D9 4E            [ 7]  479 	ld	c, (hl)
+   01DA 23            [ 6]  480 	inc	hl
+   01DB 46            [ 7]  481 	ld	b, (hl)
+   01DC 2B            [ 6]  482 	dec	hl
+   01DD 0B            [ 6]  483 	dec	bc
+   01DE 71            [ 7]  484 	ld	(hl), c
+   01DF 23            [ 6]  485 	inc	hl
+   01E0 70            [ 7]  486 	ld	(hl), b
+                            487 ;e4vm_math.c:67: }
+   01E1 DD E1         [14]  488 	pop	ix
+   01E3 C9            [10]  489 	ret
+                            490 ;e4vm_math.c:71: export void *e4vm_math__init (void)
+                            491 ;	---------------------------------
+                            492 ; Function e4vm_math__init
+                            493 ; ---------------------------------
+   01E4                     494 _e4vm_math__init::
+                            495 ;e4vm_math.c:73: __DEFMOD;
+   01E4 21rE4r01      [10]  496 	LD	HL,#. 
+   01E7 36 C9         [10]  497 	LD (HL),#0xC9 
+                            498 ;e4vm_math.c:79: }
+   01E9 C9            [10]  499 	ret
+                            500 	.area _CODE
+                            501 	.area _INITIALIZER
+                            502 	.area _CABS (ABS)

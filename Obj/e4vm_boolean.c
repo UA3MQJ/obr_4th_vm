@@ -33,7 +33,6 @@ export void e4vm_boolean_xor (e4vm_type_x4thPtr *v);
 
 void e4vm_boolean_true (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"true", 5);
   (*v)->ds[(*v)->ds_p] = e4vm_utils_true_const(v);
   (*v)->ds_p = (*v)->ds_p + 1;
 }
@@ -41,7 +40,6 @@ void e4vm_boolean_true (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_false (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"false", 6);
   (*v)->ds[(*v)->ds_p] = e4vm_utils_false_const(v);
   (*v)->ds_p = (*v)->ds_p + 1;
 }
@@ -49,7 +47,6 @@ void e4vm_boolean_false (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_not (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"not", 4);
   if ((*v)->ds[(*v)->ds_p - 1] == e4vm_utils_true_const(v)) {
     (*v)->ds[(*v)->ds_p - 1] = e4vm_utils_false_const(v);
   } else {
@@ -64,14 +61,12 @@ void e4vm_boolean_not (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_invert (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"invert", 7);
   (*v)->ds[(*v)->ds_p - 1] = e4vm_boolean_BitwiseNot((*v)->ds[(*v)->ds_p - 1]);
 }
 
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_or (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"or", 3);
   (*v)->ds[(*v)->ds_p - 2] = e4vm_boolean_BitwiseOR((*v)->ds[(*v)->ds_p - 2], (*v)->ds[(*v)->ds_p - 1]);
   (*v)->ds_p = (*v)->ds_p - 1;
 }
@@ -79,7 +74,6 @@ void e4vm_boolean_or (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_and (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"and", 4);
   (*v)->ds[(*v)->ds_p - 2] = e4vm_boolean_BitwiseAND((*v)->ds[(*v)->ds_p - 2], (*v)->ds[(*v)->ds_p - 1]);
   (*v)->ds_p = (*v)->ds_p - 1;
 }
@@ -87,7 +81,6 @@ void e4vm_boolean_and (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_xor (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"xor", 4);
   (*v)->ds[(*v)->ds_p - 2] = e4vm_boolean_BitwiseXOR((*v)->ds[(*v)->ds_p - 2], (*v)->ds[(*v)->ds_p - 1]);
   (*v)->ds_p = (*v)->ds_p - 1;
 }
@@ -95,7 +88,6 @@ void e4vm_boolean_xor (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_eql (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"eql", 4);
   if ((*v)->ds[(*v)->ds_p - 2] == (*v)->ds[(*v)->ds_p - 1]) {
     (*v)->ds[(*v)->ds_p - 2] = e4vm_utils_true_const(v);
   } else {
@@ -107,7 +99,6 @@ void e4vm_boolean_eql (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_not_eql (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"not_eql", 8);
   if (!((*v)->ds[(*v)->ds_p - 2] == (*v)->ds[(*v)->ds_p - 1])) {
     (*v)->ds[(*v)->ds_p - 2] = e4vm_utils_true_const(v);
   } else {
@@ -119,7 +110,6 @@ void e4vm_boolean_not_eql (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_less (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"less", 5);
   if ((*v)->ds[(*v)->ds_p - 2] < (*v)->ds[(*v)->ds_p - 1]) {
     (*v)->ds[(*v)->ds_p - 2] = e4vm_utils_true_const(v);
   } else {
@@ -131,7 +121,6 @@ void e4vm_boolean_less (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_greater (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"greater", 8);
   if ((*v)->ds[(*v)->ds_p - 2] > (*v)->ds[(*v)->ds_p - 1]) {
     (*v)->ds[(*v)->ds_p - 2] = e4vm_utils_true_const(v);
   } else {
@@ -143,7 +132,6 @@ void e4vm_boolean_greater (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_less_eql (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"less_eql", 9);
   if ((*v)->ds[(*v)->ds_p - 2] <= (*v)->ds[(*v)->ds_p - 1]) {
     (*v)->ds[(*v)->ds_p - 2] = e4vm_utils_true_const(v);
   } else {
@@ -155,7 +143,6 @@ void e4vm_boolean_less_eql (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_greater_eql (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"greater_eql", 12);
   if ((*v)->ds[(*v)->ds_p - 2] >= (*v)->ds[(*v)->ds_p - 1]) {
     (*v)->ds[(*v)->ds_p - 2] = e4vm_utils_true_const(v);
   } else {

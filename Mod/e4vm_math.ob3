@@ -1,12 +1,10 @@
 MODULE e4vm_math;
 IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type;
 
-
-
 (* - *)
 PROCEDURE minus* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("-");
+  (* C.WriteStrLn("-"); *)
   v.ds_p := v.ds_p - 1;
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 1] - v.ds[v.ds_p]
 END minus;
@@ -14,55 +12,49 @@ END minus;
 (* + *)
 PROCEDURE plus* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("+");
+  (* C.WriteStrLn("+"); *)
   v.ds_p := v.ds_p - 1;
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 1] + v.ds[v.ds_p]
 END plus;
 
-
 (* * *)
 PROCEDURE multiply* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("*");
+  (* C.WriteStrLn("*"); *)
   v.ds_p := v.ds_p - 1;
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 1] * v.ds[v.ds_p]
 END multiply;
 
-
 (* / *)
 PROCEDURE devide* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("/");
+  (* C.WriteStrLn("/"); *)
   v.ds_p := v.ds_p - 1;
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 1] DIV v.ds[v.ds_p]
 END devide;
 
-
 (* mod *)
 PROCEDURE mod* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("mod");
+  (* C.WriteStrLn("mod"); *)
   v.ds_p := v.ds_p - 1;
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 1] MOD v.ds[v.ds_p]
 END mod;
 
-
 (* 1+ *)
 PROCEDURE inc* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("1+");
+  (* C.WriteStrLn("1+"); *)
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 1] + 1;
 END inc;
-
 
 (* 1- *)
 PROCEDURE dec* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("1-");
+  (* C.WriteStrLn("1-"); *)
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 1] - 1;
 END dec;
 
 BEGIN
-   
 	
 END e4vm_math.

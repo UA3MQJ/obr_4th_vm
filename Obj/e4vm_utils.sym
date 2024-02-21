@@ -23,10 +23,12 @@ Symbol Table
   0 ___str_9                                                       0273 R
     _e4vm_core__init                                               **** GX
     _e4vm_core_do_nop                                              **** GX
-  0 _e4vm_utils__init                                              0274 GR
+  0 _e4vm_utils__init                                              02F6 GR
   0 _e4vm_utils_error                                              024E GR
   0 _e4vm_utils_false_const                                        0245 GR
   0 _e4vm_utils_init                                               0000 GR
+  0 _e4vm_utils_stack_ds_push                                      0274 GR
+  0 _e4vm_utils_stack_rs_push                                      02B5 GR
   0 _e4vm_utils_true_const                                         023C GR
   0 _e4vm_utils_vm_stat                                            00E6 GR
 
@@ -36,7 +38,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  27C   flags    0
+   0 _CODE                                      size  2FE   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

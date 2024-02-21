@@ -1,0 +1,17 @@
+/* Ofront+ 1.0 -sx3 -21 */
+
+#ifndef e4vm_core_ext__oh
+#define e4vm_core_ext__oh
+
+#include "SYSTEM.oh"
+#include "e4vm_type.oh"
+
+
+
+
+import void e4vm_core_ext_do_lit (e4vm_type_x4thPtr *v);
+import void e4vm_core_ext_quit (e4vm_type_x4thPtr *v);
+import void *e4vm_core_ext__init (void);
+
+
+#endif

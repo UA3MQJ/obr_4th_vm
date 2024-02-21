@@ -19,7 +19,6 @@ export void e4vm_core_do_nop (e4vm_type_x4thPtr *v);
 
 void e4vm_core_do_nop (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"nop", 4);
 }
 
 /*----------------------------------------------------------------------------*/
