@@ -11,6 +11,7 @@
 
 
 export void e4vm_core_ext_do_lit (e4vm_type_x4thPtr *v);
+export void e4vm_core_ext_get_here_addr (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_quit (e4vm_type_x4thPtr *v);
 
 
@@ -24,9 +25,14 @@ void e4vm_core_ext_quit (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_core_ext_do_lit (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"do_lit!", 8);
   (*v)->ip = (*v)->ip + 1;
   e4vm_utils_stack_ds_push(v, (*v)->mem[(*v)->ip]);
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_core_ext_get_here_addr (e4vm_type_x4thPtr *v)
+{
+  e4vm_utils_stack_ds_push(v, (*v)->hereP);
 }
 
 /*----------------------------------------------------------------------------*/

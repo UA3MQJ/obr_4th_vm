@@ -10,10 +10,7 @@
 ;--------------------------------------------------------
 	.globl _main
 	.globl _e4vm_core_ext__init
-	.globl _e4vm_core_ext_do_lit
-	.globl _e4vm_boolean__init
-	.globl _e4vm_math__init
-	.globl _e4vm_stack__init
+	.globl _e4vm_core_ext_get_here_addr
 	.globl _e4vm_utils__init
 	.globl _e4vm_utils_vm_stat
 	.globl _e4vm_utils_init
@@ -62,37 +59,37 @@ _e4vm_vm:
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;e4vm.c:26: static void e4vm_do_hello (e4vm_type_x4thPtr *v)
+;e4vm.c:23: static void e4vm_do_hello (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_do_hello
 ; ---------------------------------
 _e4vm_do_hello:
 	call	___sdcc_enter_ix
-;e4vm.c:28: Console_WriteStrLn((CHAR*)"hello!", 7);
+;e4vm.c:25: Console_WriteStrLn((CHAR*)"hello!", 7);
 	ld	hl, #___str_0
 	call	_Console_WriteStr_C_COMPACT
-;e4vm.c:29: }
+;e4vm.c:26: }
 	pop	ix
 	jp	_Console_WriteLn_COMPACT
 ___str_0:
 	.ascii "hello!"
 	.db 0x00
-;e4vm.c:31: static void e4vm_test_dolit (e4vm_type_x4thPtr *v)
+;e4vm.c:28: static void e4vm_test_here (e4vm_type_x4thPtr *v)
 ;	---------------------------------
-; Function e4vm_test_dolit
+; Function e4vm_test_here
 ; ---------------------------------
-_e4vm_test_dolit:
+_e4vm_test_here:
 	call	___sdcc_enter_ix
-;e4vm.c:33: Console_WriteStr((CHAR*)"dolit ", 7);
+;e4vm.c:30: Console_WriteStr((CHAR*)"here ", 6);
 	ld	hl, #___str_1
 	call	_Console_WriteStr_C_COMPACT
-;e4vm.c:34: e4vm_utils_init(v);
+;e4vm.c:31: e4vm_utils_init(v);
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	push	hl
 	call	_e4vm_utils_init
 	pop	af
-;e4vm.c:35: (*v)->core[0] = e4vm_core_do_nop;
+;e4vm.c:32: (*v)->core[0] = e4vm_core_do_nop;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -108,7 +105,7 @@ _e4vm_test_dolit:
 	inc	de
 	ld	a, #>(_e4vm_core_do_nop)
 	ld	(de), a
-;e4vm.c:36: (*v)->core[1] = e4vm_core_do_next;
+;e4vm.c:33: (*v)->core[1] = e4vm_core_do_next;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -122,7 +119,7 @@ _e4vm_test_dolit:
 	inc	de
 	ld	a, #>(_e4vm_core_do_next)
 	ld	(de), a
-;e4vm.c:37: (*v)->core[2] = e4vm_core_do_list;
+;e4vm.c:34: (*v)->core[2] = e4vm_core_do_list;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -136,7 +133,7 @@ _e4vm_test_dolit:
 	inc	de
 	ld	a, #>(_e4vm_core_do_list)
 	ld	(de), a
-;e4vm.c:38: (*v)->core[3] = e4vm_core_do_exit;
+;e4vm.c:35: (*v)->core[3] = e4vm_core_do_exit;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -150,7 +147,7 @@ _e4vm_test_dolit:
 	inc	de
 	ld	a, #>(_e4vm_core_do_exit)
 	ld	(de), a
-;e4vm.c:39: (*v)->core[4] = e4vm_core_ext_do_lit;
+;e4vm.c:36: (*v)->core[4] = e4vm_core_ext_get_here_addr;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -159,12 +156,12 @@ _e4vm_test_dolit:
 	ld	hl, #0x00d5
 	add	hl, de
 	ex	de, hl
-	ld	a, #<(_e4vm_core_ext_do_lit)
+	ld	a, #<(_e4vm_core_ext_get_here_addr)
 	ld	(de), a
 	inc	de
-	ld	a, #>(_e4vm_core_ext_do_lit)
+	ld	a, #>(_e4vm_core_ext_get_here_addr)
 	ld	(de), a
-;e4vm.c:40: (*v)->mem[0] = 0;
+;e4vm.c:37: (*v)->mem[0] = 0;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -176,7 +173,7 @@ _e4vm_test_dolit:
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;e4vm.c:41: (*v)->mem[1] = 1;
+;e4vm.c:38: (*v)->mem[1] = 1;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -187,7 +184,7 @@ _e4vm_test_dolit:
 	ld	(hl), #0x01
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:42: (*v)->mem[2] = 2;
+;e4vm.c:39: (*v)->mem[2] = 2;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -198,7 +195,7 @@ _e4vm_test_dolit:
 	ld	(hl), #0x02
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:43: (*v)->mem[3] = 3;
+;e4vm.c:40: (*v)->mem[3] = 3;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -209,7 +206,7 @@ _e4vm_test_dolit:
 	ld	(hl), #0x03
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:44: (*v)->mem[4] = 4;
+;e4vm.c:41: (*v)->mem[4] = 4;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -220,7 +217,7 @@ _e4vm_test_dolit:
 	ld	(hl), #0x04
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:45: (*v)->wp = 4;
+;e4vm.c:42: (*v)->wp = 4;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -233,7 +230,7 @@ _e4vm_test_dolit:
 	ld	(hl), #0x04
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:46: (*v)->mem[5] = 2;
+;e4vm.c:43: (*v)->mem[5] = 2;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -244,7 +241,7 @@ _e4vm_test_dolit:
 	ld	(hl), #0x02
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:47: (*v)->mem[6] = 4;
+;e4vm.c:44: (*v)->mem[6] = 4;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -255,7 +252,7 @@ _e4vm_test_dolit:
 	ld	(hl), #0x04
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:48: (*v)->mem[7] = 555;
+;e4vm.c:45: (*v)->mem[7] = 3;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -263,21 +260,21 @@ _e4vm_test_dolit:
 	ld	d, (hl)
 	ld	hl, #0x0098
 	add	hl, de
-	ld	(hl), #0x2b
+	ld	(hl), #0x03
 	inc	hl
-	ld	(hl), #0x02
-;e4vm.c:49: (*v)->mem[8] = 3;
+	ld	(hl), #0x00
+;e4vm.c:46: (*v)->hereP = 555;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
-	ld	hl, #0x009a
+	ld	hl, #0x0088
 	add	hl, de
-	ld	(hl), #0x03
+	ld	(hl), #0x2b
 	inc	hl
-	ld	(hl), #0x00
-;e4vm.c:50: e4vm_core_do_list(v);
+	ld	(hl), #0x02
+;e4vm.c:47: e4vm_core_do_list(v);
 	push	bc
 	push	bc
 	call	_e4vm_core_do_list
@@ -292,7 +289,7 @@ _e4vm_test_dolit:
 	push	hl
 	call	_e4vm_utils_vm_stat
 	pop	af
-;e4vm.c:53: if ((*v)->ds[0] == 555) {
+;e4vm.c:50: if ((*v)->ds[0] == 555) {
 	pop	hl
 	ld	c, (hl)
 	inc	hl
@@ -309,22 +306,22 @@ _e4vm_test_dolit:
 	ld	a, b
 	sub	a, #0x02
 	jr	NZ,00102$
-;e4vm.c:54: Console_WriteStrLn((CHAR*)" - ok", 6);
+;e4vm.c:51: Console_WriteStrLn((CHAR*)" - ok", 6);
 	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
 	jr	00104$
 00102$:
-;e4vm.c:56: Console_WriteStrLn((CHAR*)" - error", 9);
+;e4vm.c:53: Console_WriteStrLn((CHAR*)" - error", 9);
 	ld	hl, #___str_3
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
 00104$:
-;e4vm.c:58: }
+;e4vm.c:55: }
 	pop	ix
 	ret
 ___str_1:
-	.ascii "dolit "
+	.ascii "here "
 	.db 0x00
 ___str_2:
 	.ascii " - ok"
@@ -332,46 +329,40 @@ ___str_2:
 ___str_3:
 	.ascii " - error"
 	.db 0x00
-;e4vm.c:61: int main (int argc, char **argv)
+;e4vm.c:58: int main (int argc, char **argv)
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;e4vm.c:66: __IMPORT(e4vm_boolean__init);
-	call	_e4vm_boolean__init
-;e4vm.c:67: __IMPORT(e4vm_core__init);
+;e4vm.c:63: __IMPORT(e4vm_core__init);
 	call	_e4vm_core__init
-;e4vm.c:68: __IMPORT(e4vm_core_ext__init);
+;e4vm.c:64: __IMPORT(e4vm_core_ext__init);
 	call	_e4vm_core_ext__init
-;e4vm.c:69: __IMPORT(e4vm_math__init);
-	call	_e4vm_math__init
-;e4vm.c:70: __IMPORT(e4vm_stack__init);
-	call	_e4vm_stack__init
-;e4vm.c:71: __IMPORT(e4vm_utils__init);
+;e4vm.c:65: __IMPORT(e4vm_utils__init);
 	call	_e4vm_utils__init
-;e4vm.c:74: Basic_Init();
+;e4vm.c:68: Basic_Init();
 	res	4,1(iy) 
 	call 0x1642 
-;e4vm.c:75: Console_Clear(7);
+;e4vm.c:69: Console_Clear(7);
 	ld	l, #0x07
 	call	_Console_Clear_COMPACT
-;e4vm.c:76: Console_SetColors(56);
+;e4vm.c:70: Console_SetColors(56);
 	ld	hl, #_Console_attrib
 	ld	(hl), #0x38
-;e4vm.c:77: e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
+;e4vm.c:71: e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
 	ld	hl, #_e4vm_vm_static
 	ld	(_e4vm_vm), hl
-;e4vm.c:78: e4vm_test_dolit(&e4vm_vm);
+;e4vm.c:72: e4vm_test_here(&e4vm_vm);
 	ld	hl, #_e4vm_vm
 	push	hl
-	call	_e4vm_test_dolit
+	call	_e4vm_test_here
 	pop	af
-;e4vm.c:79: Basic_PAUSE(0);
+;e4vm.c:73: Basic_PAUSE(0);
 	ld	hl, #0x0000
 	call	_Basic_PAUSE_EI
-;e4vm.c:80: Basic_Quit();
-;e4vm.c:81: __FINI;
-;e4vm.c:82: }
+;e4vm.c:74: Basic_Quit();
+;e4vm.c:75: __FINI;
+;e4vm.c:76: }
 	jp  _Basic_Quit_IM1
 	.area _CODE
 	.area _INITIALIZER

@@ -55,18 +55,9 @@ void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v)
   Console_WriteInt((*v)->ip);
   Console_WriteStr((CHAR*)" wp:", 5);
   Console_WriteInt((*v)->wp);
+  Console_WriteStr((CHAR*)" hereP:", 8);
+  Console_WriteInt((*v)->hereP);
   Console_WriteStrLn((CHAR*)" ", 2);
-  Console_WriteStr((CHAR*)"rs_p:", 6);
-  Console_WriteInt((*v)->rs_p);
-  Console_WriteStrLn((CHAR*)" ", 2);
-  Console_WriteStrLn((CHAR*)"rs: [", 6);
-  i = 0;
-  while (i <= 31) {
-    Console_WriteInt((*v)->rs[i]);
-    Console_WriteStr((CHAR*)" ", 2);
-    i += 1;
-  }
-  Console_WriteStrLn((CHAR*)"]", 2);
   Console_WriteStr((CHAR*)"ds_p:", 6);
   Console_WriteInt((*v)->ds_p);
   Console_WriteStrLn((CHAR*)" ", 2);

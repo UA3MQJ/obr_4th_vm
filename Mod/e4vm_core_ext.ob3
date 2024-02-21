@@ -18,6 +18,13 @@ BEGIN
   e4vm_utils.stack_ds_push(@v, v.mem[v.ip]);  
 END do_lit;
 
+
+(*# поместит в стек данных адрес hereP.*)
+PROCEDURE get_here_addr* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  e4vm_utils.stack_ds_push(@v, v.hereP);
+END get_here_addr;
+
 BEGIN
    
 	

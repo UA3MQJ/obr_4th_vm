@@ -4,9 +4,9 @@ IMPORT SYSTEM, C := Console, Platform, B := Basic,
         e4vm_type ,
 				e4vm_core,
 				e4vm_utils,
-				e4vm_stack,
+	(*			e4vm_stack,
 				e4vm_math,
-				e4vm_boolean,
+				e4vm_boolean, *)
 				e4vm_core_ext
 ;
 
@@ -760,7 +760,7 @@ BEGIN
 	END;
 	
 		
-END test_xor; *)
+END test_xor;
 
 PROCEDURE test_dolit(VAR v: e4vm_type.x4thPtr);
 BEGIN
@@ -791,7 +791,7 @@ BEGIN
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
-	(* [6, 5] -> [3] *)
+	(* [] -> [555] *)
 	e4vm_utils.vm_stat(@v);
 	
 	IF (v.ds[0] = 555)  THEN
@@ -800,9 +800,47 @@ BEGIN
 	  C.WriteStrLn(" - error");
 	END;
 	
-		
-END test_dolit;
+END test_dolit; 
 
+PROCEDURE test_here(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("here ");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_core_ext.get_here_addr;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* here   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	v.hereP := 555;
+
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [] -> [hereP] *)
+	e4vm_utils.vm_stat(@v);
+	
+	IF (v.ds[0] = 555)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+END test_here; *)
 
 BEGIN
   B.Init;
@@ -829,9 +867,11 @@ BEGIN
 	test_or(@vm);
 	test_and(@vm);
 	test_xor(@vm);
+	test_dolit(@vm);
+	test_here(@vm);
 	*)
 	
-	test_dolit(@vm);
+	
 
   B.PAUSE(0);
 	B.Quit;

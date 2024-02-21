@@ -28,11 +28,13 @@ PROCEDURE vm_stat* (VAR v: e4vm_type.x4thPtr);
 VAR i: INTEGER;
 BEGIN
   C.WriteStr("ip:"); C.WriteInt(v.ip);
-  C.WriteStr(" wp:"); C.WriteInt(v.wp); C.WriteStrLn(" ");
+  C.WriteStr(" wp:"); C.WriteInt(v.wp);
+  C.WriteStr(" hereP:"); C.WriteInt(v.hereP);
+  C.WriteStrLn(" "); (*
   C.WriteStr("rs_p:"); C.WriteInt(v.rs_p); C.WriteStrLn(" ");
 	C.WriteStrLn("rs: ["); FOR i:=0 TO (e4vm_type.stack_size-1) DO
 	  C.WriteInt(v.rs[i]); C.WriteStr(" ");
-	END; C.WriteStrLn("]");
+	END; C.WriteStrLn("]"); *)
 	C.WriteStr("ds_p:"); C.WriteInt(v.ds_p); C.WriteStrLn(" ");
 	C.WriteStrLn("ds: ["); FOR i:=0 TO (e4vm_type.stack_size-1) DO
 	  C.WriteInt(v.ds[i]); C.WriteStr(" ");
