@@ -11,10 +11,11 @@
 	.globl _e4vm_core_ext__init
 	.globl _e4vm_utils__init
 	.globl _e4vm_utils_stack_ds_push
-	.globl _Basic_Quit_IM1
+	.globl _e4vm_utils_add_op
 	.globl _e4vm_core_ext_quit
 	.globl _e4vm_core_ext_do_lit
 	.globl _e4vm_core_ext_get_here_addr
+	.globl _e4vm_core_ext_comma
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -46,23 +47,21 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;e4vm_core_ext.c:20: void e4vm_core_ext_quit (e4vm_type_x4thPtr *v)
+;e4vm_core_ext.c:17: void e4vm_core_ext_quit (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_core_ext_quit
 ; ---------------------------------
 _e4vm_core_ext_quit::
-	call	___sdcc_enter_ix
-;e4vm_core_ext.c:22: Basic_Quit();
-;e4vm_core_ext.c:23: }
+;e4vm_core_ext.c:19: }
 	pop	ix
-	jp	_Basic_Quit_IM1
-;e4vm_core_ext.c:26: void e4vm_core_ext_do_lit (e4vm_type_x4thPtr *v)
+	jp	___sdcc_enter_ix
+;e4vm_core_ext.c:22: void e4vm_core_ext_do_lit (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_core_ext_do_lit
 ; ---------------------------------
 _e4vm_core_ext_do_lit::
 	call	___sdcc_enter_ix
-;e4vm_core_ext.c:28: (*v)->ip = (*v)->ip + 1;
+;e4vm_core_ext.c:24: (*v)->ip = (*v)->ip + 1;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -80,7 +79,7 @@ _e4vm_core_ext_do_lit::
 	ld	(hl), e
 	inc	hl
 	ld	(hl), a
-;e4vm_core_ext.c:29: e4vm_utils_stack_ds_push(v, (*v)->mem[(*v)->ip]);
+;e4vm_core_ext.c:25: e4vm_utils_stack_ds_push(v, (*v)->mem[(*v)->ip]);
 	ld	l, c
 	ld	h, b
 	ld	a, (hl)
@@ -106,16 +105,16 @@ _e4vm_core_ext_do_lit::
 	call	_e4vm_utils_stack_ds_push
 	pop	af
 	pop	af
-;e4vm_core_ext.c:30: }
+;e4vm_core_ext.c:26: }
 	pop	ix
 	ret
-;e4vm_core_ext.c:33: void e4vm_core_ext_get_here_addr (e4vm_type_x4thPtr *v)
+;e4vm_core_ext.c:29: void e4vm_core_ext_get_here_addr (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_core_ext_get_here_addr
 ; ---------------------------------
 _e4vm_core_ext_get_here_addr::
 	call	___sdcc_enter_ix
-;e4vm_core_ext.c:35: e4vm_utils_stack_ds_push(v, (*v)->hereP);
+;e4vm_core_ext.c:31: e4vm_utils_stack_ds_push(v, (*v)->hereP);
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -134,19 +133,76 @@ _e4vm_core_ext_get_here_addr::
 	call	_e4vm_utils_stack_ds_push
 	pop	af
 	pop	af
-;e4vm_core_ext.c:36: }
+;e4vm_core_ext.c:32: }
 	pop	ix
 	ret
-;e4vm_core_ext.c:40: export void *e4vm_core_ext__init (void)
+;e4vm_core_ext.c:35: void e4vm_core_ext_comma (e4vm_type_x4thPtr *v)
+;	---------------------------------
+; Function e4vm_core_ext_comma
+; ---------------------------------
+_e4vm_core_ext_comma::
+	call	___sdcc_enter_ix
+;e4vm_core_ext.c:37: (*v)->ds_p = (*v)->ds_p - 1;
+	ld	c, 4 (ix)
+	ld	b, 5 (ix)
+	ld	l, c
+	ld	h, b
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	hl, #0x0086
+	add	hl, de
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	dec	hl
+	dec	de
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
+;e4vm_core_ext.c:38: e4vm_utils_add_op(v, (*v)->ds[(*v)->ds_p]);
+	ld	l, c
+	ld	h, b
+	ld	a, (hl)
+	inc	hl
+	ld	h, (hl)
+	ld	l, a
+	add	a, #0x44
+	ld	e, a
+	ld	a, h
+	adc	a, #0x00
+	ld	d, a
+	push	bc
+	ld	bc, #0x0086
+	add	hl, bc
+	pop	bc
+	ld	a, (hl)
+	inc	hl
+	ld	h, (hl)
+	ld	l, a
+	add	hl, hl
+	add	hl, de
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	push	de
+	push	bc
+	call	_e4vm_utils_add_op
+	pop	af
+	pop	af
+;e4vm_core_ext.c:39: }
+	pop	ix
+	ret
+;e4vm_core_ext.c:43: export void *e4vm_core_ext__init (void)
 ;	---------------------------------
 ; Function e4vm_core_ext__init
 ; ---------------------------------
 _e4vm_core_ext__init::
-;e4vm_core_ext.c:42: __DEFMOD;
+;e4vm_core_ext.c:45: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_core_ext.c:45: __IMPORT(e4vm_utils__init);
-;e4vm_core_ext.c:49: }
+;e4vm_core_ext.c:46: __IMPORT(e4vm_utils__init);
+;e4vm_core_ext.c:50: }
 	jp  _e4vm_utils__init
 	.area _CODE
 	.area _INITIALIZER

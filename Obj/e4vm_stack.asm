@@ -81,30 +81,27 @@ _e4vm_stack_swap::
 	push	af
 	push	af
 ;e4vm_stack.c:31: T = (*v)->ds[(*v)->ds_p - 1];
-	ld	a, 4 (ix)
-	ld	-6 (ix), a
-	ld	a, 5 (ix)
-	ld	-5 (ix), a
-	pop	hl
-	push	hl
-	ld	c, (hl)
-	inc	hl
-	ld	b, (hl)
-	ld	hl, #0x0044
-	add	hl, bc
-	ex	de, hl
+	ld	c, 4 (ix)
+	ld	b, 5 (ix)
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x0086
-	add	hl, bc
-	ld	c, (hl)
-	ld	a, c
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	hl, #0x0044
+	add	hl, de
+	ex	(sp), hl
+	ex	de,hl
+	ld	de, #0x0086
+	add	hl, de
+	ld	e, (hl)
+	ld	a, e
 	dec	a
 	add	a, a
-	add	a, e
+	add	a, -6 (ix)
 	ld	-4 (ix), a
 	ld	a, #0x00
-	adc	a, d
+	adc	a, -5 (ix)
 	ld	-3 (ix), a
 	ld	l, -4 (ix)
 	ld	h, -3 (ix)
@@ -114,26 +111,26 @@ _e4vm_stack_swap::
 	ld	a, (hl)
 	ld	-1 (ix), a
 ;e4vm_stack.c:32: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
-	ld	a, c
+	ld	a, e
 	dec	a
 	dec	a
 	add	a, a
+	add	a, -6 (ix)
 	ld	l, a
-	ld	h, #0x00
-	add	hl, de
-	ld	c, (hl)
+	ld	a, #0x00
+	adc	a, -5 (ix)
+	ld	h, a
+	ld	e, (hl)
 	inc	hl
-	ld	b, (hl)
-	pop	de
-	pop	hl
-	push	hl
-	push	de
-	ld	(hl), c
+	ld	d, (hl)
+	ld	l, -4 (ix)
+	ld	h, -3 (ix)
+	ld	(hl), e
 	inc	hl
-	ld	(hl), b
+	ld	(hl), d
 ;e4vm_stack.c:33: (*v)->ds[(*v)->ds_p - 2] = T;
-	pop	hl
-	push	hl
+	ld	l, c
+	ld	h, b
 	ld	c, (hl)
 	inc	hl
 	ld	b, (hl)
@@ -297,30 +294,27 @@ _e4vm_stack_rot::
 	push	af
 	push	af
 ;e4vm_stack.c:54: T = (*v)->ds[(*v)->ds_p - 3];
-	ld	a, 4 (ix)
-	ld	-6 (ix), a
-	ld	a, 5 (ix)
-	ld	-5 (ix), a
-	pop	hl
-	push	hl
-	ld	c, (hl)
-	inc	hl
-	ld	b, (hl)
-	ld	hl, #0x0044
-	add	hl, bc
-	ex	de, hl
+	ld	c, 4 (ix)
+	ld	b, 5 (ix)
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x0086
-	add	hl, bc
-	ld	c, (hl)
-	ld	a, c
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	hl, #0x0044
+	add	hl, de
+	ex	(sp), hl
+	ex	de,hl
+	ld	de, #0x0086
+	add	hl, de
+	ld	e, (hl)
+	ld	a, e
 	add	a, #0xfd
 	add	a, a
-	add	a, e
+	add	a, -6 (ix)
 	ld	-4 (ix), a
 	ld	a, #0x00
-	adc	a, d
+	adc	a, -5 (ix)
 	ld	-3 (ix), a
 	ld	l, -4 (ix)
 	ld	h, -3 (ix)
@@ -330,46 +324,49 @@ _e4vm_stack_rot::
 	ld	a, (hl)
 	ld	-1 (ix), a
 ;e4vm_stack.c:55: (*v)->ds[(*v)->ds_p - 3] = (*v)->ds[(*v)->ds_p - 2];
-	ld	a, c
+	ld	a, e
 	dec	a
 	dec	a
 	add	a, a
+	add	a, -6 (ix)
 	ld	l, a
-	ld	h, #0x00
-	add	hl, de
-	ld	c, (hl)
+	ld	a, #0x00
+	adc	a, -5 (ix)
+	ld	h, a
+	ld	e, (hl)
 	inc	hl
-	ld	b, (hl)
-	pop	de
-	pop	hl
-	push	hl
-	push	de
-	ld	(hl), c
+	ld	d, (hl)
+	ld	l, -4 (ix)
+	ld	h, -3 (ix)
+	ld	(hl), e
 	inc	hl
-	ld	(hl), b
+	ld	(hl), d
 ;e4vm_stack.c:56: (*v)->ds[(*v)->ds_p - 2] = (*v)->ds[(*v)->ds_p - 1];
-	pop	hl
-	push	hl
-	ld	c, (hl)
-	inc	hl
-	ld	b, (hl)
-	ld	hl, #0x0044
-	add	hl, bc
-	ex	de, hl
 	ld	l, c
 	ld	h, b
+	ld	a, (hl)
+	inc	hl
+	ld	h, (hl)
+	ld	l, a
+	add	a, #0x44
+	ld	e, a
+	ld	a, h
+	adc	a, #0x00
+	ld	d, a
+	push	bc
 	ld	bc, #0x0086
 	add	hl, bc
+	pop	bc
 	ld	l, (hl)
 	ld	a, l
 	dec	a
 	dec	a
 	add	a, a
 	add	a, e
-	ld	c, a
+	ld	-4 (ix), a
 	ld	a, #0x00
 	adc	a, d
-	ld	b, a
+	ld	-3 (ix), a
 	dec	l
 	sla	l
 	ld	h, #0x00
@@ -377,14 +374,14 @@ _e4vm_stack_rot::
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
-	ld	a, e
-	ld	(bc), a
-	inc	bc
-	ld	a, d
-	ld	(bc), a
+	ld	l, -4 (ix)
+	ld	h, -3 (ix)
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
 ;e4vm_stack.c:57: (*v)->ds[(*v)->ds_p - 1] = T;
-	pop	hl
-	push	hl
+	ld	l, c
+	ld	h, b
 	ld	c, (hl)
 	inc	hl
 	ld	b, (hl)
@@ -420,30 +417,27 @@ _e4vm_stack_nrot::
 	push	af
 	push	af
 ;e4vm_stack.c:64: T = (*v)->ds[(*v)->ds_p - 1];
-	ld	a, 4 (ix)
-	ld	-6 (ix), a
-	ld	a, 5 (ix)
-	ld	-5 (ix), a
-	pop	hl
-	push	hl
-	ld	c, (hl)
-	inc	hl
-	ld	b, (hl)
-	ld	hl, #0x0044
-	add	hl, bc
-	ex	de, hl
+	ld	c, 4 (ix)
+	ld	b, 5 (ix)
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x0086
-	add	hl, bc
-	ld	c, (hl)
-	ld	a, c
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	hl, #0x0044
+	add	hl, de
+	ex	(sp), hl
+	ex	de,hl
+	ld	de, #0x0086
+	add	hl, de
+	ld	e, (hl)
+	ld	a, e
 	dec	a
 	add	a, a
-	add	a, e
+	add	a, -6 (ix)
 	ld	-4 (ix), a
 	ld	a, #0x00
-	adc	a, d
+	adc	a, -5 (ix)
 	ld	-3 (ix), a
 	ld	l, -4 (ix)
 	ld	h, -3 (ix)
@@ -453,46 +447,49 @@ _e4vm_stack_nrot::
 	ld	a, (hl)
 	ld	-1 (ix), a
 ;e4vm_stack.c:65: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
-	ld	a, c
+	ld	a, e
 	dec	a
 	dec	a
 	add	a, a
+	add	a, -6 (ix)
 	ld	l, a
-	ld	h, #0x00
-	add	hl, de
-	ld	c, (hl)
+	ld	a, #0x00
+	adc	a, -5 (ix)
+	ld	h, a
+	ld	e, (hl)
 	inc	hl
-	ld	b, (hl)
-	pop	de
-	pop	hl
-	push	hl
-	push	de
-	ld	(hl), c
+	ld	d, (hl)
+	ld	l, -4 (ix)
+	ld	h, -3 (ix)
+	ld	(hl), e
 	inc	hl
-	ld	(hl), b
+	ld	(hl), d
 ;e4vm_stack.c:66: (*v)->ds[(*v)->ds_p - 2] = (*v)->ds[(*v)->ds_p - 3];
-	pop	hl
-	push	hl
-	ld	c, (hl)
-	inc	hl
-	ld	b, (hl)
-	ld	hl, #0x0044
-	add	hl, bc
-	ex	de, hl
 	ld	l, c
 	ld	h, b
+	ld	a, (hl)
+	inc	hl
+	ld	h, (hl)
+	ld	l, a
+	add	a, #0x44
+	ld	e, a
+	ld	a, h
+	adc	a, #0x00
+	ld	d, a
+	push	bc
 	ld	bc, #0x0086
 	add	hl, bc
+	pop	bc
 	ld	l, (hl)
 	ld	a, l
 	dec	a
 	dec	a
 	add	a, a
 	add	a, e
-	ld	c, a
+	ld	-4 (ix), a
 	ld	a, #0x00
 	adc	a, d
-	ld	b, a
+	ld	-3 (ix), a
 	ld	a, l
 	add	a, #0xfd
 	add	a, a
@@ -502,14 +499,14 @@ _e4vm_stack_nrot::
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
-	ld	a, e
-	ld	(bc), a
-	inc	bc
-	ld	a, d
-	ld	(bc), a
+	ld	l, -4 (ix)
+	ld	h, -3 (ix)
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
 ;e4vm_stack.c:67: (*v)->ds[(*v)->ds_p - 3] = T;
-	pop	hl
-	push	hl
+	ld	l, c
+	ld	h, b
 	ld	c, (hl)
 	inc	hl
 	ld	b, (hl)

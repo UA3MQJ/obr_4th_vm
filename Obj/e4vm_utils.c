@@ -10,6 +10,7 @@
 
 
 
+export void e4vm_utils_add_op (e4vm_type_x4thPtr *v, SHORTINT addr);
 export void e4vm_utils_error (CHAR *err, SHORTINT err__len);
 export SHORTINT e4vm_utils_false_const (e4vm_type_x4thPtr *v);
 export void e4vm_utils_init (e4vm_type_x4thPtr *v);
@@ -103,6 +104,13 @@ void e4vm_utils_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x)
 {
   (*v)->rs[(*v)->rs_p] = x;
   (*v)->rs_p = (*v)->rs_p + 1;
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_utils_add_op (e4vm_type_x4thPtr *v, SHORTINT addr)
+{
+  (*v)->mem[(*v)->hereP] = addr;
+  (*v)->hereP = (*v)->hereP + 1;
 }
 
 /*----------------------------------------------------------------------------*/

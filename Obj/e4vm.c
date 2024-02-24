@@ -15,7 +15,7 @@ static e4vm_type_x4thPtr e4vm_vm;
 
 
 static void e4vm_do_hello (e4vm_type_x4thPtr *v);
-static void e4vm_test_here (e4vm_type_x4thPtr *v);
+static void e4vm_test_comma (e4vm_type_x4thPtr *v);
 
 
 /*============================================================================*/
@@ -25,15 +25,15 @@ static void e4vm_do_hello (e4vm_type_x4thPtr *v)
   Console_WriteStrLn((CHAR*)"hello!", 7);
 }
 
-static void e4vm_test_here (e4vm_type_x4thPtr *v)
+static void e4vm_test_comma (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStr((CHAR*)"here ", 6);
+  Console_WriteStr((CHAR*)"comma test", 11);
   e4vm_utils_init(v);
   (*v)->core[0] = e4vm_core_do_nop;
   (*v)->core[1] = e4vm_core_do_next;
   (*v)->core[2] = e4vm_core_do_list;
   (*v)->core[3] = e4vm_core_do_exit;
-  (*v)->core[4] = e4vm_core_ext_get_here_addr;
+  (*v)->core[4] = e4vm_core_ext_comma;
   (*v)->mem[0] = 0;
   (*v)->mem[1] = 1;
   (*v)->mem[2] = 2;
@@ -43,11 +43,11 @@ static void e4vm_test_here (e4vm_type_x4thPtr *v)
   (*v)->mem[5] = 2;
   (*v)->mem[6] = 4;
   (*v)->mem[7] = 3;
-  (*v)->hereP = 555;
+  (*v)->hereP = 18;
+  e4vm_utils_stack_ds_push(v, 777);
   e4vm_core_do_list(v);
   e4vm_core_do_next(v);
-  e4vm_utils_vm_stat(v);
-  if ((*v)->ds[0] == 555) {
+  if ((*v)->mem[18] == 777) {
     Console_WriteStrLn((CHAR*)" - ok", 6);
   } else {
     Console_WriteStrLn((CHAR*)" - error", 9);
@@ -69,7 +69,7 @@ int main (int argc, char **argv)
   Console_Clear(7);
   Console_SetColors(56);
   e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
-  e4vm_test_here(&e4vm_vm);
+  e4vm_test_comma(&e4vm_vm);
   Basic_PAUSE(0);
   Basic_Quit();
   __FINI;

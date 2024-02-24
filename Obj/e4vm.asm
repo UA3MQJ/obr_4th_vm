@@ -10,9 +10,9 @@
 ;--------------------------------------------------------
 	.globl _main
 	.globl _e4vm_core_ext__init
-	.globl _e4vm_core_ext_get_here_addr
+	.globl _e4vm_core_ext_comma
 	.globl _e4vm_utils__init
-	.globl _e4vm_utils_vm_stat
+	.globl _e4vm_utils_stack_ds_push
 	.globl _e4vm_utils_init
 	.globl _e4vm_core__init
 	.globl _e4vm_core_do_nop
@@ -74,13 +74,13 @@ _e4vm_do_hello:
 ___str_0:
 	.ascii "hello!"
 	.db 0x00
-;e4vm.c:28: static void e4vm_test_here (e4vm_type_x4thPtr *v)
+;e4vm.c:28: static void e4vm_test_comma (e4vm_type_x4thPtr *v)
 ;	---------------------------------
-; Function e4vm_test_here
+; Function e4vm_test_comma
 ; ---------------------------------
-_e4vm_test_here:
+_e4vm_test_comma:
 	call	___sdcc_enter_ix
-;e4vm.c:30: Console_WriteStr((CHAR*)"here ", 6);
+;e4vm.c:30: Console_WriteStr((CHAR*)"comma test", 11);
 	ld	hl, #___str_1
 	call	_Console_WriteStr_C_COMPACT
 ;e4vm.c:31: e4vm_utils_init(v);
@@ -147,7 +147,7 @@ _e4vm_test_here:
 	inc	de
 	ld	a, #>(_e4vm_core_do_exit)
 	ld	(de), a
-;e4vm.c:36: (*v)->core[4] = e4vm_core_ext_get_here_addr;
+;e4vm.c:36: (*v)->core[4] = e4vm_core_ext_comma;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -156,10 +156,10 @@ _e4vm_test_here:
 	ld	hl, #0x00d5
 	add	hl, de
 	ex	de, hl
-	ld	a, #<(_e4vm_core_ext_get_here_addr)
+	ld	a, #<(_e4vm_core_ext_comma)
 	ld	(de), a
 	inc	de
-	ld	a, #>(_e4vm_core_ext_get_here_addr)
+	ld	a, #>(_e4vm_core_ext_comma)
 	ld	(de), a
 ;e4vm.c:37: (*v)->mem[0] = 0;
 	ld	l, c
@@ -263,7 +263,7 @@ _e4vm_test_here:
 	ld	(hl), #0x03
 	inc	hl
 	ld	(hl), #0x00
-;e4vm.c:46: (*v)->hereP = 555;
+;e4vm.c:46: (*v)->hereP = 18;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -271,12 +271,20 @@ _e4vm_test_here:
 	ld	d, (hl)
 	ld	hl, #0x0088
 	add	hl, de
-	ld	(hl), #0x2b
+	ld	(hl), #0x12
 	inc	hl
-	ld	(hl), #0x02
-;e4vm.c:47: e4vm_core_do_list(v);
+	ld	(hl), #0x00
+;e4vm.c:47: e4vm_utils_stack_ds_push(v, 777);
 	push	bc
+	ld	hl, #0x0309
+	push	hl
 	push	bc
+	call	_e4vm_utils_stack_ds_push
+	pop	af
+	pop	af
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
 	call	_e4vm_core_do_list
 	pop	af
 	ld	l, 4 (ix)
@@ -284,27 +292,22 @@ _e4vm_test_here:
 	push	hl
 	call	_e4vm_core_do_next
 	pop	af
-	ld	l, 4 (ix)
-	ld	h, 5 (ix)
-	push	hl
-	call	_e4vm_utils_vm_stat
-	pop	af
-;e4vm.c:50: if ((*v)->ds[0] == 555) {
+;e4vm.c:50: if ((*v)->mem[18] == 777) {
 	pop	hl
 	ld	c, (hl)
 	inc	hl
 	ld	h, (hl)
 	ld	l, c
-	ld	de, #0x0044
+	ld	de, #0x00ae
 	add	hl, de
 	ld	c, (hl)
 	inc	hl
 	ld	b, (hl)
 	ld	a, c
-	sub	a, #0x2b
+	sub	a, #0x09
 	jr	NZ,00102$
 	ld	a, b
-	sub	a, #0x02
+	sub	a, #0x03
 	jr	NZ,00102$
 ;e4vm.c:51: Console_WriteStrLn((CHAR*)" - ok", 6);
 	ld	hl, #___str_2
@@ -321,7 +324,7 @@ _e4vm_test_here:
 	pop	ix
 	ret
 ___str_1:
-	.ascii "here "
+	.ascii "comma test"
 	.db 0x00
 ___str_2:
 	.ascii " - ok"
@@ -352,10 +355,10 @@ _main::
 ;e4vm.c:71: e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
 	ld	hl, #_e4vm_vm_static
 	ld	(_e4vm_vm), hl
-;e4vm.c:72: e4vm_test_here(&e4vm_vm);
+;e4vm.c:72: e4vm_test_comma(&e4vm_vm);
 	ld	hl, #_e4vm_vm
 	push	hl
-	call	_e4vm_test_here
+	call	_e4vm_test_comma
 	pop	af
 ;e4vm.c:73: Basic_PAUSE(0);
 	ld	hl, #0x0000

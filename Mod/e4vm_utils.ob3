@@ -65,5 +65,13 @@ PROCEDURE stack_rs_push* (VAR v: e4vm_type.x4thPtr; x:e4vm_type.stack_type);
 BEGIN
   v.rs[v.rs_p]:=x; v.rs_p := v.rs_p + 1;
 END stack_rs_push;
+
+(* # добавляем операцию в память. то есть в память по адресу hereP кладем переданный адрес слова *)
+PROCEDURE add_op* (VAR v: e4vm_type.x4thPtr; addr:e4vm_type.stack_type);
+BEGIN
+  (* C.WriteStrLn("add_op"); *)
+  v.mem[v.hereP] := addr;
+  v.hereP := v.hereP + 1;
+END add_op;
 	
 END e4vm_utils.

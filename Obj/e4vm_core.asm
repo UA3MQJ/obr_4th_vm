@@ -50,8 +50,7 @@
 ; ---------------------------------
 _e4vm_core_do_nop::
 ;e4vm_core.c:22: }
-	pop	ix
-	jp	___sdcc_enter_ix
+	ret
 ;e4vm_core.c:25: void e4vm_core_do_list (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_core_do_list
@@ -144,33 +143,32 @@ _e4vm_core_do_next::
 	call	___sdcc_enter_ix
 	push	af
 	push	af
+	push	af
 ;e4vm_core.c:37: while (!((*v)->ip == 0)) {
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 00101$:
-	ld	a, (bc)
-	ld	-4 (ix), a
-	inc	bc
-	ld	a, (bc)
-	ld	-3 (ix), a
-	dec	bc
-	pop	hl
-	push	hl
+	ld	l, c
+	ld	h, b
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
-	ld	a, d
-	or	a, e
-	jr	Z,00104$
+	ld	a, (de)
+	ld	-6 (ix), a
+	inc	de
+	ld	a, (de)
+	ld	-5 (ix), a
+	dec	de
+	ld	a, -5 (ix)
+	or	a, -6 (ix)
+	jp	Z, 00104$
 ;e4vm_core.c:38: next_wp = (*v)->mem[(*v)->ip];
-	ld	a, -4 (ix)
-	add	a, #0x8a
-	ld	-2 (ix), a
-	ld	a, -3 (ix)
-	adc	a, #0x00
-	ld	-1 (ix), a
-	ld	l, e
-	ld	h, d
+	ld	hl, #0x008a
+	add	hl, de
+	ld	-2 (ix), l
+	ld	-1 (ix), h
+	pop	hl
+	push	hl
 	add	hl, hl
 	ld	a, l
 	add	a, -2 (ix)
@@ -179,59 +177,66 @@ _e4vm_core_do_next::
 	adc	a, -1 (ix)
 	ld	h, a
 	ld	a, (hl)
-	ld	-2 (ix), a
+	ld	-4 (ix), a
 	inc	hl
 	ld	a, (hl)
-	ld	-1 (ix), a
+	ld	-3 (ix), a
 ;e4vm_core.c:39: next_ip = (*v)->ip + 1;
-	inc	de
+	ld	a, -6 (ix)
+	add	a, #0x01
+	ld	-2 (ix), a
+	ld	a, -5 (ix)
+	adc	a, #0x00
+	ld	-1 (ix), a
 ;e4vm_core.c:40: (*v)->ip = next_ip;
-	pop	hl
-	push	hl
-	ld	(hl), e
-	inc	hl
-	ld	(hl), d
+	ld	a, -2 (ix)
+	ld	(de), a
+	inc	de
+	ld	a, -1 (ix)
+	ld	(de), a
 ;e4vm_core.c:41: (*v)->wp = next_wp;
 	ld	l, c
 	ld	h, b
-	ld	a, (hl)
+	ld	e, (hl)
 	inc	hl
-	ld	h, (hl)
-	ld	l, a
-	inc	hl
-	inc	hl
-	ld	a, -2 (ix)
-	ld	(hl), a
-	inc	hl
-	ld	a, -1 (ix)
-	ld	(hl), a
+	ld	d, (hl)
+	inc	de
+	inc	de
+	ld	a, -4 (ix)
+	ld	(de), a
+	inc	de
+	ld	a, -3 (ix)
+	ld	(de), a
 ;e4vm_core.c:42: word_index = (*v)->mem[next_ip];
-	ld	a, (bc)
-	ld	-2 (ix), a
-	inc	bc
-	ld	a, (bc)
-	ld	-1 (ix), a
-	dec	bc
-	ld	a, -2 (ix)
-	add	a, #0x8a
-	ld	l, a
-	ld	a, -1 (ix)
-	adc	a, #0x00
-	ld	h, a
-	sla	e
-	rl	d
+	ld	l, c
+	ld	h, b
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	hl, #0x008a
 	add	hl, de
+	ld	-4 (ix), l
+	ld	-3 (ix), h
+	ld	l, -2 (ix)
+	ld	h, -1 (ix)
+	add	hl, hl
+	ld	a, l
+	add	a, -4 (ix)
+	ld	l, a
+	ld	a, h
+	adc	a, -3 (ix)
+	ld	h, a
 	ld	a, (hl)
 	inc	hl
 	ld	h, (hl)
 	ld	l, a
 ;e4vm_core.c:43: (*(*v)->core[word_index])(v);
-	ld	a, -2 (ix)
+	ld	a, e
 	add	a, #0xcd
 	ld	e, a
-	ld	a, -1 (ix)
-	adc	a, #0x00
-	ld	d, a
+	jr	NC,00116$
+	inc	d
+00116$:
 	add	hl, hl
 	add	hl, de
 	ld	a, (hl)

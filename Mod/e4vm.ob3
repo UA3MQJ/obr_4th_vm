@@ -800,7 +800,7 @@ BEGIN
 	  C.WriteStrLn(" - error");
 	END;
 	
-END test_dolit; 
+END test_dolit;
 
 PROCEDURE test_here(VAR v: e4vm_type.x4thPtr);
 BEGIN
@@ -842,6 +842,47 @@ BEGIN
 	
 END test_here; *)
 
+PROCEDURE test_comma(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("comma test");
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_core_ext.comma;
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 6] := 4; (* comma   *)
+	v.mem[ 7] := 3; (* exit*)
+	
+	v.hereP := 18; 
+	e4vm_utils.stack_ds_push(@v, 777);
+
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	
+	(*e4vm_utils.vm_stat(@v); *)
+	
+	IF (v.mem[18] = 777)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+END test_comma;
+
 BEGIN
   B.Init;
   C.Clear(C.White);
@@ -870,8 +911,7 @@ BEGIN
 	test_dolit(@vm);
 	test_here(@vm);
 	*)
-	
-	
+	test_comma(@vm);
 
   B.PAUSE(0);
 	B.Quit;

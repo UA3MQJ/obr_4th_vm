@@ -1,10 +1,12 @@
 MODULE e4vm_core_ext;
-IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type, e4vm_utils;
+IMPORT (*SYSTEM, C := Console, Platform, B := Basic, *)
+
+e4vm_type, e4vm_utils;
 
 (*# нет операции *)
 PROCEDURE quit* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  B.Quit; (* вроде бы не работает*)
+  (* B.Quit; *) (* вроде бы не работает*)
 END quit;
 
 
@@ -25,7 +27,17 @@ BEGIN
   e4vm_utils.stack_ds_push(@v, v.hereP);
 END get_here_addr;
 
+
+(*# Reserve data space for one cell and store w in the space.
+  # просто положит в ячейку на hereP++ число из стека *)
+PROCEDURE comma* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  (* C.WriteStrLn("comma"); *)
+  v.ds_p := v.ds_p - 1;
+	e4vm_utils.add_op(@v, v.ds[v.ds_p]);
+END comma;
+
+
 BEGIN
    
-	
 END e4vm_core_ext.

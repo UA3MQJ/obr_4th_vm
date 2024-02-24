@@ -10,21 +10,21 @@ Symbol Table
     _Console_WriteLn_COMPACT                                       **** GX
     _Console_WriteStr_C_COMPACT                                    **** GX
     ___sdcc_enter_ix                                               **** GX
-  0 ___str_0                                                       0175 R
-  0 _e4vm_boolean__init                                            05E2 GR
-  0 _e4vm_boolean_and                                              0205 GR
-  0 _e4vm_boolean_eql                                              02C6 GR
-  0 _e4vm_boolean_false                                            0051 GR
-  0 _e4vm_boolean_greater                                          0451 GR
-  0 _e4vm_boolean_greater_eql                                      055B GR
-  0 _e4vm_boolean_invert                                           0181 GR
-  0 _e4vm_boolean_less                                             03CA GR
-  0 _e4vm_boolean_less_eql                                         04D6 GR
-  0 _e4vm_boolean_not                                              00A2 GR
-  0 _e4vm_boolean_not_eql                                          0348 GR
-  0 _e4vm_boolean_or                                               01AD GR
+  0 ___str_0                                                       0155 R
+  0 _e4vm_boolean__init                                            05C2 GR
+  0 _e4vm_boolean_and                                              01E5 GR
+  0 _e4vm_boolean_eql                                              02A6 GR
+  0 _e4vm_boolean_false                                            0044 GR
+  0 _e4vm_boolean_greater                                          0431 GR
+  0 _e4vm_boolean_greater_eql                                      053B GR
+  0 _e4vm_boolean_invert                                           0161 GR
+  0 _e4vm_boolean_less                                             03AA GR
+  0 _e4vm_boolean_less_eql                                         04B6 GR
+  0 _e4vm_boolean_not                                              0088 GR
+  0 _e4vm_boolean_not_eql                                          0328 GR
+  0 _e4vm_boolean_or                                               018D GR
   0 _e4vm_boolean_true                                             0000 GR
-  0 _e4vm_boolean_xor                                              026C GR
+  0 _e4vm_boolean_xor                                              024C GR
     _e4vm_utils__init                                              **** GX
     _e4vm_utils_false_const                                        **** GX
     _e4vm_utils_true_const                                         **** GX
@@ -35,7 +35,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  5EA   flags    0
+   0 _CODE                                      size  5CA   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

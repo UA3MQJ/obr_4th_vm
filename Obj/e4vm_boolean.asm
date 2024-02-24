@@ -64,7 +64,6 @@
 ; ---------------------------------
 _e4vm_boolean_true::
 	call	___sdcc_enter_ix
-	push	af
 ;e4vm_boolean.c:36: (*v)->ds[(*v)->ds_p] = e4vm_utils_true_const(v);
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
@@ -89,20 +88,17 @@ _e4vm_boolean_true::
 	ld	l, a
 	add	hl, hl
 	add	hl, de
-	push	bc
 	push	hl
+	push	bc
 	push	bc
 	call	_e4vm_utils_true_const
 	pop	af
-	ld	-2 (ix), l
-	ld	-1 (ix), h
-	pop	de
+	ex	de,hl
 	pop	bc
-	ld	a, -2 (ix)
-	ld	(de), a
-	inc	de
-	ld	a, -1 (ix)
-	ld	(de), a
+	pop	hl
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
 ;e4vm_boolean.c:37: (*v)->ds_p = (*v)->ds_p + 1;
 	ld	l, c
 	ld	h, b
@@ -121,7 +117,6 @@ _e4vm_boolean_true::
 	inc	hl
 	ld	(hl), a
 ;e4vm_boolean.c:38: }
-	pop	af
 	pop	ix
 	ret
 ;e4vm_boolean.c:41: void e4vm_boolean_false (e4vm_type_x4thPtr *v)
@@ -130,7 +125,6 @@ _e4vm_boolean_true::
 ; ---------------------------------
 _e4vm_boolean_false::
 	call	___sdcc_enter_ix
-	push	af
 ;e4vm_boolean.c:43: (*v)->ds[(*v)->ds_p] = e4vm_utils_false_const(v);
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
@@ -155,20 +149,17 @@ _e4vm_boolean_false::
 	ld	l, a
 	add	hl, hl
 	add	hl, de
-	push	bc
 	push	hl
+	push	bc
 	push	bc
 	call	_e4vm_utils_false_const
 	pop	af
-	ld	-2 (ix), l
-	ld	-1 (ix), h
-	pop	de
+	ex	de,hl
 	pop	bc
-	ld	a, -2 (ix)
-	ld	(de), a
-	inc	de
-	ld	a, -1 (ix)
-	ld	(de), a
+	pop	hl
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
 ;e4vm_boolean.c:44: (*v)->ds_p = (*v)->ds_p + 1;
 	ld	l, c
 	ld	h, b
@@ -187,7 +178,6 @@ _e4vm_boolean_false::
 	inc	hl
 	ld	(hl), a
 ;e4vm_boolean.c:45: }
-	pop	af
 	pop	ix
 	ret
 ;e4vm_boolean.c:48: void e4vm_boolean_not (e4vm_type_x4thPtr *v)
@@ -219,24 +209,22 @@ _e4vm_boolean_not::
 	ld	a, (hl)
 	dec	a
 	add	a, a
-	add	a, e
-	ld	e, a
-	ld	a, #0x00
-	adc	a, d
-	ld	d, a
+	ld	l, a
+	ld	h, #0x00
+	add	hl, de
+	push	hl
 	push	bc
-	push	de
 	push	bc
 	call	_e4vm_utils_true_const
 	pop	af
 	ld	-4 (ix), l
 	ld	-3 (ix), h
-	pop	de
 	pop	bc
-	ld	a, (de)
+	pop	hl
+	ld	a, (hl)
 	ld	-2 (ix), a
-	inc	de
-	ld	a, (de)
+	inc	hl
+	ld	a, (hl)
 	ld	-1 (ix), a
 	ld	l, c
 	ld	h, b
@@ -322,23 +310,19 @@ _e4vm_boolean_not::
 	ld	a, (hl)
 	dec	a
 	add	a, a
-	add	a, e
-	ld	e, a
-	ld	a, #0x00
-	adc	a, d
-	ld	d, a
-	push	de
+	ld	l, a
+	ld	h, #0x00
+	add	hl, de
+	push	hl
 	push	bc
 	call	_e4vm_utils_true_const
 	pop	af
 	ld	c, l
 	ld	b, h
-	pop	de
-	ld	a, c
-	ld	(de), a
-	inc	de
-	ld	a, b
-	ld	(de), a
+	pop	hl
+	ld	(hl), c
+	inc	hl
+	ld	(hl), b
 	jr	00107$
 00102$:
 ;e4vm_boolean.c:56: Console_WriteStrLn((CHAR*)"not logical", 12);

@@ -7,3 +7,5 @@
 @DEL *.asm
 @DEL *.lk
 @DEL *.c
+@DEL *.rel
+@DEL *.oh
