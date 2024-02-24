@@ -8,6 +8,7 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _e4vm_type__init
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -39,6 +40,16 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
+;e4vm_type.c:29: export void *e4vm_type__init (void)
+;	---------------------------------
+; Function e4vm_type__init
+; ---------------------------------
+_e4vm_type__init::
+;e4vm_type.c:31: __DEFMOD;
+	LD	HL,#. 
+	LD (HL),#0xC9 
+;e4vm_type.c:35: }
+	ret
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)

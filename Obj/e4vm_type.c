@@ -25,3 +25,11 @@ typedef
 
 /*============================================================================*/
 
+
+export void *e4vm_type__init (void)
+{
+  __DEFMOD;
+  __REGMOD("e4vm_type", 0);
+/* BEGIN */
+  __ENDMOD;
+}

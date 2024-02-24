@@ -1,5 +1,5 @@
 MODULE e4vm_core_ext;
-IMPORT (*SYSTEM, C := Console, Platform, B := Basic, *)
+IMPORT SYSTEM, C := Console, Platform, B := Basic,
 
 e4vm_type, e4vm_utils;
 
@@ -37,6 +37,12 @@ BEGIN
 	e4vm_utils.add_op(@v, v.ds[v.ds_p]);
 END comma;
 
+(*# переход по адресу в следующей €чейке *)
+PROCEDURE branch* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("branch");
+  v.ip := v.mem[v.ip]; 
+END branch;
 
 BEGIN
    

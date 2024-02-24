@@ -1,4 +1,5 @@
-MODULE [noinit] e4vm_type;
+(*MODULE [noinit] e4vm_type;*)
+MODULE e4vm_type;
 IMPORT SYSTEM;
 
 CONST

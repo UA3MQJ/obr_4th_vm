@@ -840,7 +840,7 @@ BEGIN
 	  C.WriteStrLn(" - error");
 	END;
 	
-END test_here; *)
+END test_here;
 
 PROCEDURE test_comma(VAR v: e4vm_type.x4thPtr);
 BEGIN
@@ -881,12 +881,66 @@ BEGIN
 	  C.WriteStrLn(" - error");
 	END;
 	
-END test_comma;
+END test_comma; *)
+
+PROCEDURE test_branch(VAR v: e4vm_type.x4thPtr);
+VAR t:INTEGER;
+BEGIN
+  C.WriteStr("branch test");
+
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_core_ext.branch;
+	
+	(* если кусок ниже раскомментировать, который
+	записывает данные в память, то программа при работе начинает
+	глючить. или вообще сбрасываться.
+	хотелось бы понять, как запись в память портит работу *)
+	(*
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+
+	v.wp := 4;
+	(* тестовая прогремма *)
+	
+	v.mem[ 5] := 2; (* do_list подпрограмма*)
+	v.mem[ 6] := 0; (* nop   *)
+	v.mem[ 7] := 0; (* nop*)
+	v.mem[ 8] := 3; (* exit*)
+	v.mem[ 9] := 0; (* nop*)
+	v.mem[10] := 0; (* nop*)
+	v.mem[11] := 3; (* exit*) *)
+	
+(*
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+*)	
+
+	(* e4vm_utils.vm_stat(@v); *)
+	
+	C.WriteInt(321);
+	
+	IF (v.ip = 777)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+	
+END test_branch;
 
 BEGIN
   B.Init;
   C.Clear(C.White);
   C.SetColors(C.BlackOnWhite);
+
+	C.WriteInt(321);
 
   vm := SYSTEM.VAL(e4vm_type.x4thPtr, SYSTEM.ADR(vm_static));
 
@@ -910,9 +964,12 @@ BEGIN
 	test_xor(@vm);
 	test_dolit(@vm);
 	test_here(@vm);
-	*)
 	test_comma(@vm);
+	*)
 
-  B.PAUSE(0);
+	test_branch(@vm);
+
+
+  (* B.PAUSE(0); *)
 	B.Quit;
 END e4vm.

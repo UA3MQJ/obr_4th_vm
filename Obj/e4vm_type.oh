@@ -25,6 +25,7 @@ typedef
 
 
 
+import void *e4vm_type__init (void);
 
 
 #endif
