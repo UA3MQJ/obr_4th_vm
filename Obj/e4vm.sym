@@ -18,6 +18,10 @@ Symbol Table
   0 ___str_10                                                      05B3 R
   0 ___str_11                                                      05BF R
   0 ___str_12                                                      05C5 R
+  0 ___str_13                                                      07EA R
+  0 ___str_14                                                      07F7 R
+  0 ___str_15                                                      07FD R
+  0 ___str_16                                                      0806 R
   0 ___str_2                                                       0158 R
   0 ___str_3                                                       015E R
   0 ___str_4                                                       029F R
@@ -36,25 +40,27 @@ Symbol Table
     _e4vm_core_ext_comma                                           **** GX
     _e4vm_core_ext_do_lit                                          **** GX
     _e4vm_core_ext_get_here_addr                                   **** GX
+    _e4vm_core_ext_zbranch                                         **** GX
   0 _e4vm_do_hello                                                 0000 R
   0 _e4vm_test_branch                                              041A R
   0 _e4vm_test_comma                                               02B8 R
   0 _e4vm_test_dolit                                               0015 R
   0 _e4vm_test_here                                                0167 R
+  0 _e4vm_test_zbranch                                             05CE R
     _e4vm_type__init                                               **** GX
     _e4vm_utils__init                                              **** GX
     _e4vm_utils_init                                               **** GX
     _e4vm_utils_stack_ds_push                                      **** GX
   1 _e4vm_vm                                                       010D R
   1 _e4vm_vm_static                                                0000 R
-  0 _main                                                          05CE GR
+  0 _main                                                          0808 GR
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  612   flags    0
+   0 _CODE                                      size  853   flags    0
    1 _DATA                                      size  10F   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

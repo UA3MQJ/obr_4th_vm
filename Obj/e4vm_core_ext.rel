@@ -1,5 +1,5 @@
 XL2
-H 9 areas C global symbols
+H 9 areas D global symbols
 M e4vm_core_ext
 O -mz80
 S _e4vm_utils__init Ref0000
@@ -8,8 +8,9 @@ S _e4vm_type__init Ref0000
 S _e4vm_utils_add_op Ref0000
 S _e4vm_utils_stack_ds_push Ref0000
 S ___sdcc_enter_ix Ref0000
-A _CODE size CC flags 0 addr 0
-S _e4vm_core_ext__init Def00C1
+A _CODE size 135 flags 0 addr 0
+S _e4vm_core_ext__init Def012A
+S _e4vm_core_ext_zbranch Def00C1
 S _e4vm_core_ext_branch Def009D
 S _e4vm_core_ext_do_lit Def0005
 S _e4vm_core_ext_get_here_addr Def003D
@@ -67,5 +68,29 @@ T B8 00 1B 7B 02 03 7A 02 DD E1 C9
 R 00 00 00 00
 T C1 00
 R 00 00 00 00
-T C1 00 21 C1 00 36 C9 CD 00 00 C3 00 00
+T C1 00 CD 00 00 F5 DD 4E 04 DD 46 05 69 60 5E 23
+R 00 00 00 00 02 03 05 00
+T CF 00 56 21 86 00 19 5E 23 56 2B 1B 73 23 72 69
+R 00 00 00 00
+T DD 00 60 4E 23 46 21 44 00 09 EB 69 60 C5 01
+R 00 00 00 00
+T EA 00 86 00 09 C1 7E 23 66 6F 29 19 5E 23 56 0A
+R 00 00 00 00
+T F8 00 DD 77 FE 03 0A DD 77 FF 0B 7A B3 20 18 21
+R 00 00 00 00
+T 06 01 8A 00 09 DD 7E FE 3C 87 5F 16 00 19 5E 23
+R 00 00 00 00
+T 14 01 56 1B 7B 02 03 7A 02 18 09
+R 00 00 00 00
+T 1D 01
+R 00 00 00 00
+T 1D 01 DD 7E FE 02 03 DD 7E FF 02
+R 00 00 00 00
+T 26 01
+R 00 00 00 00
+T 26 01 F1 DD E1 C9
+R 00 00 00 00
+T 2A 01
+R 00 00 00 00
+T 2A 01 21 2A 01 36 C9 CD 00 00 C3 00 00
 R 00 00 00 00 00 03 00 00 02 08 02 00 02 0B 00 00

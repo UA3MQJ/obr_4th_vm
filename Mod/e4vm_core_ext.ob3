@@ -40,8 +40,20 @@ END comma;
 (*# переход по адресу в следующей €чейке *)
 PROCEDURE branch* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  v.ip := v.mem[v.ip+1] - 1;
+  v.ip := v.mem[v.ip + 1] - 1;
 END branch;
+
+(*# переход по адресу, если в топ ds 0. то есть false.
+  # false - это все биты в ноле. true - это все биты одной €чейки(cell) в единице. *)
+PROCEDURE zbranch* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  v.ds_p := v.ds_p - 1;
+  IF v.ds[v.ds_p] = 0 THEN
+    v.ip := v.mem[v.ip + 1] - 1;
+  ELSE
+    v.ip := v.ip;
+  END
+END zbranch;
 
 BEGIN
    

@@ -933,6 +933,71 @@ BEGIN
 	
 END test_branch;
 
+PROCEDURE test_zbranch(VAR v: e4vm_type.x4thPtr);
+VAR t:INTEGER;
+BEGIN
+  C.WriteStr("zbranch test");
+
+  e4vm_utils.init(@v);
+
+	v.core[0] := e4vm_core.do_nop;
+  v.core[1] := e4vm_core.do_next;
+	v.core[2] := e4vm_core.do_list;
+	v.core[3] := e4vm_core.do_exit;
+	v.core[4] := e4vm_core_ext.zbranch;
+	v.core[5] := e4vm_core_ext.do_lit
+	
+	
+	v.mem[0] := 0; 
+	v.mem[1] := 1; 
+	v.mem[2] := 2; 
+	v.mem[3] := 3; 
+	v.mem[4] := 4; 
+	v.mem[5] := 5;
+
+	v.wp := 5;
+	(* עוסעמגאÿ ןנמדנוללא *)
+	
+	v.mem[ 6] :=  2; (* do_list ןמהןנמדנאללא*)
+	v.mem[ 7] :=  4; (* branch*)
+	v.mem[ 8] := 12; (* adr 12*)
+	v.mem[ 9] :=  5; (* lit   *)
+	v.mem[10] :=  1; (* 1*)
+	v.mem[11] :=  3; (* exit*)
+	v.mem[12] :=  5; (* lit   *)
+	v.mem[13] :=  2; (* 2*)
+	v.mem[14] :=  3; (* exit*)
+	
+	e4vm_utils.stack_ds_push(@v, 0);
+
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+
+	(* e4vm_utils.vm_stat(@v); *)
+	
+	IF (v.ds[v.ds_p - 1] = 2)  THEN
+	  C.WriteStr(" - ok");
+	ELSE
+	  C.WriteStr(" - error");
+	END;
+	
+	v.wp := 5;
+	
+	e4vm_utils.stack_ds_push(@v, 1);
+
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+
+	(* e4vm_utils.vm_stat(@v); *)
+	
+	IF (v.ds[v.ds_p - 1] = 1)  THEN
+	  C.WriteStr(" - ok");
+	ELSE
+	  C.WriteStr(" - error");
+	END;
+	C.WriteStrLn(" ");
+END test_zbranch;
+
 BEGIN
   B.Init;
   C.Clear(C.White);
@@ -966,6 +1031,7 @@ BEGIN
 	test_here(@vm);
 	test_comma(@vm);
 	test_branch(@vm);
+  test_zbranch(@vm);
 
 
   (* B.PAUSE(0); *)
