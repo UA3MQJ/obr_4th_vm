@@ -39,6 +39,11 @@ BEGIN
 		word_index:=v.mem[next_ip];
     (* выполняем эту команду *)
 		v.core[word_index](@v);
+(*
+		C.WriteStr("2) v.ip=");
+    C.WriteInt(v.ip);C.WriteStrLn(" ");
+    B.PAUSE(0)
+*)
 	END;
 END do_next;
 

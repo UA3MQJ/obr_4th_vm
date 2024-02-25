@@ -40,8 +40,7 @@ END comma;
 (*# переход по адресу в следующей €чейке *)
 PROCEDURE branch* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("branch");
-  v.ip := v.mem[v.ip]; 
+  v.ip := v.mem[v.ip+1] - 1;
 END branch;
 
 BEGIN

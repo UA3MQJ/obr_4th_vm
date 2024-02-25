@@ -28,6 +28,8 @@ void e4vm_utils_init (e4vm_type_x4thPtr *v)
   (*v)->ip = 0;
   (*v)->wp = 0;
   (*v)->hereP = 0;
+  (*v)->rs_p = 0;
+  (*v)->ds_p = 0;
   (*v)->cell_bit_size = 16;
   (*v)->is_eval_mode = 1;
   i = 0;
@@ -52,6 +54,7 @@ void e4vm_utils_init (e4vm_type_x4thPtr *v)
 void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v)
 {
   SHORTINT i;
+  Console_WriteStrLn((CHAR*)" ", 2);
   Console_WriteStr((CHAR*)"ip:", 4);
   Console_WriteInt((*v)->ip);
   Console_WriteStr((CHAR*)" wp:", 5);
@@ -59,6 +62,17 @@ void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v)
   Console_WriteStr((CHAR*)" hereP:", 8);
   Console_WriteInt((*v)->hereP);
   Console_WriteStrLn((CHAR*)" ", 2);
+  Console_WriteStr((CHAR*)"rs_p:", 6);
+  Console_WriteInt((*v)->rs_p);
+  Console_WriteStrLn((CHAR*)" ", 2);
+  Console_WriteStrLn((CHAR*)"rs: [", 6);
+  i = 0;
+  while (i <= 31) {
+    Console_WriteInt((*v)->rs[i]);
+    Console_WriteStr((CHAR*)" ", 2);
+    i += 1;
+  }
+  Console_WriteStrLn((CHAR*)"]", 2);
   Console_WriteStr((CHAR*)"ds_p:", 6);
   Console_WriteInt((*v)->ds_p);
   Console_WriteStrLn((CHAR*)" ", 2);
@@ -66,6 +80,14 @@ void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v)
   i = 0;
   while (i <= 31) {
     Console_WriteInt((*v)->ds[i]);
+    Console_WriteStr((CHAR*)" ", 2);
+    i += 1;
+  }
+  Console_WriteStrLn((CHAR*)"]", 2);
+  Console_WriteStrLn((CHAR*)"mem: [", 7);
+  i = 0;
+  while (i <= 31) {
+    Console_WriteInt((*v)->mem[i]);
     Console_WriteStr((CHAR*)" ", 2);
     i += 1;
   }
@@ -121,6 +143,7 @@ export void *e4vm_utils__init (void)
   __IMPORT(Console__init);
   __IMPORT(Platform__init);
   __IMPORT(e4vm_core__init);
+  __IMPORT(e4vm_type__init);
   __REGMOD("e4vm_utils", 0);
 /* BEGIN */
   __ENDMOD;

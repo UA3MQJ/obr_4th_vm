@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _e4vm_core__init
+	.globl _e4vm_type__init
 	.globl _e4vm_core_do_nop
 	.globl _e4vm_core_do_list
 	.globl _e4vm_core_do_next
@@ -318,8 +319,9 @@ _e4vm_core__init::
 ;e4vm_core.c:58: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_core.c:64: }
-	ret
+;e4vm_core.c:61: __IMPORT(e4vm_type__init);
+;e4vm_core.c:65: }
+	jp  _e4vm_type__init
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)

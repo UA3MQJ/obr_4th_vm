@@ -16,6 +16,9 @@ static e4vm_type_x4thPtr e4vm_vm;
 
 static void e4vm_do_hello (e4vm_type_x4thPtr *v);
 static void e4vm_test_branch (e4vm_type_x4thPtr *v);
+static void e4vm_test_comma (e4vm_type_x4thPtr *v);
+static void e4vm_test_dolit (e4vm_type_x4thPtr *v);
+static void e4vm_test_here (e4vm_type_x4thPtr *v);
 
 
 /*============================================================================*/
@@ -23,6 +26,91 @@ static void e4vm_test_branch (e4vm_type_x4thPtr *v);
 static void e4vm_do_hello (e4vm_type_x4thPtr *v)
 {
   Console_WriteStrLn((CHAR*)"hello!", 7);
+}
+
+static void e4vm_test_dolit (e4vm_type_x4thPtr *v)
+{
+  Console_WriteStr((CHAR*)"dolit test", 11);
+  e4vm_utils_init(v);
+  (*v)->core[0] = e4vm_core_do_nop;
+  (*v)->core[1] = e4vm_core_do_next;
+  (*v)->core[2] = e4vm_core_do_list;
+  (*v)->core[3] = e4vm_core_do_exit;
+  (*v)->core[4] = e4vm_core_ext_do_lit;
+  (*v)->mem[0] = 0;
+  (*v)->mem[1] = 1;
+  (*v)->mem[2] = 2;
+  (*v)->mem[3] = 3;
+  (*v)->mem[4] = 4;
+  (*v)->wp = 4;
+  (*v)->mem[5] = 2;
+  (*v)->mem[6] = 4;
+  (*v)->mem[7] = 555;
+  (*v)->mem[8] = 3;
+  e4vm_core_do_list(v);
+  e4vm_core_do_next(v);
+  if ((*v)->ds[0] == 555) {
+    Console_WriteStrLn((CHAR*)" - ok", 6);
+  } else {
+    Console_WriteStrLn((CHAR*)" - error", 9);
+  }
+}
+
+static void e4vm_test_here (e4vm_type_x4thPtr *v)
+{
+  Console_WriteStr((CHAR*)"here test", 10);
+  e4vm_utils_init(v);
+  (*v)->core[0] = e4vm_core_do_nop;
+  (*v)->core[1] = e4vm_core_do_next;
+  (*v)->core[2] = e4vm_core_do_list;
+  (*v)->core[3] = e4vm_core_do_exit;
+  (*v)->core[4] = e4vm_core_ext_get_here_addr;
+  (*v)->mem[0] = 0;
+  (*v)->mem[1] = 1;
+  (*v)->mem[2] = 2;
+  (*v)->mem[3] = 3;
+  (*v)->mem[4] = 4;
+  (*v)->wp = 4;
+  (*v)->mem[5] = 2;
+  (*v)->mem[6] = 4;
+  (*v)->mem[7] = 3;
+  (*v)->hereP = 555;
+  e4vm_core_do_list(v);
+  e4vm_core_do_next(v);
+  if ((*v)->ds[0] == 555) {
+    Console_WriteStrLn((CHAR*)" - ok", 6);
+  } else {
+    Console_WriteStrLn((CHAR*)" - error", 9);
+  }
+}
+
+static void e4vm_test_comma (e4vm_type_x4thPtr *v)
+{
+  Console_WriteStr((CHAR*)"comma test", 11);
+  e4vm_utils_init(v);
+  (*v)->core[0] = e4vm_core_do_nop;
+  (*v)->core[1] = e4vm_core_do_next;
+  (*v)->core[2] = e4vm_core_do_list;
+  (*v)->core[3] = e4vm_core_do_exit;
+  (*v)->core[4] = e4vm_core_ext_comma;
+  (*v)->mem[0] = 0;
+  (*v)->mem[1] = 1;
+  (*v)->mem[2] = 2;
+  (*v)->mem[3] = 3;
+  (*v)->mem[4] = 4;
+  (*v)->wp = 4;
+  (*v)->mem[5] = 2;
+  (*v)->mem[6] = 4;
+  (*v)->mem[7] = 3;
+  (*v)->hereP = 18;
+  e4vm_utils_stack_ds_push(v, 777);
+  e4vm_core_do_list(v);
+  e4vm_core_do_next(v);
+  if ((*v)->mem[18] == 777) {
+    Console_WriteStrLn((CHAR*)" - ok", 6);
+  } else {
+    Console_WriteStrLn((CHAR*)" - error", 9);
+  }
 }
 
 static void e4vm_test_branch (e4vm_type_x4thPtr *v)
@@ -35,8 +123,26 @@ static void e4vm_test_branch (e4vm_type_x4thPtr *v)
   (*v)->core[2] = e4vm_core_do_list;
   (*v)->core[3] = e4vm_core_do_exit;
   (*v)->core[4] = e4vm_core_ext_branch;
-  Console_WriteInt(321);
-  if ((*v)->ip == 777) {
+  (*v)->core[5] = e4vm_core_ext_do_lit;
+  (*v)->mem[0] = 0;
+  (*v)->mem[1] = 1;
+  (*v)->mem[2] = 2;
+  (*v)->mem[3] = 3;
+  (*v)->mem[4] = 4;
+  (*v)->mem[5] = 5;
+  (*v)->wp = 5;
+  (*v)->mem[6] = 2;
+  (*v)->mem[7] = 4;
+  (*v)->mem[8] = 12;
+  (*v)->mem[9] = 5;
+  (*v)->mem[10] = 1;
+  (*v)->mem[11] = 3;
+  (*v)->mem[12] = 5;
+  (*v)->mem[13] = 2;
+  (*v)->mem[14] = 3;
+  e4vm_core_do_list(v);
+  e4vm_core_do_next(v);
+  if ((*v)->ds[0] == 2) {
     Console_WriteStrLn((CHAR*)" - ok", 6);
   } else {
     Console_WriteStrLn((CHAR*)" - error", 9);
@@ -58,8 +164,10 @@ int main (int argc, char **argv)
   Basic_Init();
   Console_Clear(7);
   Console_SetColors(56);
-  Console_WriteInt(321);
   e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
+  e4vm_test_dolit(&e4vm_vm);
+  e4vm_test_here(&e4vm_vm);
+  e4vm_test_comma(&e4vm_vm);
   e4vm_test_branch(&e4vm_vm);
   Basic_Quit();
   __FINI;

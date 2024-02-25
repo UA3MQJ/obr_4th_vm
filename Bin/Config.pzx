@@ -1,5 +1,5 @@
 MainMod=
-CodeAdr=45056
+CodeAdr=25000
 DataAdr=50000
 Options=
 Modules=e4vm_core.rel e4vm_core_ext.rel e4vm_utils.rel e4vm_stack.rel e4vm_math.rel e4vm_boolean.rel

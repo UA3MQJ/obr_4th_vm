@@ -7,27 +7,24 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-    _Console_WriteLn_COMPACT                                       **** GX
-    _Console_WriteStr_C_COMPACT                                    **** GX
     ___sdcc_enter_ix                                               **** GX
-  0 ___str_0                                                       00CA R
-  0 _e4vm_core_ext__init                                           00D1 GR
+  0 _e4vm_core_ext__init                                           00C1 GR
   0 _e4vm_core_ext_branch                                          009D GR
   0 _e4vm_core_ext_comma                                           005D GR
   0 _e4vm_core_ext_do_lit                                          0005 GR
   0 _e4vm_core_ext_get_here_addr                                   003D GR
   0 _e4vm_core_ext_quit                                            0000 GR
+    _e4vm_type__init                                               **** GX
     _e4vm_utils__init                                              **** GX
     _e4vm_utils_add_op                                             **** GX
     _e4vm_utils_stack_ds_push                                      **** GX
-
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size   D9   flags    0
+   0 _CODE                                      size   CC   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

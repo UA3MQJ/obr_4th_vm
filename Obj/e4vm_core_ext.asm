@@ -12,8 +12,7 @@
 	.globl _e4vm_utils__init
 	.globl _e4vm_utils_stack_ds_push
 	.globl _e4vm_utils_add_op
-	.globl _Console_WriteStr_C_COMPACT
-	.globl _Console_WriteLn_COMPACT
+	.globl _e4vm_type__init
 	.globl _e4vm_core_ext_quit
 	.globl _e4vm_core_ext_do_lit
 	.globl _e4vm_core_ext_get_here_addr
@@ -202,11 +201,7 @@ _e4vm_core_ext_comma::
 ; ---------------------------------
 _e4vm_core_ext_branch::
 	call	___sdcc_enter_ix
-;e4vm_core_ext.c:49: Console_WriteStrLn((CHAR*)"branch", 7);
-	ld	hl, #___str_0
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-;e4vm_core_ext.c:50: (*v)->ip = (*v)->mem[(*v)->ip];
+;e4vm_core_ext.c:49: (*v)->ip = (*v)->mem[(*v)->ip + 1] - 1;
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	ld	c, (hl)
@@ -215,36 +210,34 @@ _e4vm_core_ext_branch::
 	ld	hl, #0x008a
 	add	hl, bc
 	ex	de, hl
-	ld	l, c
-	ld	h, b
-	ld	a, (hl)
-	inc	hl
-	ld	h, (hl)
+	ld	a, (bc)
+	inc	a
+	add	a, a
 	ld	l, a
-	add	hl, hl
+	ld	h, #0x00
 	add	hl, de
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
+	dec	de
 	ld	a, e
 	ld	(bc), a
 	inc	bc
 	ld	a, d
 	ld	(bc), a
-;e4vm_core_ext.c:51: }
+;e4vm_core_ext.c:50: }
 	pop	ix
 	ret
-___str_0:
-	.ascii "branch"
-	.db 0x00
-;e4vm_core_ext.c:55: export void *e4vm_core_ext__init (void)
+;e4vm_core_ext.c:54: export void *e4vm_core_ext__init (void)
 ;	---------------------------------
 ; Function e4vm_core_ext__init
 ; ---------------------------------
 _e4vm_core_ext__init::
-;e4vm_core_ext.c:57: __DEFMOD;
+;e4vm_core_ext.c:56: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
+;e4vm_core_ext.c:59: __IMPORT(e4vm_type__init);
+	call	_e4vm_type__init
 ;e4vm_core_ext.c:60: __IMPORT(e4vm_utils__init);
 ;e4vm_core_ext.c:64: }
 	jp  _e4vm_utils__init

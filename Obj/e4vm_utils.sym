@@ -22,6 +22,7 @@ Symbol Table
   0 ___str_8                                                       01FD R
     _e4vm_core__init                                               **** GX
     _e4vm_core_do_nop                                              **** GX
+    _e4vm_type__init                                               **** GX
   0 _e4vm_utils__init                                              02C1 GR
   0 _e4vm_utils_add_op                                             0280 GR
   0 _e4vm_utils_error                                              01D8 GR
@@ -38,7 +39,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  2C9   flags    0
+   0 _CODE                                      size  2CC   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

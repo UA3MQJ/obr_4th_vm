@@ -46,8 +46,7 @@ void e4vm_core_ext_comma (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_core_ext_branch (e4vm_type_x4thPtr *v)
 {
-  Console_WriteStrLn((CHAR*)"branch", 7);
-  (*v)->ip = (*v)->mem[(*v)->ip];
+  (*v)->ip = (*v)->mem[(*v)->ip + 1] - 1;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -57,6 +56,7 @@ export void *e4vm_core_ext__init (void)
   __DEFMOD;
   __IMPORT(Console__init);
   __IMPORT(Platform__init);
+  __IMPORT(e4vm_type__init);
   __IMPORT(e4vm_utils__init);
   __REGMOD("e4vm_core_ext", 0);
 /* BEGIN */

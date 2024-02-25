@@ -1,6 +1,6 @@
 -mjwx
 -i e4vm.ihx
--b _CODE = 0xb000
+-b _CODE = 0x61a8
 -b _DATA = 0xc350
 -k C:\xdev\ZXDev\Lib
 -k C:\xdev\ZXDev\Bin\..\lib\z80
