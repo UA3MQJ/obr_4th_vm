@@ -51,9 +51,21 @@ BEGIN
   IF v.ds[v.ds_p] = 0 THEN
     v.ip := v.mem[v.ip + 1] - 1;
   ELSE
-    v.ip := v.ip;
+    (* v.ip := v.ip; *)
   END
 END zbranch;
+
+(* # войти в eval режим - eval = true *)
+PROCEDURE lbrac* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  v.is_eval_mode := TRUE;
+END lbrac;
+
+(* # выйти из eval режима - eval = false *)
+PROCEDURE rbrac* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  v.is_eval_mode := FALSE;
+END rbrac;
 
 BEGIN
    
