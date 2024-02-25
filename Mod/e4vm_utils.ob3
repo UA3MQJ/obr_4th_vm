@@ -79,5 +79,12 @@ BEGIN
   v.mem[v.hereP] := addr;
   v.hereP := v.hereP + 1;
 END add_op;
+
+PROCEDURE read_char* (VAR v: e4vm_type.x4thPtr) : SYSTEM.BYTE;
+BEGIN
+  REPEAT UNTIL ~(B.PEEK(23556) = 255);
+  RETURN B.PEEK(23560); (* LAST_K *)
+END read_char;
+
 	
 END e4vm_utils.

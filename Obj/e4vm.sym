@@ -7,8 +7,10 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-    _Basic_Quit_DI                                                 **** GX
+    _Basic_INKEY                                                   **** GX
+    _Basic_Quit_IM1                                                **** GX
     _Console_Clear_COMPACT                                         **** GX
+    _Console_WriteInt_COMPACT                                      **** GX
     _Console_WriteLn_COMPACT                                       **** GX
     _Console_WriteStr_C_COMPACT                                    **** GX
     _Console_attrib                                                **** GX
@@ -22,6 +24,8 @@ Symbol Table
   0 ___str_14                                                      07F7 R
   0 ___str_15                                                      07FD R
   0 ___str_16                                                      0806 R
+  0 ___str_17                                                      082F R
+  0 ___str_18                                                      083F R
   0 ___str_2                                                       0158 R
   0 ___str_3                                                       015E R
   0 ___str_4                                                       029F R
@@ -46,6 +50,7 @@ Symbol Table
   0 _e4vm_test_comma                                               02B8 R
   0 _e4vm_test_dolit                                               0015 R
   0 _e4vm_test_here                                                0167 R
+  0 _e4vm_test_read_char                                           0808 R
   0 _e4vm_test_zbranch                                             05CE R
     _e4vm_type__init                                               **** GX
     _e4vm_utils__init                                              **** GX
@@ -53,14 +58,20 @@ Symbol Table
     _e4vm_utils_stack_ds_push                                      **** GX
   1 _e4vm_vm                                                       010D R
   1 _e4vm_vm_static                                                0000 R
-  0 _main                                                          0808 GR
-
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
+Hexadecimal [16-Bits]
+
+Symbol Table
+
+  0 _main                                                          0845 GR
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 3.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  853   flags    0
+   0 _CODE                                      size  896   flags    0
    1 _DATA                                      size  10F   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

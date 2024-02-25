@@ -19,6 +19,7 @@ static void e4vm_test_branch (e4vm_type_x4thPtr *v);
 static void e4vm_test_comma (e4vm_type_x4thPtr *v);
 static void e4vm_test_dolit (e4vm_type_x4thPtr *v);
 static void e4vm_test_here (e4vm_type_x4thPtr *v);
+static void e4vm_test_read_char (e4vm_type_x4thPtr *v);
 static void e4vm_test_zbranch (e4vm_type_x4thPtr *v);
 
 
@@ -197,6 +198,18 @@ static void e4vm_test_zbranch (e4vm_type_x4thPtr *v)
   Console_WriteStrLn((CHAR*)" ", 2);
 }
 
+static void e4vm_test_read_char (e4vm_type_x4thPtr *v)
+{
+  SHORTINT t;
+  CHAR ch;
+  CHAR c;
+  Console_WriteStr((CHAR*)"read_char test ", 16);
+  e4vm_utils_init(v);
+  c = Basic_INKEY();
+  Console_WriteInt(ch);
+  Console_WriteStr((CHAR*)" - ok", 6);
+}
+
 
 int main (int argc, char **argv)
 {
@@ -218,6 +231,7 @@ int main (int argc, char **argv)
   e4vm_test_comma(&e4vm_vm);
   e4vm_test_branch(&e4vm_vm);
   e4vm_test_zbranch(&e4vm_vm);
+  e4vm_test_read_char(&e4vm_vm);
   Basic_Quit();
   __FINI;
 }

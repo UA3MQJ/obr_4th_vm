@@ -998,6 +998,19 @@ BEGIN
 	C.WriteStrLn(" ");
 END test_zbranch;
 
+PROCEDURE test_read_char(VAR v: e4vm_type.x4thPtr);
+VAR t:INTEGER; ch: SYSTEM.BYTE; c: CHAR;
+BEGIN
+  C.WriteStr("read_char test ");
+
+  e4vm_utils.init(@v);
+
+	ch:=e4vm_utils.read_char(@v);
+	
+	C.WriteInt(ch);
+	C.WriteStr(" - ok");
+END test_read_char;
+
 BEGIN
   B.Init;
   C.Clear(C.White);
@@ -1032,7 +1045,7 @@ BEGIN
 	test_comma(@vm);
 	test_branch(@vm);
   test_zbranch(@vm);
-
+  test_read_char(@vm);
 
   (* B.PAUSE(0); *)
 	B.Quit;

@@ -14,6 +14,7 @@ export void e4vm_utils_add_op (e4vm_type_x4thPtr *v, SHORTINT addr);
 export void e4vm_utils_error (CHAR *err, SHORTINT err__len);
 export SHORTINT e4vm_utils_false_const (e4vm_type_x4thPtr *v);
 export void e4vm_utils_init (e4vm_type_x4thPtr *v);
+export CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v);
 export void e4vm_utils_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x);
 export void e4vm_utils_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x);
 export SHORTINT e4vm_utils_true_const (e4vm_type_x4thPtr *v);
@@ -133,6 +134,14 @@ void e4vm_utils_add_op (e4vm_type_x4thPtr *v, SHORTINT addr)
 {
   (*v)->mem[(*v)->hereP] = addr;
   (*v)->hereP = (*v)->hereP + 1;
+}
+
+/*----------------------------------------------------------------------------*/
+CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v)
+{
+  do {
+  } while (!(!(Basic_PEEK(23556) == 255)));
+  return Basic_PEEK(23560);
 }
 
 /*----------------------------------------------------------------------------*/

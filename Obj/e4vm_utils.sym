@@ -11,35 +11,38 @@ Symbol Table
     _Console_WriteLn_COMPACT                                       **** GX
     _Console_WriteStr_C_COMPACT                                    **** GX
     ___sdcc_enter_ix                                               **** GX
-  0 ___str_0                                                       01A5 R
-  0 ___str_1                                                       01A9 R
-  0 ___str_2                                                       01AE R
-  0 ___str_3                                                       01B6 R
-  0 ___str_4                                                       01B8 R
-  0 ___str_5                                                       01BE R
-  0 ___str_6                                                       01C4 R
-  0 ___str_7                                                       01F5 R
-  0 ___str_8                                                       01FD R
+  0 ___str_0                                                       02CE R
+  0 ___str_1                                                       02D0 R
+  0 ___str_10                                                      0331 R
+  0 ___str_11                                                      0339 R
+  0 ___str_2                                                       02D4 R
+  0 ___str_3                                                       02D9 R
+  0 ___str_4                                                       02E1 R
+  0 ___str_5                                                       02E7 R
+  0 ___str_6                                                       02ED R
+  0 ___str_7                                                       02EF R
+  0 ___str_8                                                       02F5 R
+  0 ___str_9                                                       02FB R
     _e4vm_core__init                                               **** GX
     _e4vm_core_do_nop                                              **** GX
     _e4vm_type__init                                               **** GX
-  0 _e4vm_utils__init                                              02C1 GR
-  0 _e4vm_utils_add_op                                             0280 GR
-  0 _e4vm_utils_error                                              01D8 GR
-  0 _e4vm_utils_false_const                                        01CF GR
+  0 _e4vm_utils__init                                              040D GR
+  0 _e4vm_utils_add_op                                             03BC GR
+  0 _e4vm_utils_error                                              0314 GR
+  0 _e4vm_utils_false_const                                        030B GR
   0 _e4vm_utils_init                                               0000 GR
-  0 _e4vm_utils_stack_ds_push                                      01FE GR
-  0 _e4vm_utils_stack_rs_push                                      023F GR
-  0 _e4vm_utils_true_const                                         01C6 GR
-  0 _e4vm_utils_vm_stat                                            00E6 GR
-
+  0 _e4vm_utils_read_char                                          03FD GR
+  0 _e4vm_utils_stack_ds_push                                      033A GR
+  0 _e4vm_utils_stack_rs_push                                      037B GR
+  0 _e4vm_utils_true_const                                         0302 GR
+  0 _e4vm_utils_vm_stat                                            0125 GR
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  2CC   flags    0
+   0 _CODE                                      size  418   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8
