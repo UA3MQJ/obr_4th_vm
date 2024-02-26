@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _e4vm_math__init
+	.globl _e4vm_type__init
 	.globl _SYSTEM_MODS
 	.globl _SYSTEM_DIVS
 	.globl _e4vm_math_minus
@@ -495,8 +496,9 @@ _e4vm_math__init::
 ;e4vm_math.c:73: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_math.c:79: }
-	ret
+;e4vm_math.c:76: __IMPORT(e4vm_type__init);
+;e4vm_math.c:80: }
+	jp  _e4vm_type__init
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)

@@ -14,6 +14,7 @@ import void e4vm_utils_error (CHAR *err, SHORTINT err__len);
 import SHORTINT e4vm_utils_false_const (e4vm_type_x4thPtr *v);
 import void e4vm_utils_init (e4vm_type_x4thPtr *v);
 import CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v);
+import void e4vm_utils_read_string (e4vm_type_x4thPtr *v);
 import void e4vm_utils_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x);
 import void e4vm_utils_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x);
 import SHORTINT e4vm_utils_true_const (e4vm_type_x4thPtr *v);

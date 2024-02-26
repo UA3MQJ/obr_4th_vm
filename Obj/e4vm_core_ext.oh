@@ -13,7 +13,9 @@ import void e4vm_core_ext_branch (e4vm_type_x4thPtr *v);
 import void e4vm_core_ext_comma (e4vm_type_x4thPtr *v);
 import void e4vm_core_ext_do_lit (e4vm_type_x4thPtr *v);
 import void e4vm_core_ext_get_here_addr (e4vm_type_x4thPtr *v);
+import void e4vm_core_ext_lbrac (e4vm_type_x4thPtr *v);
 import void e4vm_core_ext_quit (e4vm_type_x4thPtr *v);
+import void e4vm_core_ext_rbrac (e4vm_type_x4thPtr *v);
 import void e4vm_core_ext_zbranch (e4vm_type_x4thPtr *v);
 import void *e4vm_core_ext__init (void);
 

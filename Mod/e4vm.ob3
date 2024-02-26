@@ -1007,9 +1007,18 @@ BEGIN
 
 	ch:=e4vm_utils.read_char(@v);
 	
-	C.WriteInt(ch);
+	C.WriteInt(ch); C.WriteCh(CHR(ch));
 	C.WriteStr(" - ok");
 END test_read_char;
+
+PROCEDURE test_read_string(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("read_string test ");
+
+	e4vm_utils.read_string(@v);
+	C.WriteStrLn(v.in_string);
+	C.WriteStr(" - ok");
+END test_read_string;
 
 BEGIN
   B.Init;
@@ -1045,8 +1054,9 @@ BEGIN
 	test_comma(@vm);
 	test_branch(@vm);
   test_zbranch(@vm);
-  test_read_char(@vm);
+  (* test_read_char(@vm); *)
+  test_read_string(@vm);
 
-  (* B.PAUSE(0); *)
+  B.PAUSE(0);
 	B.Quit;
 END e4vm.

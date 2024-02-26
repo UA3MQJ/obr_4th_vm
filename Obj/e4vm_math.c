@@ -73,6 +73,7 @@ export void *e4vm_math__init (void)
   __DEFMOD;
   __IMPORT(Console__init);
   __IMPORT(Platform__init);
+  __IMPORT(e4vm_type__init);
   __REGMOD("e4vm_math", 0);
 /* BEGIN */
   __ENDMOD;

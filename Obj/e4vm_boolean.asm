@@ -12,6 +12,7 @@
 	.globl _e4vm_utils__init
 	.globl _e4vm_utils_true_const
 	.globl _e4vm_utils_false_const
+	.globl _e4vm_type__init
 	.globl _Console_WriteStr_C_COMPACT
 	.globl _Console_WriteLn_COMPACT
 	.globl _e4vm_boolean_true
@@ -1271,8 +1272,10 @@ _e4vm_boolean__init::
 ;e4vm_boolean.c:158: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_boolean.c:161: __IMPORT(e4vm_utils__init);
-;e4vm_boolean.c:165: }
+;e4vm_boolean.c:161: __IMPORT(e4vm_type__init);
+	call	_e4vm_type__init
+;e4vm_boolean.c:162: __IMPORT(e4vm_utils__init);
+;e4vm_boolean.c:166: }
 	jp  _e4vm_utils__init
 	.area _CODE
 	.area _INITIALIZER

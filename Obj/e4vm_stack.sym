@@ -15,13 +15,15 @@ Symbol Table
   0 _e4vm_stack_over                                               00DE GR
   0 _e4vm_stack_rot                                                0126 GR
   0 _e4vm_stack_swap                                               001B GR
+    _e4vm_type__init                                               **** GX
+
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  28E   flags    0
+   0 _CODE                                      size  290   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

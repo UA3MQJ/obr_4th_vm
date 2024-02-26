@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _e4vm_stack__init
+	.globl _e4vm_type__init
 	.globl _e4vm_stack_drop
 	.globl _e4vm_stack_swap
 	.globl _e4vm_stack_dup
@@ -540,8 +541,9 @@ _e4vm_stack__init::
 ;e4vm_stack.c:74: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_stack.c:80: }
-	ret
+;e4vm_stack.c:77: __IMPORT(e4vm_type__init);
+;e4vm_stack.c:81: }
+	jp  _e4vm_type__init
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)

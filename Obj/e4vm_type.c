@@ -16,6 +16,7 @@ typedef
     SHORTINT cell_bit_size;
     BOOLEAN is_eval_mode;
     e4vm_type_ProcedureType core[32];
+    CHAR in_string[64];
   } e4vm_type_x4th;
 
 

@@ -158,6 +158,7 @@ export void *e4vm_boolean__init (void)
   __DEFMOD;
   __IMPORT(Console__init);
   __IMPORT(Platform__init);
+  __IMPORT(e4vm_type__init);
   __IMPORT(e4vm_utils__init);
   __REGMOD("e4vm_boolean", 0);
 /* BEGIN */

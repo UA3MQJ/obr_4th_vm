@@ -86,5 +86,11 @@ BEGIN
   RETURN B.PEEK(23560); (* LAST_K *)
 END read_char;
 
+PROCEDURE read_string* (VAR v: e4vm_type.x4thPtr);
+VAR str: ARRAY 64 OF CHAR;
+BEGIN
+  C.ReadStr(@v.in_string, e4vm_type.in_str_size);
+END read_string;
+
 	
 END e4vm_utils.
