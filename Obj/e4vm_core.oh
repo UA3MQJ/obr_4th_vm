@@ -9,6 +9,7 @@
 
 
 
+import void e4vm_core_add_core_words (e4vm_type_x4thPtr *v);
 import void e4vm_core_do_exit (e4vm_type_x4thPtr *v);
 import void e4vm_core_do_list (e4vm_type_x4thPtr *v);
 import void e4vm_core_do_next (e4vm_type_x4thPtr *v);

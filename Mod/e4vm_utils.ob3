@@ -1,9 +1,69 @@
 MODULE e4vm_utils;
 IMPORT SYSTEM, C := Console, Platform, B := Basic, 
-
-        e4vm_type,
-        e4vm_core
+        e4vm_type
 ;
+
+(* # функция добавления слово в словарь базовых: *)
+PROCEDURE add_core_word* (
+  VAR v: e4vm_type.x4thPtr;
+  word: e4vm_type.word_string_type;
+  proc: e4vm_type.ProcedureType;
+  immediate: BOOLEAN
+);
+BEGIN
+  v.words[v.words_count].word := word;
+  v.words[v.words_count].addr := v.words_count;
+  v.words[v.words_count].proc := proc;
+  v.words[v.words_count].immediate := immediate;
+  v.words[v.words_count].enabled := TRUE;
+  v.mem[v.words_count] := v.words_count;
+
+  v.words_count := v.words_count + 1;
+  v.hereP := v.words_count;
+END add_core_word;
+
+(*  # поиск адреса слова *)
+PROCEDURE look_up_word_address* (
+  VAR v: e4vm_type.x4thPtr;
+  word: e4vm_type.word_string_type
+): INTEGER;
+VAR i: INTEGER;
+BEGIN
+	FOR i:=0 TO (v.words_count-1) DO
+	  IF (v.words[i].word = word) THEN
+	    RETURN v.words[i].addr;
+	  END;
+	END;
+  RETURN -1;	
+END look_up_word_address;
+
+(* # добавляем операцию в память. то есть в память по адресу hereP кладем переданный адрес слова *)
+PROCEDURE here_to_wp* (
+  VAR v: e4vm_type.x4thPtr
+);
+BEGIN
+	v.wp := v.hereP;
+END here_to_wp;
+
+(* # добавляем операцию в память. то есть в память по адресу hereP кладем переданный адрес слова *)
+PROCEDURE add_op* (
+  VAR v: e4vm_type.x4thPtr;
+  word_adr: e4vm_type.word_addr_type
+);
+BEGIN
+	v.mem[v.hereP] := word_adr;
+	v.hereP := v.hereP + 1;
+END add_op;
+
+(*  # это больше нужно для pipe'ов потому что вложенную фунцию в пайпе не вызвать с входными данными (или можно?)
+  # поместить в память адрес слова, найденного по строке *)
+PROCEDURE add_op_from_string* (
+  VAR v: e4vm_type.x4thPtr;
+  word: e4vm_type.word_string_type
+);
+BEGIN
+	add_op(@v, look_up_word_address(@v, word));
+END add_op_from_string;
 
 PROCEDURE init* (VAR v: e4vm_type.x4thPtr);
 VAR i: INTEGER;
@@ -13,14 +73,15 @@ BEGIN
 	v.hereP := 0;
 	v.rs_p := 0;
 	v.ds_p := 0;
+	v.words_count := 0;
 	v.cell_bit_size := e4vm_type.alu_bit_width;
 	v.is_eval_mode := TRUE;
 	FOR i:=0 TO (e4vm_type.mem_size-1) DO
 	  v.mem[i] := 0;
 	END;
-	 FOR i:=0 TO (e4vm_type.core_size-1) DO
-	  v.core[i] := e4vm_core.do_nop;
-	END;
+	(* FOR i:=0 TO (e4vm_type.core_size-1) DO
+	  v.core[i] := NIL;
+	END; *)
 	FOR i:=0 TO (e4vm_type.stack_size-1) DO
 	  v.rs[i] := 0; v.ds[i] := 0;
 	END;
@@ -33,6 +94,8 @@ BEGIN
   C.WriteStr("ip:"); C.WriteInt(v.ip);
   C.WriteStr(" wp:"); C.WriteInt(v.wp);
   C.WriteStr(" hereP:"); C.WriteInt(v.hereP);
+  C.WriteStr(" words_count:"); C.WriteInt(v.words_count);
+
   C.WriteStrLn(" ");
   C.WriteStr("rs_p:"); C.WriteInt(v.rs_p); C.WriteStrLn(" ");
 	C.WriteStrLn("rs: ["); FOR i:=0 TO (e4vm_type.stack_size-1) DO
@@ -71,14 +134,6 @@ PROCEDURE stack_rs_push* (VAR v: e4vm_type.x4thPtr; x:e4vm_type.stack_type);
 BEGIN
   v.rs[v.rs_p]:=x; v.rs_p := v.rs_p + 1;
 END stack_rs_push;
-
-(* # добавляем операцию в память. то есть в память по адресу hereP кладем переданный адрес слова *)
-PROCEDURE add_op* (VAR v: e4vm_type.x4thPtr; addr:e4vm_type.stack_type);
-BEGIN
-  (* C.WriteStrLn("add_op"); *)
-  v.mem[v.hereP] := addr;
-  v.hereP := v.hereP + 1;
-END add_op;
 
 PROCEDURE read_char* (VAR v: e4vm_type.x4thPtr) : SYSTEM.BYTE;
 BEGIN

@@ -3,11 +3,11 @@ IMPORT SYSTEM, C := Console, Platform, B := Basic,
 
         e4vm_type ,
 				e4vm_core,
-				e4vm_utils,
+				e4vm_utils
 	(*			e4vm_stack,
 				e4vm_math,
-				e4vm_boolean, *)
-				e4vm_core_ext
+				e4vm_boolean, 
+				e4vm_core_ext*)
 ;
 
 
@@ -20,77 +20,45 @@ VAR
 (* Отладочная функция *)
 PROCEDURE do_hello (VAR v : e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStrLn("hello!");
+  (* C.WriteStrLn("hello!"); *)
+  v.mem[30] := 1;
 END do_hello;
 
-(*
+
 PROCEDURE test1(VAR v: e4vm_type.x4thPtr);
 BEGIN
   (* проверяется визуально. должно выполнить NoP hello nop*)
+  C.WriteStr("e4vm_core test1 ");
   e4vm_utils.init(@v);
+  e4vm_core.add_core_words(@v);
+  e4vm_utils.add_core_word(@v, "hello", do_hello,  FALSE);
 
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := do_hello;
-	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
 
-	v.wp := 4;
-	(* тестовая прогремма 1 *)
-	v.mem[5] := 2; (* do_list *)
-	v.mem[6] := 0; (* nop     *)
-	v.mem[7] := 4; (* hello   *)
-	v.mem[8] := 0; (* nop     *)
-	v.mem[9] := 3; (* exit    *)
-	
-	e4vm_core.do_list(@v);
-	e4vm_core.do_next(@v);
+  e4vm_utils.add_op_from_string(@v, "dolist"); (* addr 5 *)
+  e4vm_utils.add_op_from_string(@v, "hello");
+  e4vm_utils.add_op_from_string(@v, "exit");
+  e4vm_utils.add_op_from_string(@v, "dolist"); (* addr 8 *)
+  e4vm_utils.add_op_from_string(@v, "nop");
+  e4vm_utils.add_op(@v, 4);
+  e4vm_utils.add_op_from_string(@v, "nop");
+  e4vm_utils.add_op_from_string(@v, "exit");
 
-	(* e4vm_utils.vm_stat(@v); *)
+  (* e4vm_utils.vm_stat(@v); *)
+
+  v.wp := 8; (* и с 5 и с 8 должно отработать *)
+
+  e4vm_core.do_list(@v);
+  e4vm_core.do_next(@v);
+
+	IF (v.mem[30] = 1)  THEN
+	  C.WriteStr(" - ok");
+	ELSE
+	  C.WriteStr(" - error");
+	END;
+	C.WriteStrLn(" ");
 END test1;
 
-
-PROCEDURE test2(VAR v: e4vm_type.x4thPtr);
-BEGIN
-  (* проверяется визуально. должно выполнить nop nop hello nop nop*)
-  e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := do_hello;
-	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 7;
-	(* тестовая прогремма 2 *)
-	
-	v.mem[ 5] := 2; (* do_list подпрограмма*)
-	v.mem[ 6] := 4; (* hello   *)
-	v.mem[ 7] := 3; (* exit    *)
-	v.mem[ 8] := 2; (* do_list основная программа*)
-	v.mem[ 9] := 0; (* nop     *)
-	v.mem[10] := 0; (* nop     *)
-	v.mem[11] := 4; (* вызов подпрограммы *)
-	v.mem[12] := 0; (* nop     *)
-	v.mem[13] := 0; (* nop     *)
-	v.mem[14] := 3; (* exit    *)	
-	
-	e4vm_core.do_list(@v);
-	e4vm_core.do_next(@v);
-END test2;
-
+(*
 PROCEDURE test_dolit(VAR v: e4vm_type.x4thPtr);
 BEGIN
   C.WriteStr("dolit ");
@@ -761,7 +729,6 @@ BEGIN
 	
 		
 END test_xor;
-*)
 
 PROCEDURE test_dolit(VAR v: e4vm_type.x4thPtr);
 BEGIN
@@ -1019,6 +986,7 @@ BEGIN
 	C.WriteStrLn(v.in_string);
 	C.WriteStr(" - ok");
 END test_read_string;
+*)
 
 BEGIN
   B.Init;
@@ -1027,7 +995,9 @@ BEGIN
 
   vm := SYSTEM.VAL(e4vm_type.x4thPtr, SYSTEM.ADR(vm_static));
 
-	(* test1(@vm);
+	test1(@vm);
+	
+	(*
 	test2(@vm);
   test_dolit(@vm);
 	test_drop(@vm);
@@ -1047,7 +1017,7 @@ BEGIN
 	test_xor(@vm);
 
 
-	*)
+	
 	
 	test_dolit(@vm);
 	test_here(@vm);
@@ -1056,6 +1026,7 @@ BEGIN
   test_zbranch(@vm);
   (* test_read_char(@vm); *)
   test_read_string(@vm);
+*)
 
   B.PAUSE(0);
 	B.Quit;

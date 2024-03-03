@@ -12,40 +12,40 @@ Symbol Table
     _Console_WriteLn_COMPACT                                       **** GX
     _Console_WriteStr_C_COMPACT                                    **** GX
     ___sdcc_enter_ix                                               **** GX
-  0 ___str_0                                                       02B7 R
-  0 ___str_1                                                       02B9 R
-  0 ___str_10                                                      0309 R
-  0 ___str_11                                                      0311 R
-  0 ___str_2                                                       02BD R
-  0 ___str_3                                                       02C2 R
-  0 ___str_4                                                       02CA R
-  0 ___str_5                                                       02D0 R
-  0 ___str_6                                                       02D6 R
-  0 ___str_7                                                       02D8 R
-  0 ___str_8                                                       02DE R
-  0 ___str_9                                                       02E4 R
-    _e4vm_core__init                                               **** GX
-    _e4vm_core_do_nop                                              **** GX
+  0 ___str_0                                                       0411 R
+  0 ___str_1                                                       0413 R
+  0 ___str_10                                                      0474 R
+  0 ___str_11                                                      047C R
+  0 ___str_2                                                       0417 R
+  0 ___str_3                                                       041C R
+  0 ___str_4                                                       0424 R
+  0 ___str_5                                                       042A R
+  0 ___str_6                                                       0430 R
+  0 ___str_7                                                       0432 R
+  0 ___str_8                                                       0438 R
+  0 ___str_9                                                       043E R
     _e4vm_type__init                                               **** GX
-  0 _e4vm_utils__init                                              0406 GR
-  0 _e4vm_utils_add_op                                             0392 GR
-  0 _e4vm_utils_error                                              02F3 GR
-  0 _e4vm_utils_false_const                                        02EF GR
-  0 _e4vm_utils_init                                               0000 GR
-  0 _e4vm_utils_read_char                                          03D2 GR
-  0 _e4vm_utils_read_string                                        03DD GR
-  0 _e4vm_utils_stack_ds_push                                      0312 GR
-  0 _e4vm_utils_stack_rs_push                                      0352 GR
-  0 _e4vm_utils_true_const                                         02EB GR
-  0 _e4vm_utils_vm_stat                                            0112 GR
-
+  0 _e4vm_utils__init                                              0576 GR
+  0 _e4vm_utils_add_core_word                                      0000 GR
+  0 _e4vm_utils_add_op                                             04FF GR
+  0 _e4vm_utils_add_op_from_string                                 011B GR
+  0 _e4vm_utils_error                                              0457 GR
+  0 _e4vm_utils_false_const                                        044E GR
+  0 _e4vm_utils_init                                               0157 GR
+  0 _e4vm_utils_read_char                                          0540 GR
+  0 _e4vm_utils_read_string                                        0550 GR
+  0 _e4vm_utils_stack_ds_push                                      047D GR
+  0 _e4vm_utils_stack_rs_push                                      04BE GR
+  0 _e4vm_utils_true_const                                         0445 GR
+  0 _e4vm_utils_vm_stat                                            0268 GR
+    _memcpy                                                        **** GX
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  411   flags    0
+   0 _CODE                                      size  57E   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

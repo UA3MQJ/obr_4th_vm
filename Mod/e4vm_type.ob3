@@ -9,14 +9,24 @@ CONST
 	alu_bit_width* = 16;
 	in_str_size* = 64;
 	
+	
 TYPE
   stack_type* = INTEGER;
   mem_type* = INTEGER;
+  word_addr_type* = INTEGER;
+  word_string_type* = ARRAY 8 OF CHAR;
 
-TYPE 
+TYPE
+  core_word* = RECORD [untagged]
+    word*: word_string_type;
+    addr*: word_addr_type;
+    proc*: ProcedureType;
+    immediate*: BOOLEAN;
+    enabled*: BOOLEAN;
+  END;
+
   x4thPtr* = POINTER [untagged] TO x4th;
 
-  (* ProcedureType* = PROCEDURE; *)
   ProcedureType* = PROCEDURE(VAR vm : x4thPtr);
 
   x4th* = RECORD [untagged]
@@ -27,7 +37,9 @@ TYPE
     mem*: ARRAY mem_size OF mem_type;
 	  cell_bit_size*: INTEGER;
 	  is_eval_mode*: BOOLEAN;
-	  core*: ARRAY core_size OF ProcedureType;
+	  (* core*: ARRAY core_size OF ProcedureType; *)
+	  words*: ARRAY core_size OF core_word;
+	  words_count*: INTEGER;
 	  in_string*: ARRAY in_str_size OF CHAR;
   END;
 

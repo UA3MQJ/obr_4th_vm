@@ -8,6 +8,17 @@ typedef
   void (*e4vm_type_ProcedureType)(e4vm_type_x4thPtr*);
 
 typedef
+  CHAR e4vm_type_word_string_type[8];
+
+typedef
+  struct e4vm_type_core_word {
+    e4vm_type_word_string_type word;
+    SHORTINT addr;
+    e4vm_type_ProcedureType proc;
+    BOOLEAN immediate, enabled;
+  } e4vm_type_core_word;
+
+typedef
   struct e4vm_type_x4th {
     SHORTINT ip, wp;
     SHORTINT rs[32], ds[32];
@@ -15,7 +26,8 @@ typedef
     SHORTINT mem[32];
     SHORTINT cell_bit_size;
     BOOLEAN is_eval_mode;
-    e4vm_type_ProcedureType core[32];
+    e4vm_type_core_word words[32];
+    SHORTINT words_count;
     CHAR in_string[64];
   } e4vm_type_x4th;
 
