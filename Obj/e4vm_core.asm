@@ -190,20 +190,23 @@ _e4vm_core_do_next::
 ;e4vm_core.c:39: while (!((*v)->ip == 0)) {
 	ld	l, c
 	ld	h, b
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+;e4vm_core.c:41: (*v)->ip = (*v)->ip + 1;
+	ld	l, e
+	ld	h, d
 	ld	a, (hl)
 	inc	hl
 	ld	h, (hl)
 	ld	l, a
-;e4vm_core.c:41: (*v)->ip = (*v)->ip + 1;
-	ld	e, (hl)
 	inc	hl
-	ld	d, (hl)
-	dec	hl
+	ex	(sp), hl
+	ld	a, -2 (ix)
+	ld	(de), a
 	inc	de
-	ld	a, d
-	ld	(hl), e
-	inc	hl
-	ld	(hl), a
+	ld	a, -1 (ix)
+	ld	(de), a
 ;e4vm_core.c:42: word_index = (*v)->mem[(*v)->wp];
 	ld	l, c
 	ld	h, b
@@ -239,17 +242,12 @@ _e4vm_core_do_next::
 	jr	NC,00117$
 	inc	d
 00117$:
-	push	de
-	ld	e, l
-	ld	d, h
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
 	add	hl, hl
 	add	hl, de
-	add	hl, hl
-	add	hl, de
-	add	hl, hl
-	pop	de
-	add	hl, de
-	ld	de, #0x000a
+	ld	de, #0x000c
 	add	hl, de
 	ld	a, (hl)
 	inc	hl
@@ -328,7 +326,7 @@ _e4vm_core_do_exit::
 ; ---------------------------------
 _e4vm_core_add_core_words::
 	call	___sdcc_enter_ix
-	ld	hl, #-32
+	ld	hl, #-40
 	add	hl, sp
 	ld	sp, hl
 ;e4vm_core.c:61: __MOVE((CHAR*)"nop", _str__5, 4);
@@ -363,7 +361,7 @@ _e4vm_core_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_core.c:63: __MOVE((CHAR*)"dolist", _str__4, 7);
-	ld	hl, #8
+	ld	hl, #10
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -394,7 +392,7 @@ _e4vm_core_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_core.c:65: __MOVE((CHAR*)"next", _str__3, 5);
-	ld	hl, #16
+	ld	hl, #20
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -425,7 +423,7 @@ _e4vm_core_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_core.c:67: __MOVE((CHAR*)"exit", _str__2, 5);
-	ld	hl, #24
+	ld	hl, #30
 	add	hl, sp
 	ld	c, l
 	ld	b, h

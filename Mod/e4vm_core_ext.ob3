@@ -1,7 +1,7 @@
 MODULE e4vm_core_ext;
 IMPORT SYSTEM, C := Console, Platform, B := Basic,
 
-e4vm_type, e4vm_utils;
+e4vm_type, e4vm_utils, e4vm_core;
 
 (*# нет операции *)
 PROCEDURE quit* (VAR v: e4vm_type.x4thPtr);
@@ -67,6 +67,37 @@ BEGIN
   v.is_eval_mode := FALSE;
 END rbrac;
 
+(* # делаем последнее определенное слово immediate = true *)
+PROCEDURE immediate* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+	v.words[v.words_count - 1].immediate := TRUE;
+END immediate;
+
+(*# выполнить слово по указанному адресу*)
+PROCEDURE execute_addr* (
+  VAR v: e4vm_type.x4thPtr;
+  word_address : e4vm_type.word_addr_type
+);
+VAR word_idx:INTEGER;
+BEGIN
+  word_idx := e4vm_utils.look_up_word_idx_by_address(@v, word_address);
+  (* если слова нет в словаре - значит оно интерпретируется *)
+  IF word_idx = -1 THEN
+    v.ip := 0; v.wp := word_address;
+    e4vm_core.do_list(@v);
+    e4vm_core.do_next(@v);
+  ELSE
+    v.words[word_idx].proc(@v);
+  END
+END execute_addr;
+
+(* выполнить слово по адресу со стека ds - стек данных *)
+PROCEDURE execute* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+	v.ds_p := v.ds_p - 1;
+	execute_addr(@v, v.ds[v.ds_p]);
+END execute;
+
 PROCEDURE add_core_words* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   e4vm_utils.add_core_word(@v, "quit",    quit,    FALSE);
@@ -75,8 +106,10 @@ BEGIN
   e4vm_utils.add_core_word(@v, ",",       comma,   FALSE);
   e4vm_utils.add_core_word(@v, "branch",  branch,  FALSE);
   e4vm_utils.add_core_word(@v, "0branch", zbranch, FALSE);
-  e4vm_utils.add_core_word(@v, "[",       lbrac,   FALSE);
+  e4vm_utils.add_core_word(@v, "[",       lbrac,   TRUE);
   e4vm_utils.add_core_word(@v, "]",       rbrac,   FALSE);
+  e4vm_utils.add_core_word(@v, "immediate", immediate, TRUE);
+  e4vm_utils.add_core_word(@v, "execute", execute, FALSE);
 END add_core_words;
 
 BEGIN

@@ -17,6 +17,7 @@ export SHORTINT e4vm_utils_false_const (e4vm_type_x4thPtr *v);
 export void e4vm_utils_here_to_wp (e4vm_type_x4thPtr *v);
 export void e4vm_utils_init (e4vm_type_x4thPtr *v);
 export SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word);
+export SHORTINT e4vm_utils_look_up_word_idx_by_address (e4vm_type_x4thPtr *v, SHORTINT word_address);
 export CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v);
 export void e4vm_utils_read_string (e4vm_type_x4thPtr *v);
 export void e4vm_utils_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x);
@@ -29,7 +30,7 @@ export void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v);
 
 void e4vm_utils_add_core_word (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word, e4vm_type_ProcedureType proc, BOOLEAN immediate)
 {
-  __MOVE(word, (*v)->words[(*v)->words_count].word, 8);
+  __MOVE(word, (*v)->words[(*v)->words_count].word, 10);
   (*v)->words[(*v)->words_count].addr = (*v)->words_count;
   (*v)->words[(*v)->words_count].proc = proc;
   (*v)->words[(*v)->words_count].immediate = immediate;
@@ -46,13 +47,30 @@ SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_s
   _for__9 = (*v)->words_count - 1;
   i = 0;
   while (i <= _for__9) {
-    if (__STRCMPCC((*v)->words[i].word, word, 8, (CHAR*)"e4vm_utils", -907) == 0) {
+    if (__STRCMPCC((*v)->words[i].word, word, 10, (CHAR*)"e4vm_utils", -907) == 0) {
       return (*v)->words[i].addr;
     }
     i += 1;
   }
   Console_WriteStr((CHAR*)"look_up_word_address ERROR: unknown word ", 42);
-  Console_WriteStrLn((void*)word, 8);
+  Console_WriteStrLn((void*)word, 10);
+  return -1;
+}
+
+/*----------------------------------------------------------------------------*/
+SHORTINT e4vm_utils_look_up_word_idx_by_address (e4vm_type_x4thPtr *v, SHORTINT word_address)
+{
+  SHORTINT i, _for__11;
+  _for__11 = (*v)->words_count - 1;
+  i = 0;
+  while (i <= _for__11) {
+    if ((*v)->words[i].addr == word_address) {
+      return i;
+    }
+    i += 1;
+  }
+  Console_WriteStr((CHAR*)"look_up_word_idx_by_address ERROR: unknown word ", 49);
+  Console_WriteInt(word_address);
   return -1;
 }
 
@@ -191,9 +209,9 @@ CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v)
 void e4vm_utils_read_string (e4vm_type_x4thPtr *v)
 {
   CHAR str[64];
-  e4vm_type_x4thPtr _ptr__12 = NIL;
-  _ptr__12 = *v;
-  Console_ReadStr((void*)_ptr__12->in_string, 64, 64);
+  e4vm_type_x4thPtr _ptr__14 = NIL;
+  _ptr__14 = *v;
+  Console_ReadStr((void*)_ptr__14->in_string, 64, 64);
 }
 
 /*----------------------------------------------------------------------------*/

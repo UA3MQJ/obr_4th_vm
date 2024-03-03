@@ -38,6 +38,22 @@ BEGIN
   RETURN -1;	
 END look_up_word_address;
 
+(* # поиск слова по адресу *)
+PROCEDURE look_up_word_idx_by_address* (
+  VAR v: e4vm_type.x4thPtr;
+  word_address : e4vm_type.word_addr_type
+): INTEGER;
+VAR i: INTEGER;
+BEGIN
+	FOR i:=0 TO (v.words_count-1) DO
+	  IF (v.words[i].addr = word_address) THEN
+	    RETURN i;
+	  END;
+	END;
+	C.WriteStr("look_up_word_idx_by_address ERROR: unknown word "); C.WriteInt(word_address);
+  RETURN -1;	
+END look_up_word_idx_by_address;
+
 (* # добавляем операцию в память. то есть в память по адресу hereP кладем переданный адрес слова *)
 PROCEDURE here_to_wp* (
   VAR v: e4vm_type.x4thPtr

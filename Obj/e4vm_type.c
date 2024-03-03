@@ -8,7 +8,7 @@ typedef
   void (*e4vm_type_ProcedureType)(e4vm_type_x4thPtr*);
 
 typedef
-  CHAR e4vm_type_word_string_type[8];
+  CHAR e4vm_type_word_string_type[10];
 
 typedef
   struct e4vm_type_core_word {

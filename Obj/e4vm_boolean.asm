@@ -1273,7 +1273,7 @@ _e4vm_boolean_greater_eql::
 ; ---------------------------------
 _e4vm_boolean_add_core_words::
 	call	___sdcc_enter_ix
-	ld	hl, #-104
+	ld	hl, #-130
 	add	hl, sp
 	ld	sp, hl
 ;e4vm_boolean.c:171: __MOVE((CHAR*)"true", _str__18, 5);
@@ -1308,7 +1308,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:173: __MOVE((CHAR*)"false", _str__17, 6);
-	ld	hl, #8
+	ld	hl, #10
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1339,7 +1339,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:175: __MOVE((CHAR*)"not", _str__16, 4);
-	ld	hl, #16
+	ld	hl, #20
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1370,7 +1370,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:177: __MOVE((CHAR*)"invert", _str__15, 7);
-	ld	hl, #24
+	ld	hl, #30
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1401,7 +1401,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:179: __MOVE((CHAR*)"or", _str__14, 3);
-	ld	hl, #32
+	ld	hl, #40
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1432,7 +1432,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:181: __MOVE((CHAR*)"and", _str__13, 4);
-	ld	hl, #40
+	ld	hl, #50
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1463,7 +1463,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:183: __MOVE((CHAR*)"xor", _str__12, 4);
-	ld	hl, #48
+	ld	hl, #60
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1494,7 +1494,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:185: __MOVE((CHAR*)"<>", _str__11, 3);
-	ld	hl, #56
+	ld	hl, #70
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1525,7 +1525,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:187: __MOVE((CHAR*)"=", _str__10, 2);
-	ld	hl, #64
+	ld	hl, #80
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1556,7 +1556,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:189: __MOVE((CHAR*)"<", _str__9, 2);
-	ld	hl, #72
+	ld	hl, #90
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1587,7 +1587,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:191: __MOVE((CHAR*)">", _str__8, 2);
-	ld	hl, #80
+	ld	hl, #100
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1618,7 +1618,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:193: __MOVE((CHAR*)"<=", _str__7, 3);
-	ld	hl, #88
+	ld	hl, #110
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1649,7 +1649,7 @@ _e4vm_boolean_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_boolean.c:195: __MOVE((CHAR*)">=", _str__6, 3);
-	ld	hl, #96
+	ld	hl, #120
 	add	hl, sp
 	ld	c, l
 	ld	b, h

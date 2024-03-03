@@ -543,7 +543,7 @@
                             543 ; ---------------------------------
    0288                     544 _e4vm_stack_add_core_words::
    0288 CDr00r00      [17]  545 	call	___sdcc_enter_ix
-   028B 21 D0 FF      [10]  546 	ld	hl, #-48
+   028B 21 C4 FF      [10]  546 	ld	hl, #-60
    028E 39            [11]  547 	add	hl, sp
    028F F9            [ 6]  548 	ld	sp, hl
                             549 ;e4vm_stack.c:81: __MOVE((CHAR*)"drop", _str__7, 5);
@@ -578,7 +578,7 @@
    02BB F1            [10]  578 	pop	af
    02BC 33            [ 6]  579 	inc	sp
                             580 ;e4vm_stack.c:83: __MOVE((CHAR*)"swap", _str__6, 5);
-   02BD 21 08 00      [10]  581 	ld	hl, #8
+   02BD 21 0A 00      [10]  581 	ld	hl, #10
    02C0 39            [11]  582 	add	hl, sp
    02C1 4D            [ 4]  583 	ld	c, l
    02C2 44            [ 4]  584 	ld	b, h
@@ -609,7 +609,7 @@
    02E8 F1            [10]  609 	pop	af
    02E9 33            [ 6]  610 	inc	sp
                             611 ;e4vm_stack.c:85: __MOVE((CHAR*)"dup", _str__5, 4);
-   02EA 21 10 00      [10]  612 	ld	hl, #16
+   02EA 21 14 00      [10]  612 	ld	hl, #20
    02ED 39            [11]  613 	add	hl, sp
    02EE 4D            [ 4]  614 	ld	c, l
    02EF 44            [ 4]  615 	ld	b, h
@@ -640,7 +640,7 @@
    0315 F1            [10]  640 	pop	af
    0316 33            [ 6]  641 	inc	sp
                             642 ;e4vm_stack.c:87: __MOVE((CHAR*)"over", _str__4, 5);
-   0317 21 18 00      [10]  643 	ld	hl, #24
+   0317 21 1E 00      [10]  643 	ld	hl, #30
    031A 39            [11]  644 	add	hl, sp
    031B 4D            [ 4]  645 	ld	c, l
    031C 44            [ 4]  646 	ld	b, h
@@ -671,7 +671,7 @@
    0342 F1            [10]  671 	pop	af
    0343 33            [ 6]  672 	inc	sp
                             673 ;e4vm_stack.c:89: __MOVE((CHAR*)"rot", _str__3, 4);
-   0344 21 20 00      [10]  674 	ld	hl, #32
+   0344 21 28 00      [10]  674 	ld	hl, #40
    0347 39            [11]  675 	add	hl, sp
    0348 4D            [ 4]  676 	ld	c, l
    0349 44            [ 4]  677 	ld	b, h
@@ -702,7 +702,7 @@
    036F F1            [10]  702 	pop	af
    0370 33            [ 6]  703 	inc	sp
                             704 ;e4vm_stack.c:91: __MOVE((CHAR*)"nrot", _str__2, 5);
-   0371 21 28 00      [10]  705 	ld	hl, #40
+   0371 21 32 00      [10]  705 	ld	hl, #50
    0374 39            [11]  706 	add	hl, sp
    0375 4D            [ 4]  707 	ld	c, l
    0376 44            [ 4]  708 	ld	b, h

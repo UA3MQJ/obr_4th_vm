@@ -54,10 +54,10 @@ void e4vm_core_do_exit (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_core_add_core_words (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__5[8];
-  CHAR _str__4[8];
-  CHAR _str__3[8];
-  CHAR _str__2[8];
+  CHAR _str__5[10];
+  CHAR _str__4[10];
+  CHAR _str__3[10];
+  CHAR _str__2[10];
   __MOVE((CHAR*)"nop", _str__5, 4);
   e4vm_utils_add_core_word(v, (void*)_str__5, e4vm_core_do_nop, 0);
   __MOVE((CHAR*)"dolist", _str__4, 7);

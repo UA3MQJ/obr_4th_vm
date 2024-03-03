@@ -18,6 +18,7 @@
 	.globl _memcpy
 	.globl _e4vm_utils_add_core_word
 	.globl _e4vm_utils_look_up_word_address
+	.globl _e4vm_utils_look_up_word_idx_by_address
 	.globl _e4vm_utils_here_to_wp
 	.globl _e4vm_utils_add_op
 	.globl _e4vm_utils_add_op_from_string
@@ -61,14 +62,14 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;e4vm_utils.c:30: void e4vm_utils_add_core_word (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word, e4vm_type_ProcedureType proc, BOOLEAN immediate)
+;e4vm_utils.c:31: void e4vm_utils_add_core_word (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word, e4vm_type_ProcedureType proc, BOOLEAN immediate)
 ;	---------------------------------
 ; Function e4vm_utils_add_core_word
 ; ---------------------------------
 _e4vm_utils_add_core_word::
 	call	___sdcc_enter_ix
 	push	af
-;e4vm_utils.c:32: __MOVE(word, (*v)->words[(*v)->words_count].word, 8);
+;e4vm_utils.c:33: __MOVE(word, (*v)->words[(*v)->words_count].word, 10);
 	ld	c, 6 (ix)
 	ld	b, 7 (ix)
 	ld	a, 4 (ix)
@@ -87,24 +88,19 @@ _e4vm_utils_add_core_word::
 	adc	a, #0x00
 	ld	d, a
 	push	bc
-	ld	bc, #0x028d
+	ld	bc, #0x02cd
 	add	hl, bc
 	pop	bc
 	ld	a, (hl)
 	inc	hl
 	ld	h, (hl)
 	ld	l, a
-	push	de
-	ld	e, l
-	ld	d, h
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
 	add	hl, hl
 	add	hl, de
-	add	hl, hl
-	add	hl, de
-	add	hl, hl
-	pop	de
-	add	hl, de
-	ld	de, #0x0008
+	ld	de, #0x000a
 	push	de
 	push	bc
 	push	hl
@@ -112,7 +108,7 @@ _e4vm_utils_add_core_word::
 	pop	af
 	pop	af
 	pop	af
-;e4vm_utils.c:33: (*v)->words[(*v)->words_count].addr = (*v)->words_count;
+;e4vm_utils.c:34: (*v)->words[(*v)->words_count].addr = (*v)->words_count;
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -123,7 +119,7 @@ _e4vm_utils_add_core_word::
 	ex	de, hl
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x028d
+	ld	bc, #0x02cd
 	add	hl, bc
 	ld	c, (hl)
 	inc	hl
@@ -131,17 +127,16 @@ _e4vm_utils_add_core_word::
 	ld	l, c
 	ld	h, b
 	add	hl, hl
-	add	hl, bc
 	add	hl, hl
-	add	hl, bc
+	add	hl, hl
 	add	hl, hl
 	add	hl, de
-	ld	de, #0x0008
+	ld	de, #0x000a
 	add	hl, de
 	ld	(hl), c
 	inc	hl
 	ld	(hl), b
-;e4vm_utils.c:34: (*v)->words[(*v)->words_count].proc = proc;
+;e4vm_utils.c:35: (*v)->words[(*v)->words_count].proc = proc;
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -152,27 +147,25 @@ _e4vm_utils_add_core_word::
 	ex	de, hl
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x028d
+	ld	bc, #0x02cd
 	add	hl, bc
-	ld	c, (hl)
+	ld	a, (hl)
 	inc	hl
-	ld	b, (hl)
-	ld	l, c
-	ld	h, b
+	ld	h, (hl)
+	ld	l, a
 	add	hl, hl
-	add	hl, bc
 	add	hl, hl
-	add	hl, bc
+	add	hl, hl
 	add	hl, hl
 	add	hl, de
-	ld	bc, #0x000a
+	ld	bc, #0x000c
 	add	hl, bc
 	ld	a, 8 (ix)
 	ld	(hl), a
 	inc	hl
 	ld	a, 9 (ix)
 	ld	(hl), a
-;e4vm_utils.c:35: (*v)->words[(*v)->words_count].immediate = immediate;
+;e4vm_utils.c:36: (*v)->words[(*v)->words_count].immediate = immediate;
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -183,24 +176,22 @@ _e4vm_utils_add_core_word::
 	ex	de, hl
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x028d
+	ld	bc, #0x02cd
 	add	hl, bc
-	ld	c, (hl)
+	ld	a, (hl)
 	inc	hl
-	ld	b, (hl)
-	ld	l, c
-	ld	h, b
+	ld	h, (hl)
+	ld	l, a
 	add	hl, hl
-	add	hl, bc
 	add	hl, hl
-	add	hl, bc
+	add	hl, hl
 	add	hl, hl
 	add	hl, de
-	ld	bc, #0x000c
+	ld	bc, #0x000e
 	add	hl, bc
 	ld	a, 10 (ix)
 	ld	(hl), a
-;e4vm_utils.c:36: (*v)->words[(*v)->words_count].enabled = 1;
+;e4vm_utils.c:37: (*v)->words[(*v)->words_count].enabled = 1;
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -211,23 +202,21 @@ _e4vm_utils_add_core_word::
 	ex	de, hl
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x028d
+	ld	bc, #0x02cd
 	add	hl, bc
-	ld	c, (hl)
+	ld	a, (hl)
 	inc	hl
-	ld	b, (hl)
-	ld	l, c
-	ld	h, b
+	ld	h, (hl)
+	ld	l, a
 	add	hl, hl
-	add	hl, bc
 	add	hl, hl
-	add	hl, bc
+	add	hl, hl
 	add	hl, hl
 	add	hl, de
-	ld	bc, #0x000d
+	ld	bc, #0x000f
 	add	hl, bc
 	ld	(hl), #0x01
-;e4vm_utils.c:37: (*v)->mem[(*v)->words_count] = (*v)->words_count;
+;e4vm_utils.c:38: (*v)->mem[(*v)->words_count] = (*v)->words_count;
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -238,7 +227,7 @@ _e4vm_utils_add_core_word::
 	ex	de, hl
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x028d
+	ld	bc, #0x02cd
 	add	hl, bc
 	ld	c, (hl)
 	inc	hl
@@ -250,13 +239,13 @@ _e4vm_utils_add_core_word::
 	ld	(hl), c
 	inc	hl
 	ld	(hl), b
-;e4vm_utils.c:38: (*v)->words_count = (*v)->words_count + 1;
+;e4vm_utils.c:39: (*v)->words_count = (*v)->words_count + 1;
 	pop	hl
 	push	hl
 	ld	c, (hl)
 	inc	hl
 	ld	b, (hl)
-	ld	hl, #0x028d
+	ld	hl, #0x02cd
 	add	hl, bc
 	ld	c, (hl)
 	inc	hl
@@ -267,7 +256,7 @@ _e4vm_utils_add_core_word::
 	ld	(hl), c
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:39: (*v)->hereP = (*v)->words_count;
+;e4vm_utils.c:40: (*v)->hereP = (*v)->words_count;
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -278,7 +267,7 @@ _e4vm_utils_add_core_word::
 	ex	de, hl
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x028d
+	ld	bc, #0x02cd
 	add	hl, bc
 	ld	c, (hl)
 	inc	hl
@@ -288,11 +277,11 @@ _e4vm_utils_add_core_word::
 	inc	de
 	ld	a, b
 	ld	(de), a
-;e4vm_utils.c:40: }
+;e4vm_utils.c:41: }
 	pop	af
 	pop	ix
 	ret
-;e4vm_utils.c:43: SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word)
+;e4vm_utils.c:44: SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word)
 ;	---------------------------------
 ; Function e4vm_utils_look_up_word_address
 ; ---------------------------------
@@ -301,8 +290,7 @@ _e4vm_utils_look_up_word_address::
 	push	af
 	push	af
 	push	af
-	push	af
-;e4vm_utils.c:46: _for__9 = (*v)->words_count - 1;
+;e4vm_utils.c:47: _for__9 = (*v)->words_count - 1;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -311,13 +299,13 @@ _e4vm_utils_look_up_word_address::
 	inc	hl
 	ld	h, (hl)
 	ld	l, e
-	ld	de, #0x028d
+	ld	de, #0x02cd
 	add	hl, de
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
 	dec	de
-;e4vm_utils.c:48: while (i <= _for__9) {
+;e4vm_utils.c:49: while (i <= _for__9) {
 	xor	a, a
 	ld	-2 (ix), a
 	ld	-1 (ix), a
@@ -330,34 +318,33 @@ _e4vm_utils_look_up_word_address::
 	xor	a, #0x80
 00123$:
 	jp	M, 00105$
-;e4vm_utils.c:49: if (__STRCMPCC((*v)->words[i].word, word, 8, (CHAR*)"e4vm_utils", -907) == 0) {
+;e4vm_utils.c:50: if (__STRCMPCC((*v)->words[i].word, word, 10, (CHAR*)"e4vm_utils", -907) == 0) {
 	ld	l, c
 	ld	h, b
 	ld	a, (hl)
 	inc	hl
 	ld	h, (hl)
-	add	a, #0xcd
-	ld	-8 (ix), a
-	ld	a, h
-	adc	a, #0x00
-	ld	-7 (ix), a
+	ld	l, a
 	push	de
-	ld	e, -2 (ix)
-	ld	d, -1 (ix)
-	ld	l, e
-	ld	h, d
-	add	hl, hl
+	ld	de, #0x00cd
 	add	hl, de
-	add	hl, hl
-	add	hl, de
-	add	hl, hl
 	pop	de
-	ld	-6 (ix), l
-	ld	-5 (ix), h
-	ld	a, -8 (ix)
+	ld	a, -2 (ix)
+	ld	-6 (ix), a
+	ld	a, -1 (ix)
+	ld	-5 (ix), a
+	ld	a, #0x04+1
+	jr	00125$
+00124$:
+	sla	-6 (ix)
+	rl	-5 (ix)
+00125$:
+	dec	a
+	jr	NZ,00124$
+	ld	a, l
 	add	a, -6 (ix)
 	ld	-4 (ix), a
-	ld	a, -7 (ix)
+	ld	a, h
 	adc	a, -5 (ix)
 	ld	-3 (ix), a
 	push	bc
@@ -376,7 +363,7 @@ _e4vm_utils_look_up_word_address::
 	ld	a, h
 	or	a, l
 	jr	NZ,00102$
-;e4vm_utils.c:50: return (*v)->words[i].addr;
+;e4vm_utils.c:51: return (*v)->words[i].addr;
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -384,10 +371,10 @@ _e4vm_utils_look_up_word_address::
 	ld	b, (hl)
 	ld	hl, #0x00cd
 	add	hl, bc
-	ld	e, -6 (ix)
-	ld	d, -5 (ix)
+	pop	de
+	push	de
 	add	hl, de
-	ld	de, #0x0008
+	ld	de, #0x000a
 	add	hl, de
 	ld	a, (hl)
 	inc	hl
@@ -395,16 +382,16 @@ _e4vm_utils_look_up_word_address::
 	ld	l, a
 	jr	00106$
 00102$:
-;e4vm_utils.c:52: i += 1;
+;e4vm_utils.c:53: i += 1;
 	inc	-2 (ix)
-	jp	NZ,00103$
+	jr	NZ,00103$
 	inc	-1 (ix)
 	jp	00103$
 00105$:
-;e4vm_utils.c:54: Console_WriteStr((CHAR*)"look_up_word_address ERROR: unknown word ", 42);
+;e4vm_utils.c:55: Console_WriteStr((CHAR*)"look_up_word_address ERROR: unknown word ", 42);
 	ld	hl, #___str_0
 	call	_Console_WriteStr_C_COMPACT
-;e4vm_utils.c:55: Console_WriteStrLn((void*)word, 8);
+;e4vm_utils.c:56: Console_WriteStrLn((void*)word, 10);
 	ld	c, 6 (ix)
 	ld	b, 7 (ix)
 	ld	-2 (ix), c
@@ -413,23 +400,128 @@ _e4vm_utils_look_up_word_address::
 	ld	h, b
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:56: return -1;
+;e4vm_utils.c:57: return -1;
 	ld	hl, #0xffff
 00106$:
-;e4vm_utils.c:57: }
+;e4vm_utils.c:58: }
 	ld	sp, ix
 	pop	ix
 	ret
 ___str_0:
 	.ascii "look_up_word_address ERROR: unknown word "
 	.db 0x00
-;e4vm_utils.c:60: void e4vm_utils_here_to_wp (e4vm_type_x4thPtr *v)
+;e4vm_utils.c:61: SHORTINT e4vm_utils_look_up_word_idx_by_address (e4vm_type_x4thPtr *v, SHORTINT word_address)
+;	---------------------------------
+; Function e4vm_utils_look_up_word_idx_by_address
+; ---------------------------------
+_e4vm_utils_look_up_word_idx_by_address::
+	call	___sdcc_enter_ix
+	push	af
+	push	af
+	push	af
+	push	af
+;e4vm_utils.c:64: _for__11 = (*v)->words_count - 1;
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	ld	c, (hl)
+	inc	hl
+	ld	b, (hl)
+	ld	l, c
+	ld	h, b
+	ld	de, #0x02cd
+	add	hl, de
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	a, e
+	add	a, #0xff
+	ld	-8 (ix), a
+	ld	a, d
+	adc	a, #0xff
+	ld	-7 (ix), a
+;e4vm_utils.c:65: i = 0;
+	xor	a, a
+	ld	-6 (ix), a
+	ld	-5 (ix), a
+;e4vm_utils.c:66: while (i <= _for__11) {
+	ld	hl, #0x00cd
+	add	hl, bc
+	ld	-4 (ix), l
+	ld	-3 (ix), h
+	xor	a, a
+	ld	-2 (ix), a
+	ld	-1 (ix), a
+00103$:
+	ld	a, -8 (ix)
+	sub	a, -2 (ix)
+	ld	a, -7 (ix)
+	sbc	a, -1 (ix)
+	jp	PO, 00123$
+	xor	a, #0x80
+00123$:
+	jp	M, 00105$
+;e4vm_utils.c:67: if ((*v)->words[i].addr == word_address) {
+	ld	l, -2 (ix)
+	ld	h, -1 (ix)
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	ld	e, -4 (ix)
+	ld	d, -3 (ix)
+	add	hl, de
+	ld	de, #0x000a
+	add	hl, de
+	ld	c, (hl)
+	inc	hl
+	ld	b, (hl)
+	ld	l, 6 (ix)
+	ld	h, 7 (ix)
+	cp	a, a
+	sbc	hl, bc
+	jr	NZ,00102$
+;e4vm_utils.c:68: return i;
+	pop	bc
+	pop	hl
+	push	hl
+	push	bc
+	jr	00106$
+00102$:
+;e4vm_utils.c:70: i += 1;
+	inc	-2 (ix)
+	jr	NZ,00126$
+	inc	-1 (ix)
+00126$:
+	ld	a, -2 (ix)
+	ld	-6 (ix), a
+	ld	a, -1 (ix)
+	ld	-5 (ix), a
+	jr	00103$
+00105$:
+;e4vm_utils.c:72: Console_WriteStr((CHAR*)"look_up_word_idx_by_address ERROR: unknown word ", 49);
+	ld	hl, #___str_1
+	call	_Console_WriteStr_C_COMPACT
+;e4vm_utils.c:73: Console_WriteInt(word_address);
+	ld	l, 6 (ix)
+	ld	h, 7 (ix)
+	call	_Console_WriteInt_COMPACT
+;e4vm_utils.c:74: return -1;
+	ld	hl, #0xffff
+00106$:
+;e4vm_utils.c:75: }
+	ld	sp, ix
+	pop	ix
+	ret
+___str_1:
+	.ascii "look_up_word_idx_by_address ERROR: unknown word "
+	.db 0x00
+;e4vm_utils.c:78: void e4vm_utils_here_to_wp (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_utils_here_to_wp
 ; ---------------------------------
 _e4vm_utils_here_to_wp::
 	call	___sdcc_enter_ix
-;e4vm_utils.c:62: (*v)->wp = (*v)->hereP;
+;e4vm_utils.c:80: (*v)->wp = (*v)->hereP;
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	ld	a, (hl)
@@ -450,16 +542,16 @@ _e4vm_utils_here_to_wp::
 	inc	bc
 	ld	a, d
 	ld	(bc), a
-;e4vm_utils.c:63: }
+;e4vm_utils.c:81: }
 	pop	ix
 	ret
-;e4vm_utils.c:66: void e4vm_utils_add_op (e4vm_type_x4thPtr *v, SHORTINT word_adr)
+;e4vm_utils.c:84: void e4vm_utils_add_op (e4vm_type_x4thPtr *v, SHORTINT word_adr)
 ;	---------------------------------
 ; Function e4vm_utils_add_op
 ; ---------------------------------
 _e4vm_utils_add_op::
 	call	___sdcc_enter_ix
-;e4vm_utils.c:68: (*v)->mem[(*v)->hereP] = word_adr;
+;e4vm_utils.c:86: (*v)->mem[(*v)->hereP] = word_adr;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -488,7 +580,7 @@ _e4vm_utils_add_op::
 	inc	hl
 	ld	a, 7 (ix)
 	ld	(hl), a
-;e4vm_utils.c:69: (*v)->hereP = (*v)->hereP + 1;
+;e4vm_utils.c:87: (*v)->hereP = (*v)->hereP + 1;
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -505,15 +597,15 @@ _e4vm_utils_add_op::
 	ld	(hl), c
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:70: }
+;e4vm_utils.c:88: }
 	pop	ix
 	ret
-;e4vm_utils.c:73: void e4vm_utils_add_op_from_string (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word)
+;e4vm_utils.c:91: void e4vm_utils_add_op_from_string (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word)
 ;	---------------------------------
 ; Function e4vm_utils_add_op_from_string
 ; ---------------------------------
 _e4vm_utils_add_op_from_string::
-;e4vm_utils.c:75: e4vm_utils_add_op(v, e4vm_utils_look_up_word_address(v, word));
+;e4vm_utils.c:93: e4vm_utils_add_op(v, e4vm_utils_look_up_word_address(v, word));
 	ld	iy, #4
 	add	iy, sp
 	ld	l, 0 (iy)
@@ -536,16 +628,16 @@ _e4vm_utils_add_op_from_string::
 	call	_e4vm_utils_add_op
 	pop	af
 	pop	af
-;e4vm_utils.c:76: }
+;e4vm_utils.c:94: }
 	ret
-;e4vm_utils.c:79: void e4vm_utils_init (e4vm_type_x4thPtr *v)
+;e4vm_utils.c:97: void e4vm_utils_init (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_utils_init
 ; ---------------------------------
 _e4vm_utils_init::
 	call	___sdcc_enter_ix
 	push	af
-;e4vm_utils.c:82: (*v)->ip = 0;
+;e4vm_utils.c:100: (*v)->ip = 0;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -557,7 +649,7 @@ _e4vm_utils_init::
 	ld	(de), a
 	inc	de
 	ld	(de), a
-;e4vm_utils.c:83: (*v)->wp = 0;
+;e4vm_utils.c:101: (*v)->wp = 0;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -569,7 +661,7 @@ _e4vm_utils_init::
 	ld	(de), a
 	inc	de
 	ld	(de), a
-;e4vm_utils.c:84: (*v)->hereP = 0;
+;e4vm_utils.c:102: (*v)->hereP = 0;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -581,7 +673,7 @@ _e4vm_utils_init::
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:85: (*v)->rs_p = 0;
+;e4vm_utils.c:103: (*v)->rs_p = 0;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -593,7 +685,7 @@ _e4vm_utils_init::
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:86: (*v)->ds_p = 0;
+;e4vm_utils.c:104: (*v)->ds_p = 0;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -605,19 +697,19 @@ _e4vm_utils_init::
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:87: (*v)->words_count = 0;
+;e4vm_utils.c:105: (*v)->words_count = 0;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
-	ld	hl, #0x028d
+	ld	hl, #0x02cd
 	add	hl, de
 	xor	a, a
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:88: (*v)->cell_bit_size = 16;
+;e4vm_utils.c:106: (*v)->cell_bit_size = 16;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -628,7 +720,7 @@ _e4vm_utils_init::
 	ld	(hl), #0x10
 	inc	hl
 	ld	(hl), #0x00
-;e4vm_utils.c:89: (*v)->is_eval_mode = 1;
+;e4vm_utils.c:107: (*v)->is_eval_mode = 1;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -637,7 +729,7 @@ _e4vm_utils_init::
 	ld	hl, #0x00cc
 	add	hl, de
 	ld	(hl), #0x01
-;e4vm_utils.c:91: while (i <= 31) {
+;e4vm_utils.c:109: while (i <= 31) {
 	ld	de, #0x0000
 00101$:
 	ld	a, #0x1f
@@ -648,7 +740,7 @@ _e4vm_utils_init::
 	xor	a, #0x80
 00131$:
 	jp	M, 00103$
-;e4vm_utils.c:92: (*v)->mem[i] = 0;
+;e4vm_utils.c:110: (*v)->mem[i] = 0;
 	ld	l, c
 	ld	h, b
 	ld	a, (hl)
@@ -672,11 +764,11 @@ _e4vm_utils_init::
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:93: i += 1;
+;e4vm_utils.c:111: i += 1;
 	inc	de
 	jr	00101$
 00103$:
-;e4vm_utils.c:96: while (i <= 31) {
+;e4vm_utils.c:114: while (i <= 31) {
 	ld	hl, #0x0000
 	ex	(sp), hl
 00104$:
@@ -688,7 +780,7 @@ _e4vm_utils_init::
 	xor	a, #0x80
 00132$:
 	jp	M, 00107$
-;e4vm_utils.c:97: (*v)->rs[i] = 0;
+;e4vm_utils.c:115: (*v)->rs[i] = 0;
 	ld	l, c
 	ld	h, b
 	ld	e, (hl)
@@ -705,7 +797,7 @@ _e4vm_utils_init::
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:98: (*v)->ds[i] = 0;
+;e4vm_utils.c:116: (*v)->ds[i] = 0;
 	ld	l, c
 	ld	h, b
 	ld	a, (hl)
@@ -721,17 +813,17 @@ _e4vm_utils_init::
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:99: i += 1;
+;e4vm_utils.c:117: i += 1;
 	inc	-2 (ix)
 	jr	NZ,00104$
 	inc	-1 (ix)
 	jr	00104$
 00107$:
-;e4vm_utils.c:101: }
+;e4vm_utils.c:119: }
 	pop	af
 	pop	ix
 	ret
-;e4vm_utils.c:104: void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v)
+;e4vm_utils.c:122: void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_utils_vm_stat
 ; ---------------------------------
@@ -741,14 +833,14 @@ _e4vm_utils_vm_stat::
 	push	af
 	push	af
 	push	af
-;e4vm_utils.c:107: Console_WriteStrLn((CHAR*)" ", 2);
-	ld	hl, #___str_1
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:108: Console_WriteStr((CHAR*)"ip:", 4);
+;e4vm_utils.c:125: Console_WriteStrLn((CHAR*)" ", 2);
 	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
-;e4vm_utils.c:109: Console_WriteInt((*v)->ip);
+	call	_Console_WriteLn_COMPACT
+;e4vm_utils.c:126: Console_WriteStr((CHAR*)"ip:", 4);
+	ld	hl, #___str_3
+	call	_Console_WriteStr_C_COMPACT
+;e4vm_utils.c:127: Console_WriteInt((*v)->ip);
 	ld	a, 4 (ix)
 	ld	-8 (ix), a
 	ld	a, 5 (ix)
@@ -764,10 +856,10 @@ _e4vm_utils_vm_stat::
 	ld	h, (hl)
 	ld	l, c
 	call	_Console_WriteInt_COMPACT
-;e4vm_utils.c:110: Console_WriteStr((CHAR*)" wp:", 5);
-	ld	hl, #___str_3
+;e4vm_utils.c:128: Console_WriteStr((CHAR*)" wp:", 5);
+	ld	hl, #___str_4
 	call	_Console_WriteStr_C_COMPACT
-;e4vm_utils.c:111: Console_WriteInt((*v)->wp);
+;e4vm_utils.c:129: Console_WriteInt((*v)->wp);
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -781,10 +873,10 @@ _e4vm_utils_vm_stat::
 	ld	h, (hl)
 	ld	l, c
 	call	_Console_WriteInt_COMPACT
-;e4vm_utils.c:112: Console_WriteStr((CHAR*)" hereP:", 8);
-	ld	hl, #___str_4
+;e4vm_utils.c:130: Console_WriteStr((CHAR*)" hereP:", 8);
+	ld	hl, #___str_5
 	call	_Console_WriteStr_C_COMPACT
-;e4vm_utils.c:113: Console_WriteInt((*v)->hereP);
+;e4vm_utils.c:131: Console_WriteInt((*v)->hereP);
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -798,18 +890,18 @@ _e4vm_utils_vm_stat::
 	ld	h, (hl)
 	ld	l, c
 	call	_Console_WriteInt_COMPACT
-;e4vm_utils.c:114: Console_WriteStrLn((CHAR*)" ", 2);
-	ld	hl, #___str_1
+;e4vm_utils.c:132: Console_WriteStrLn((CHAR*)" ", 2);
+	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:115: Console_WriteStrLn((CHAR*)" ", 2);
-	ld	hl, #___str_1
+;e4vm_utils.c:133: Console_WriteStrLn((CHAR*)" ", 2);
+	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:116: Console_WriteStr((CHAR*)"rs_p:", 6);
-	ld	hl, #___str_5
+;e4vm_utils.c:134: Console_WriteStr((CHAR*)"rs_p:", 6);
+	ld	hl, #___str_6
 	call	_Console_WriteStr_C_COMPACT
-;e4vm_utils.c:117: Console_WriteInt((*v)->rs_p);
+;e4vm_utils.c:135: Console_WriteInt((*v)->rs_p);
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -823,15 +915,15 @@ _e4vm_utils_vm_stat::
 	ld	h, (hl)
 	ld	l, c
 	call	_Console_WriteInt_COMPACT
-;e4vm_utils.c:118: Console_WriteStrLn((CHAR*)" ", 2);
-	ld	hl, #___str_1
+;e4vm_utils.c:136: Console_WriteStrLn((CHAR*)" ", 2);
+	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:119: Console_WriteStrLn((CHAR*)"rs: [", 6);
-	ld	hl, #___str_6
+;e4vm_utils.c:137: Console_WriteStrLn((CHAR*)"rs: [", 6);
+	ld	hl, #___str_7
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:121: while (i <= 31) {
+;e4vm_utils.c:139: while (i <= 31) {
 	xor	a, a
 	ld	-2 (ix), a
 	ld	-1 (ix), a
@@ -844,7 +936,7 @@ _e4vm_utils_vm_stat::
 	xor	a, #0x80
 00145$:
 	jp	M, 00103$
-;e4vm_utils.c:122: Console_WriteInt((*v)->rs[i]);
+;e4vm_utils.c:140: Console_WriteInt((*v)->rs[i]);
 	pop	hl
 	push	hl
 	ld	a, (hl)
@@ -869,23 +961,23 @@ _e4vm_utils_vm_stat::
 	ld	h, (hl)
 	ld	l, c
 	call	_Console_WriteInt_COMPACT
-;e4vm_utils.c:123: Console_WriteStr((CHAR*)" ", 2);
-	ld	hl, #___str_1
+;e4vm_utils.c:141: Console_WriteStr((CHAR*)" ", 2);
+	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
-;e4vm_utils.c:124: i += 1;
+;e4vm_utils.c:142: i += 1;
 	inc	-2 (ix)
 	jr	NZ,00101$
 	inc	-1 (ix)
 	jr	00101$
 00103$:
-;e4vm_utils.c:126: Console_WriteStrLn((CHAR*)"]", 2);
-	ld	hl, #___str_7
-	call	_Console_WriteStr_C_COMPACT
-	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:127: Console_WriteStr((CHAR*)"ds_p:", 6);
+;e4vm_utils.c:144: Console_WriteStrLn((CHAR*)"]", 2);
 	ld	hl, #___str_8
 	call	_Console_WriteStr_C_COMPACT
-;e4vm_utils.c:128: Console_WriteInt((*v)->ds_p);
+	call	_Console_WriteLn_COMPACT
+;e4vm_utils.c:145: Console_WriteStr((CHAR*)"ds_p:", 6);
+	ld	hl, #___str_9
+	call	_Console_WriteStr_C_COMPACT
+;e4vm_utils.c:146: Console_WriteInt((*v)->ds_p);
 	pop	hl
 	push	hl
 	ld	c, (hl)
@@ -899,15 +991,15 @@ _e4vm_utils_vm_stat::
 	ld	h, (hl)
 	ld	l, c
 	call	_Console_WriteInt_COMPACT
-;e4vm_utils.c:129: Console_WriteStrLn((CHAR*)" ", 2);
-	ld	hl, #___str_1
+;e4vm_utils.c:147: Console_WriteStrLn((CHAR*)" ", 2);
+	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:130: Console_WriteStrLn((CHAR*)"ds: [", 6);
-	ld	hl, #___str_9
+;e4vm_utils.c:148: Console_WriteStrLn((CHAR*)"ds: [", 6);
+	ld	hl, #___str_10
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:132: while (i <= 31) {
+;e4vm_utils.c:150: while (i <= 31) {
 	ld	bc, #0x0000
 00104$:
 	ld	a, #0x1f
@@ -918,7 +1010,7 @@ _e4vm_utils_vm_stat::
 	xor	a, #0x80
 00147$:
 	jp	M, 00106$
-;e4vm_utils.c:133: Console_WriteInt((*v)->ds[i]);
+;e4vm_utils.c:151: Console_WriteInt((*v)->ds[i]);
 	pop	hl
 	push	hl
 	ld	e, (hl)
@@ -937,22 +1029,22 @@ _e4vm_utils_vm_stat::
 	ld	l, a
 	push	bc
 	call	_Console_WriteInt_COMPACT
-	ld	hl, #___str_1
+	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
 	pop	bc
-;e4vm_utils.c:135: i += 1;
+;e4vm_utils.c:153: i += 1;
 	inc	bc
 	jr	00104$
 00106$:
-;e4vm_utils.c:137: Console_WriteStrLn((CHAR*)"]", 2);
-	ld	hl, #___str_7
+;e4vm_utils.c:155: Console_WriteStrLn((CHAR*)"]", 2);
+	ld	hl, #___str_8
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:138: Console_WriteStrLn((CHAR*)"mem: [", 7);
-	ld	hl, #___str_10
+;e4vm_utils.c:156: Console_WriteStrLn((CHAR*)"mem: [", 7);
+	ld	hl, #___str_11
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:140: while (i <= 31) {
+;e4vm_utils.c:158: while (i <= 31) {
 	ld	bc, #0x0000
 00107$:
 	ld	a, #0x1f
@@ -963,7 +1055,7 @@ _e4vm_utils_vm_stat::
 	xor	a, #0x80
 00148$:
 	jp	M, 00109$
-;e4vm_utils.c:141: Console_WriteInt((*v)->mem[i]);
+;e4vm_utils.c:159: Console_WriteInt((*v)->mem[i]);
 	pop	hl
 	push	hl
 	ld	e, (hl)
@@ -985,100 +1077,100 @@ _e4vm_utils_vm_stat::
 	push	bc
 	ld	l, e
 	call	_Console_WriteInt_COMPACT
-	ld	hl, #___str_1
+	ld	hl, #___str_2
 	call	_Console_WriteStr_C_COMPACT
 	pop	bc
-;e4vm_utils.c:143: i += 1;
+;e4vm_utils.c:161: i += 1;
 	inc	bc
 	jr	00107$
 00109$:
-;e4vm_utils.c:145: Console_WriteStrLn((CHAR*)"]", 2);
-	ld	hl, #___str_7
+;e4vm_utils.c:163: Console_WriteStrLn((CHAR*)"]", 2);
+	ld	hl, #___str_8
 	call	_Console_WriteStr_C_COMPACT
 	call	_Console_WriteLn_COMPACT
-;e4vm_utils.c:146: }
+;e4vm_utils.c:164: }
 	ld	sp, ix
 	pop	ix
 	ret
-___str_1:
+___str_2:
 	.ascii " "
 	.db 0x00
-___str_2:
+___str_3:
 	.ascii "ip:"
 	.db 0x00
-___str_3:
+___str_4:
 	.ascii " wp:"
 	.db 0x00
-___str_4:
+___str_5:
 	.ascii " hereP:"
 	.db 0x00
-___str_5:
+___str_6:
 	.ascii "rs_p:"
 	.db 0x00
-___str_6:
+___str_7:
 	.ascii "rs: ["
 	.db 0x00
-___str_7:
+___str_8:
 	.ascii "]"
 	.db 0x00
-___str_8:
+___str_9:
 	.ascii "ds_p:"
 	.db 0x00
-___str_9:
+___str_10:
 	.ascii "ds: ["
 	.db 0x00
-___str_10:
+___str_11:
 	.ascii "mem: ["
 	.db 0x00
-;e4vm_utils.c:149: SHORTINT e4vm_utils_true_const (e4vm_type_x4thPtr *v)
+;e4vm_utils.c:167: SHORTINT e4vm_utils_true_const (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_utils_true_const
 ; ---------------------------------
 _e4vm_utils_true_const::
-;e4vm_utils.c:151: return -1;
+;e4vm_utils.c:169: return -1;
 	ld	hl, #0xffff
-;e4vm_utils.c:152: }
+;e4vm_utils.c:170: }
 	ret
-;e4vm_utils.c:155: SHORTINT e4vm_utils_false_const (e4vm_type_x4thPtr *v)
+;e4vm_utils.c:173: SHORTINT e4vm_utils_false_const (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_utils_false_const
 ; ---------------------------------
 _e4vm_utils_false_const::
-;e4vm_utils.c:157: return 0;
+;e4vm_utils.c:175: return 0;
 	ld	hl, #0x0000
-;e4vm_utils.c:158: }
+;e4vm_utils.c:176: }
 	ret
-;e4vm_utils.c:161: void e4vm_utils_error (CHAR *err, SHORTINT err__len)
+;e4vm_utils.c:179: void e4vm_utils_error (CHAR *err, SHORTINT err__len)
 ;	---------------------------------
 ; Function e4vm_utils_error
 ; ---------------------------------
 _e4vm_utils_error::
-;e4vm_utils.c:163: Console_WriteStr((CHAR*)"Error: ", 8);
-	ld	hl, #___str_11
+;e4vm_utils.c:181: Console_WriteStr((CHAR*)"Error: ", 8);
+	ld	hl, #___str_12
 	call	_Console_WriteStr_C_COMPACT
-;e4vm_utils.c:164: Console_WriteStr((void*)err, err__len);
+;e4vm_utils.c:182: Console_WriteStr((void*)err, err__len);
 	pop	bc
 	pop	hl
 	push	hl
 	push	bc
 	call	_Console_WriteStr_C_COMPACT
-;e4vm_utils.c:165: Console_WriteStrLn((CHAR*)"", 1);
-	ld	hl, #___str_12
+;e4vm_utils.c:183: Console_WriteStrLn((CHAR*)"", 1);
+	ld	hl, #___str_13
 	call	_Console_WriteStr_C_COMPACT
-;e4vm_utils.c:166: }
+;e4vm_utils.c:184: }
 	jp  _Console_WriteLn_COMPACT
-___str_11:
+___str_12:
 	.ascii "Error: "
 	.db 0x00
-___str_12:
+___str_13:
 	.db 0x00
-;e4vm_utils.c:169: void e4vm_utils_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x)
+;e4vm_utils.c:187: void e4vm_utils_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x)
 ;	---------------------------------
 ; Function e4vm_utils_stack_ds_push
 ; ---------------------------------
 _e4vm_utils_stack_ds_push::
 	call	___sdcc_enter_ix
-;e4vm_utils.c:171: (*v)->ds[(*v)->ds_p] = x;
+;e4vm_utils.c:189: (*v)->ds[(*v)->ds_p] = x;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -1107,7 +1199,7 @@ _e4vm_utils_stack_ds_push::
 	inc	hl
 	ld	a, 7 (ix)
 	ld	(hl), a
-;e4vm_utils.c:172: (*v)->ds_p = (*v)->ds_p + 1;
+;e4vm_utils.c:190: (*v)->ds_p = (*v)->ds_p + 1;
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -1124,16 +1216,16 @@ _e4vm_utils_stack_ds_push::
 	ld	(hl), c
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:173: }
+;e4vm_utils.c:191: }
 	pop	ix
 	ret
-;e4vm_utils.c:176: void e4vm_utils_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x)
+;e4vm_utils.c:194: void e4vm_utils_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x)
 ;	---------------------------------
 ; Function e4vm_utils_stack_rs_push
 ; ---------------------------------
 _e4vm_utils_stack_rs_push::
 	call	___sdcc_enter_ix
-;e4vm_utils.c:178: (*v)->rs[(*v)->rs_p] = x;
+;e4vm_utils.c:196: (*v)->rs[(*v)->rs_p] = x;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -1162,7 +1254,7 @@ _e4vm_utils_stack_rs_push::
 	inc	hl
 	ld	a, 7 (ix)
 	ld	(hl), a
-;e4vm_utils.c:179: (*v)->rs_p = (*v)->rs_p + 1;
+;e4vm_utils.c:197: (*v)->rs_p = (*v)->rs_p + 1;
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -1179,26 +1271,26 @@ _e4vm_utils_stack_rs_push::
 	ld	(hl), c
 	inc	hl
 	ld	(hl), a
-;e4vm_utils.c:180: }
+;e4vm_utils.c:198: }
 	pop	ix
 	ret
-;e4vm_utils.c:183: CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v)
+;e4vm_utils.c:201: CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_utils_read_char
 ; ---------------------------------
 _e4vm_utils_read_char::
-;e4vm_utils.c:185: do {
+;e4vm_utils.c:203: do {
 00101$:
-;e4vm_utils.c:186: } while (!(!(Basic_PEEK(23556) == 255)));
+;e4vm_utils.c:204: } while (!(!(Basic_PEEK(23556) == 255)));
 	ld	a, (#0x5c04)
 	inc	a
 	jr	Z,00101$
-;e4vm_utils.c:187: return Basic_PEEK(23560);
+;e4vm_utils.c:205: return Basic_PEEK(23560);
 	ld	hl, #0x5c08
 	ld	l, (hl)
-;e4vm_utils.c:188: }
+;e4vm_utils.c:206: }
 	ret
-;e4vm_utils.c:191: void e4vm_utils_read_string (e4vm_type_x4thPtr *v)
+;e4vm_utils.c:209: void e4vm_utils_read_string (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_utils_read_string
 ; ---------------------------------
@@ -1206,7 +1298,7 @@ _e4vm_utils_read_string::
 	ld	hl, #-64
 	add	hl, sp
 	ld	sp, hl
-;e4vm_utils.c:195: _ptr__12 = *v;
+;e4vm_utils.c:213: _ptr__14 = *v;
 	ld	hl, #66
 	add	hl, sp
 	ld	a, (hl)
@@ -1216,8 +1308,8 @@ _e4vm_utils_read_string::
 	ld	c, (hl)
 	inc	hl
 	ld	b, (hl)
-;e4vm_utils.c:196: Console_ReadStr((void*)_ptr__12->in_string, 64, 64);
-	ld	hl, #0x028f
+;e4vm_utils.c:214: Console_ReadStr((void*)_ptr__14->in_string, 64, 64);
+	ld	hl, #0x02cf
 	add	hl, bc
 	ld	a, #0x40
 	push	af
@@ -1229,21 +1321,21 @@ _e4vm_utils_read_string::
 	pop	af
 	pop	af
 	inc	sp
-;e4vm_utils.c:197: }
+;e4vm_utils.c:215: }
 	ld	hl, #64
 	add	hl, sp
 	ld	sp, hl
 	ret
-;e4vm_utils.c:201: export void *e4vm_utils__init (void)
+;e4vm_utils.c:219: export void *e4vm_utils__init (void)
 ;	---------------------------------
 ; Function e4vm_utils__init
 ; ---------------------------------
 _e4vm_utils__init::
-;e4vm_utils.c:203: __DEFMOD;
+;e4vm_utils.c:221: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_utils.c:206: __IMPORT(e4vm_type__init);
-;e4vm_utils.c:210: }
+;e4vm_utils.c:224: __IMPORT(e4vm_type__init);
+;e4vm_utils.c:228: }
 	jp  _e4vm_type__init
 	.area _CODE
 	.area _INITIALIZER

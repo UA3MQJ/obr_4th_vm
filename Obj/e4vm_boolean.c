@@ -155,19 +155,19 @@ void e4vm_boolean_greater_eql (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_boolean_add_core_words (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__18[8];
-  CHAR _str__17[8];
-  CHAR _str__16[8];
-  CHAR _str__15[8];
-  CHAR _str__14[8];
-  CHAR _str__13[8];
-  CHAR _str__12[8];
-  CHAR _str__11[8];
-  CHAR _str__10[8];
-  CHAR _str__9[8];
-  CHAR _str__8[8];
-  CHAR _str__7[8];
-  CHAR _str__6[8];
+  CHAR _str__18[10];
+  CHAR _str__17[10];
+  CHAR _str__16[10];
+  CHAR _str__15[10];
+  CHAR _str__14[10];
+  CHAR _str__13[10];
+  CHAR _str__12[10];
+  CHAR _str__11[10];
+  CHAR _str__10[10];
+  CHAR _str__9[10];
+  CHAR _str__8[10];
+  CHAR _str__7[10];
+  CHAR _str__6[10];
   __MOVE((CHAR*)"true", _str__18, 5);
   e4vm_utils_add_core_word(v, (void*)_str__18, e4vm_boolean_true, 0);
   __MOVE((CHAR*)"false", _str__17, 6);

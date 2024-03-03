@@ -14,7 +14,7 @@ TYPE
   stack_type* = INTEGER;
   mem_type* = INTEGER;
   word_addr_type* = INTEGER;
-  word_string_type* = ARRAY 8 OF CHAR;
+  word_string_type* = ARRAY 10 OF CHAR;
 
 TYPE
   core_word* = RECORD [untagged]

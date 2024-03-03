@@ -72,12 +72,12 @@ void e4vm_stack_nrot (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_stack_add_core_words (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__7[8];
-  CHAR _str__6[8];
-  CHAR _str__5[8];
-  CHAR _str__4[8];
-  CHAR _str__3[8];
-  CHAR _str__2[8];
+  CHAR _str__7[10];
+  CHAR _str__6[10];
+  CHAR _str__5[10];
+  CHAR _str__4[10];
+  CHAR _str__3[10];
+  CHAR _str__2[10];
   __MOVE((CHAR*)"drop", _str__7, 5);
   e4vm_utils_add_core_word(v, (void*)_str__7, e4vm_stack_drop, 0);
   __MOVE((CHAR*)"swap", _str__6, 5);

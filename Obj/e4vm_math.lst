@@ -499,7 +499,7 @@
                             499 ; ---------------------------------
    01E5                     500 _e4vm_math_add_core_words::
    01E5 CDr00r00      [17]  501 	call	___sdcc_enter_ix
-   01E8 21 C8 FF      [10]  502 	ld	hl, #-56
+   01E8 21 BA FF      [10]  502 	ld	hl, #-70
    01EB 39            [11]  503 	add	hl, sp
    01EC F9            [ 6]  504 	ld	sp, hl
                             505 ;e4vm_math.c:81: __MOVE((CHAR*)"-", _str__8, 2);
@@ -534,7 +534,7 @@
    0218 F1            [10]  534 	pop	af
    0219 33            [ 6]  535 	inc	sp
                             536 ;e4vm_math.c:83: __MOVE((CHAR*)"+", _str__7, 2);
-   021A 21 08 00      [10]  537 	ld	hl, #8
+   021A 21 0A 00      [10]  537 	ld	hl, #10
    021D 39            [11]  538 	add	hl, sp
    021E 4D            [ 4]  539 	ld	c, l
    021F 44            [ 4]  540 	ld	b, h
@@ -565,7 +565,7 @@
    0245 F1            [10]  565 	pop	af
    0246 33            [ 6]  566 	inc	sp
                             567 ;e4vm_math.c:85: __MOVE((CHAR*)"*", _str__6, 2);
-   0247 21 10 00      [10]  568 	ld	hl, #16
+   0247 21 14 00      [10]  568 	ld	hl, #20
    024A 39            [11]  569 	add	hl, sp
    024B 4D            [ 4]  570 	ld	c, l
    024C 44            [ 4]  571 	ld	b, h
@@ -596,7 +596,7 @@
    0272 F1            [10]  596 	pop	af
    0273 33            [ 6]  597 	inc	sp
                             598 ;e4vm_math.c:87: __MOVE((CHAR*)"/", _str__5, 2);
-   0274 21 18 00      [10]  599 	ld	hl, #24
+   0274 21 1E 00      [10]  599 	ld	hl, #30
    0277 39            [11]  600 	add	hl, sp
    0278 4D            [ 4]  601 	ld	c, l
    0279 44            [ 4]  602 	ld	b, h
@@ -627,7 +627,7 @@
    029F F1            [10]  627 	pop	af
    02A0 33            [ 6]  628 	inc	sp
                             629 ;e4vm_math.c:89: __MOVE((CHAR*)"mod", _str__4, 4);
-   02A1 21 20 00      [10]  630 	ld	hl, #32
+   02A1 21 28 00      [10]  630 	ld	hl, #40
    02A4 39            [11]  631 	add	hl, sp
    02A5 4D            [ 4]  632 	ld	c, l
    02A6 44            [ 4]  633 	ld	b, h
@@ -658,7 +658,7 @@
    02CC F1            [10]  658 	pop	af
    02CD 33            [ 6]  659 	inc	sp
                             660 ;e4vm_math.c:91: __MOVE((CHAR*)"1+", _str__3, 3);
-   02CE 21 28 00      [10]  661 	ld	hl, #40
+   02CE 21 32 00      [10]  661 	ld	hl, #50
    02D1 39            [11]  662 	add	hl, sp
    02D2 4D            [ 4]  663 	ld	c, l
    02D3 44            [ 4]  664 	ld	b, h
@@ -689,7 +689,7 @@
    02F9 F1            [10]  689 	pop	af
    02FA 33            [ 6]  690 	inc	sp
                             691 ;e4vm_math.c:93: __MOVE((CHAR*)"1-", _str__2, 3);
-   02FB 21 30 00      [10]  692 	ld	hl, #48
+   02FB 21 3C 00      [10]  692 	ld	hl, #60
    02FE 39            [11]  693 	add	hl, sp
    02FF 4D            [ 4]  694 	ld	c, l
    0300 44            [ 4]  695 	ld	b, h

@@ -74,7 +74,21 @@ Symbol Table
   0 ___str_143                                                     2176 R
   0 ___str_144                                                     21AB R
   0 ___str_145                                                     21BD R
+  0 ___str_146                                                     2303 R
+  0 ___str_147                                                     2313 R
+  0 ___str_148                                                     2319 R
+  0 ___str_149                                                     2320 R
   0 ___str_15                                                      043F R
+  0 ___str_150                                                     232A R
+  0 ___str_151                                                     232F R
+  0 ___str_152                                                     2335 R
+  0 ___str_153                                                     2488 R
+  0 ___str_154                                                     24A0 R
+  0 ___str_155                                                     24A6 R
+  0 ___str_156                                                     24AD R
+  0 ___str_157                                                     24B5 R
+  0 ___str_158                                                     24BA R
+  0 ___str_159                                                     24C0 R
   0 ___str_16                                                      0446 R
   0 ___str_17                                                      044B R
   0 ___str_18                                                      0450 R
@@ -104,6 +118,11 @@ Symbol Table
   0 ___str_4                                                       01E3 R
   0 ___str_40                                                      0994 R
   0 ___str_41                                                      0998 R
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 3.
+Hexadecimal [16-Bits]
+
+Symbol Table
+
   0 ___str_42                                                      099D R
   0 ___str_43                                                      09A3 R
   0 ___str_44                                                      0AE0 R
@@ -118,11 +137,6 @@ Symbol Table
   0 ___str_52                                                      0C5A R
   0 ___str_53                                                      0C5C R
   0 ___str_54                                                      0C5E R
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 3.
-Hexadecimal [16-Bits]
-
-Symbol Table
-
   0 ___str_55                                                      0C63 R
   0 ___str_56                                                      0C69 R
   0 ___str_57                                                      0D85 R
@@ -164,6 +178,11 @@ Symbol Table
   0 ___str_9                                                       0300 R
   0 ___str_90                                                      1502 R
   0 ___str_91                                                      150F R
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 4.
+Hexadecimal [16-Bits]
+
+Symbol Table
+
   0 ___str_92                                                      1516 R
   0 ___str_93                                                      151D R
   0 ___str_94                                                      1522 R
@@ -178,11 +197,6 @@ Symbol Table
     _e4vm_core_add_core_words                                      **** GX
     _e4vm_core_do_list                                             **** GX
     _e4vm_core_do_next                                             **** GX
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 4.
-Hexadecimal [16-Bits]
-
-Symbol Table
-
     _e4vm_core_ext__init                                           **** GX
     _e4vm_core_ext_add_core_words                                  **** GX
   0 _e4vm_do_hello                                                 0000 R
@@ -198,7 +212,9 @@ Symbol Table
   0 _e4vm_test_dolit                                               01F8 R
   0 _e4vm_test_drop                                                0321 R
   0 _e4vm_test_dup                                                 05A0 R
+  0 _e4vm_test_execute1                                            233E R
   0 _e4vm_test_here                                                18BF R
+  0 _e4vm_test_immediate                                           21C3 R
   0 _e4vm_test_inc                                                 0F18 R
   0 _e4vm_test_invert                                              13FB R
   0 _e4vm_test_minus                                               0B0B R
@@ -222,23 +238,29 @@ Symbol Table
     _e4vm_utils_false_const                                        **** GX
     _e4vm_utils_here_to_wp                                         **** GX
     _e4vm_utils_init                                               **** GX
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 5.
+Hexadecimal [16-Bits]
+
+Symbol Table
+
+    _e4vm_utils_look_up_word_address                               **** GX
     _e4vm_utils_read_char                                          **** GX
     _e4vm_utils_read_string                                        **** GX
     _e4vm_utils_stack_ds_push                                      **** GX
     _e4vm_utils_true_const                                         **** GX
-  1 _e4vm_vm                                                       02CF R
+  1 _e4vm_vm                                                       030F R
   1 _e4vm_vm_static                                                0000 R
-  0 _main                                                          21C3 GR
+  0 _main                                                          24C9 GR
     _memcpy                                                        **** GX
 
 
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 5.
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 6.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size 2293   flags    0
-   1 _DATA                                      size  2D1   flags    0
+   0 _CODE                                      size 250D   flags    0
+   1 _DATA                                      size  311   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8
    4 _HOME                                      size    0   flags    0

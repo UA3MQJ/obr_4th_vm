@@ -543,7 +543,7 @@ _e4vm_stack_nrot::
 ; ---------------------------------
 _e4vm_stack_add_core_words::
 	call	___sdcc_enter_ix
-	ld	hl, #-48
+	ld	hl, #-60
 	add	hl, sp
 	ld	sp, hl
 ;e4vm_stack.c:81: __MOVE((CHAR*)"drop", _str__7, 5);
@@ -578,7 +578,7 @@ _e4vm_stack_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_stack.c:83: __MOVE((CHAR*)"swap", _str__6, 5);
-	ld	hl, #8
+	ld	hl, #10
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -609,7 +609,7 @@ _e4vm_stack_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_stack.c:85: __MOVE((CHAR*)"dup", _str__5, 4);
-	ld	hl, #16
+	ld	hl, #20
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -640,7 +640,7 @@ _e4vm_stack_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_stack.c:87: __MOVE((CHAR*)"over", _str__4, 5);
-	ld	hl, #24
+	ld	hl, #30
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -671,7 +671,7 @@ _e4vm_stack_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_stack.c:89: __MOVE((CHAR*)"rot", _str__3, 4);
-	ld	hl, #32
+	ld	hl, #40
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -702,7 +702,7 @@ _e4vm_stack_add_core_words::
 	pop	af
 	inc	sp
 ;e4vm_stack.c:91: __MOVE((CHAR*)"nrot", _str__2, 5);
-	ld	hl, #40
+	ld	hl, #50
 	add	hl, sp
 	ld	c, l
 	ld	b, h
