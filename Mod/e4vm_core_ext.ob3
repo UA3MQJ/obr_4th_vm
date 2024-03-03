@@ -16,8 +16,8 @@ END quit;
 PROCEDURE do_lit* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   (* C.WriteStrLn("do_lit!"); *)
-  v.ip := v.ip + 1;
   e4vm_utils.stack_ds_push(@v, v.mem[v.ip]);  
+  v.ip := v.ip + 1;
 END do_lit;
 
 
@@ -40,7 +40,7 @@ END comma;
 (*# переход по адресу в следующей ячейке *)
 PROCEDURE branch* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-  v.ip := v.mem[v.ip + 1] - 1;
+ v.ip := v.mem[v.ip];
 END branch;
 
 (*# переход по адресу, если в топ ds 0. то есть false.
@@ -49,9 +49,9 @@ PROCEDURE zbranch* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   v.ds_p := v.ds_p - 1;
   IF v.ds[v.ds_p] = 0 THEN
-    v.ip := v.mem[v.ip + 1] - 1;
+    v.ip := v.mem[v.ip];
   ELSE
-    (* v.ip := v.ip; *)
+    v.ip := v.ip;
   END
 END zbranch;
 
@@ -66,6 +66,18 @@ PROCEDURE rbrac* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   v.is_eval_mode := FALSE;
 END rbrac;
+
+PROCEDURE add_core_words* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  e4vm_utils.add_core_word(@v, "quit",    quit,    FALSE);
+  e4vm_utils.add_core_word(@v, "dolit",   do_lit,  FALSE);
+  e4vm_utils.add_core_word(@v, "here",    get_here_addr, FALSE);
+  e4vm_utils.add_core_word(@v, ",",       comma,   FALSE);
+  e4vm_utils.add_core_word(@v, "branch",  branch,  FALSE);
+  e4vm_utils.add_core_word(@v, "0branch", zbranch, FALSE);
+  e4vm_utils.add_core_word(@v, "[",       lbrac,   FALSE);
+  e4vm_utils.add_core_word(@v, "]",       rbrac,   FALSE);
+END add_core_words;
 
 BEGIN
    

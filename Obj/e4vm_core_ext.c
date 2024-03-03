@@ -10,6 +10,7 @@
 
 
 
+export void e4vm_core_ext_add_core_words (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_branch (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_comma (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_do_lit (e4vm_type_x4thPtr *v);
@@ -29,8 +30,8 @@ void e4vm_core_ext_quit (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_core_ext_do_lit (e4vm_type_x4thPtr *v)
 {
-  (*v)->ip = (*v)->ip + 1;
   e4vm_utils_stack_ds_push(v, (*v)->mem[(*v)->ip]);
+  (*v)->ip = (*v)->ip + 1;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -49,7 +50,7 @@ void e4vm_core_ext_comma (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_core_ext_branch (e4vm_type_x4thPtr *v)
 {
-  (*v)->ip = (*v)->mem[(*v)->ip + 1] - 1;
+  (*v)->ip = (*v)->mem[(*v)->ip];
 }
 
 /*----------------------------------------------------------------------------*/
@@ -57,7 +58,9 @@ void e4vm_core_ext_zbranch (e4vm_type_x4thPtr *v)
 {
   (*v)->ds_p = (*v)->ds_p - 1;
   if ((*v)->ds[(*v)->ds_p] == 0) {
-    (*v)->ip = (*v)->mem[(*v)->ip + 1] - 1;
+    (*v)->ip = (*v)->mem[(*v)->ip];
+  } else {
+    (*v)->ip = (*v)->ip + 1;
   }
 }
 
@@ -71,6 +74,35 @@ void e4vm_core_ext_lbrac (e4vm_type_x4thPtr *v)
 void e4vm_core_ext_rbrac (e4vm_type_x4thPtr *v)
 {
   (*v)->is_eval_mode = 0;
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_core_ext_add_core_words (e4vm_type_x4thPtr *v)
+{
+  CHAR _str__9[8];
+  CHAR _str__8[8];
+  CHAR _str__7[8];
+  CHAR _str__6[8];
+  CHAR _str__5[8];
+  CHAR _str__4[8];
+  CHAR _str__3[8];
+  CHAR _str__2[8];
+  __MOVE((CHAR*)"quit", _str__9, 5);
+  e4vm_utils_add_core_word(v, (void*)_str__9, e4vm_core_ext_quit, 0);
+  __MOVE((CHAR*)"dolit", _str__8, 6);
+  e4vm_utils_add_core_word(v, (void*)_str__8, e4vm_core_ext_do_lit, 0);
+  __MOVE((CHAR*)"here", _str__7, 5);
+  e4vm_utils_add_core_word(v, (void*)_str__7, e4vm_core_ext_get_here_addr, 0);
+  __MOVE((CHAR*)",", _str__6, 2);
+  e4vm_utils_add_core_word(v, (void*)_str__6, e4vm_core_ext_comma, 0);
+  __MOVE((CHAR*)"branch", _str__5, 7);
+  e4vm_utils_add_core_word(v, (void*)_str__5, e4vm_core_ext_branch, 0);
+  __MOVE((CHAR*)"0branch", _str__4, 8);
+  e4vm_utils_add_core_word(v, (void*)_str__4, e4vm_core_ext_zbranch, 0);
+  __MOVE((CHAR*)"[", _str__3, 2);
+  e4vm_utils_add_core_word(v, (void*)_str__3, e4vm_core_ext_lbrac, 0);
+  __MOVE((CHAR*)"]", _str__2, 2);
+  e4vm_utils_add_core_word(v, (void*)_str__2, e4vm_core_ext_rbrac, 0);
 }
 
 /*----------------------------------------------------------------------------*/

@@ -51,6 +51,8 @@ SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_s
     }
     i += 1;
   }
+  Console_WriteStr((CHAR*)"look_up_word_address ERROR: unknown word ", 42);
+  Console_WriteStrLn((void*)word, 8);
   return -1;
 }
 
@@ -109,8 +111,7 @@ void e4vm_utils_vm_stat (e4vm_type_x4thPtr *v)
   Console_WriteInt((*v)->wp);
   Console_WriteStr((CHAR*)" hereP:", 8);
   Console_WriteInt((*v)->hereP);
-  Console_WriteStr((CHAR*)" words_count:", 14);
-  Console_WriteInt((*v)->words_count);
+  Console_WriteStrLn((CHAR*)" ", 2);
   Console_WriteStrLn((CHAR*)" ", 2);
   Console_WriteStr((CHAR*)"rs_p:", 6);
   Console_WriteInt((*v)->rs_p);

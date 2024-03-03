@@ -9,13 +9,17 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _e4vm_stack__init
+	.globl _e4vm_utils__init
+	.globl _e4vm_utils_add_core_word
 	.globl _e4vm_type__init
+	.globl _memcpy
 	.globl _e4vm_stack_drop
 	.globl _e4vm_stack_swap
 	.globl _e4vm_stack_dup
 	.globl _e4vm_stack_over
 	.globl _e4vm_stack_rot
 	.globl _e4vm_stack_nrot
+	.globl _e4vm_stack_add_core_words
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -47,13 +51,13 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;e4vm_stack.c:22: void e4vm_stack_drop (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:24: void e4vm_stack_drop (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_drop
 ; ---------------------------------
 _e4vm_stack_drop::
 	call	___sdcc_enter_ix
-;e4vm_stack.c:24: (*v)->ds_p = (*v)->ds_p - 1;
+;e4vm_stack.c:26: (*v)->ds_p = (*v)->ds_p - 1;
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	ld	c, (hl)
@@ -69,10 +73,10 @@ _e4vm_stack_drop::
 	ld	(hl), c
 	inc	hl
 	ld	(hl), b
-;e4vm_stack.c:25: }
+;e4vm_stack.c:27: }
 	pop	ix
 	ret
-;e4vm_stack.c:28: void e4vm_stack_swap (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:30: void e4vm_stack_swap (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_swap
 ; ---------------------------------
@@ -81,7 +85,7 @@ _e4vm_stack_swap::
 	push	af
 	push	af
 	push	af
-;e4vm_stack.c:31: T = (*v)->ds[(*v)->ds_p - 1];
+;e4vm_stack.c:33: T = (*v)->ds[(*v)->ds_p - 1];
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -111,7 +115,7 @@ _e4vm_stack_swap::
 	inc	hl
 	ld	a, (hl)
 	ld	-1 (ix), a
-;e4vm_stack.c:32: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
+;e4vm_stack.c:34: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
 	ld	a, e
 	dec	a
 	dec	a
@@ -129,7 +133,7 @@ _e4vm_stack_swap::
 	ld	(hl), e
 	inc	hl
 	ld	(hl), d
-;e4vm_stack.c:33: (*v)->ds[(*v)->ds_p - 2] = T;
+;e4vm_stack.c:35: (*v)->ds[(*v)->ds_p - 2] = T;
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -154,17 +158,17 @@ _e4vm_stack_swap::
 	inc	hl
 	ld	a, -1 (ix)
 	ld	(hl), a
-;e4vm_stack.c:34: }
+;e4vm_stack.c:36: }
 	ld	sp, ix
 	pop	ix
 	ret
-;e4vm_stack.c:37: void e4vm_stack_dup (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:39: void e4vm_stack_dup (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_dup
 ; ---------------------------------
 _e4vm_stack_dup::
 	call	___sdcc_enter_ix
-;e4vm_stack.c:39: (*v)->ds_p = (*v)->ds_p + 1;
+;e4vm_stack.c:41: (*v)->ds_p = (*v)->ds_p + 1;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -183,7 +187,7 @@ _e4vm_stack_dup::
 	ld	(hl), e
 	inc	hl
 	ld	(hl), a
-;e4vm_stack.c:40: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
+;e4vm_stack.c:42: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -218,16 +222,16 @@ _e4vm_stack_dup::
 	inc	bc
 	ld	a, d
 	ld	(bc), a
-;e4vm_stack.c:41: }
+;e4vm_stack.c:43: }
 	pop	ix
 	ret
-;e4vm_stack.c:44: void e4vm_stack_over (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:46: void e4vm_stack_over (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_over
 ; ---------------------------------
 _e4vm_stack_over::
 	call	___sdcc_enter_ix
-;e4vm_stack.c:46: (*v)->ds_p = (*v)->ds_p + 1;
+;e4vm_stack.c:48: (*v)->ds_p = (*v)->ds_p + 1;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -246,7 +250,7 @@ _e4vm_stack_over::
 	ld	(hl), e
 	inc	hl
 	ld	(hl), a
-;e4vm_stack.c:47: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 3];
+;e4vm_stack.c:49: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 3];
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -282,10 +286,10 @@ _e4vm_stack_over::
 	inc	bc
 	ld	a, d
 	ld	(bc), a
-;e4vm_stack.c:48: }
+;e4vm_stack.c:50: }
 	pop	ix
 	ret
-;e4vm_stack.c:51: void e4vm_stack_rot (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:53: void e4vm_stack_rot (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_rot
 ; ---------------------------------
@@ -294,7 +298,7 @@ _e4vm_stack_rot::
 	push	af
 	push	af
 	push	af
-;e4vm_stack.c:54: T = (*v)->ds[(*v)->ds_p - 3];
+;e4vm_stack.c:56: T = (*v)->ds[(*v)->ds_p - 3];
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -324,7 +328,7 @@ _e4vm_stack_rot::
 	inc	hl
 	ld	a, (hl)
 	ld	-1 (ix), a
-;e4vm_stack.c:55: (*v)->ds[(*v)->ds_p - 3] = (*v)->ds[(*v)->ds_p - 2];
+;e4vm_stack.c:57: (*v)->ds[(*v)->ds_p - 3] = (*v)->ds[(*v)->ds_p - 2];
 	ld	a, e
 	dec	a
 	dec	a
@@ -342,7 +346,7 @@ _e4vm_stack_rot::
 	ld	(hl), e
 	inc	hl
 	ld	(hl), d
-;e4vm_stack.c:56: (*v)->ds[(*v)->ds_p - 2] = (*v)->ds[(*v)->ds_p - 1];
+;e4vm_stack.c:58: (*v)->ds[(*v)->ds_p - 2] = (*v)->ds[(*v)->ds_p - 1];
 	ld	l, c
 	ld	h, b
 	ld	a, (hl)
@@ -380,7 +384,7 @@ _e4vm_stack_rot::
 	ld	(hl), e
 	inc	hl
 	ld	(hl), d
-;e4vm_stack.c:57: (*v)->ds[(*v)->ds_p - 1] = T;
+;e4vm_stack.c:59: (*v)->ds[(*v)->ds_p - 1] = T;
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -404,11 +408,11 @@ _e4vm_stack_rot::
 	inc	hl
 	ld	a, -1 (ix)
 	ld	(hl), a
-;e4vm_stack.c:58: }
+;e4vm_stack.c:60: }
 	ld	sp, ix
 	pop	ix
 	ret
-;e4vm_stack.c:61: void e4vm_stack_nrot (e4vm_type_x4thPtr *v)
+;e4vm_stack.c:63: void e4vm_stack_nrot (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_stack_nrot
 ; ---------------------------------
@@ -417,7 +421,7 @@ _e4vm_stack_nrot::
 	push	af
 	push	af
 	push	af
-;e4vm_stack.c:64: T = (*v)->ds[(*v)->ds_p - 1];
+;e4vm_stack.c:66: T = (*v)->ds[(*v)->ds_p - 1];
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -447,7 +451,7 @@ _e4vm_stack_nrot::
 	inc	hl
 	ld	a, (hl)
 	ld	-1 (ix), a
-;e4vm_stack.c:65: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
+;e4vm_stack.c:67: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 2];
 	ld	a, e
 	dec	a
 	dec	a
@@ -465,7 +469,7 @@ _e4vm_stack_nrot::
 	ld	(hl), e
 	inc	hl
 	ld	(hl), d
-;e4vm_stack.c:66: (*v)->ds[(*v)->ds_p - 2] = (*v)->ds[(*v)->ds_p - 3];
+;e4vm_stack.c:68: (*v)->ds[(*v)->ds_p - 2] = (*v)->ds[(*v)->ds_p - 3];
 	ld	l, c
 	ld	h, b
 	ld	a, (hl)
@@ -505,7 +509,7 @@ _e4vm_stack_nrot::
 	ld	(hl), e
 	inc	hl
 	ld	(hl), d
-;e4vm_stack.c:67: (*v)->ds[(*v)->ds_p - 3] = T;
+;e4vm_stack.c:69: (*v)->ds[(*v)->ds_p - 3] = T;
 	ld	l, c
 	ld	h, b
 	ld	c, (hl)
@@ -529,21 +533,236 @@ _e4vm_stack_nrot::
 	inc	hl
 	ld	a, -1 (ix)
 	ld	(hl), a
-;e4vm_stack.c:68: }
+;e4vm_stack.c:70: }
 	ld	sp, ix
 	pop	ix
 	ret
-;e4vm_stack.c:72: export void *e4vm_stack__init (void)
+;e4vm_stack.c:73: void e4vm_stack_add_core_words (e4vm_type_x4thPtr *v)
+;	---------------------------------
+; Function e4vm_stack_add_core_words
+; ---------------------------------
+_e4vm_stack_add_core_words::
+	call	___sdcc_enter_ix
+	ld	hl, #-48
+	add	hl, sp
+	ld	sp, hl
+;e4vm_stack.c:81: __MOVE((CHAR*)"drop", _str__7, 5);
+	ld	hl, #0
+	add	hl, sp
+	ld	c, l
+	ld	b, h
+	push	hl
+	ld	de, #0x0005
+	push	de
+	ld	de, #___str_0
+	push	de
+	push	bc
+	call	_memcpy
+	pop	af
+	pop	af
+	pop	af
+	pop	hl
+;e4vm_stack.c:82: e4vm_utils_add_core_word(v, (void*)_str__7, e4vm_stack_drop, 0);
+	xor	a, a
+	push	af
+	inc	sp
+	ld	bc, #_e4vm_stack_drop
+	push	bc
+	push	hl
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
+	call	_e4vm_utils_add_core_word
+	pop	af
+	pop	af
+	pop	af
+	inc	sp
+;e4vm_stack.c:83: __MOVE((CHAR*)"swap", _str__6, 5);
+	ld	hl, #8
+	add	hl, sp
+	ld	c, l
+	ld	b, h
+	push	hl
+	ld	de, #0x0005
+	push	de
+	ld	de, #___str_1
+	push	de
+	push	bc
+	call	_memcpy
+	pop	af
+	pop	af
+	pop	af
+	pop	hl
+;e4vm_stack.c:84: e4vm_utils_add_core_word(v, (void*)_str__6, e4vm_stack_swap, 0);
+	xor	a, a
+	push	af
+	inc	sp
+	ld	bc, #_e4vm_stack_swap
+	push	bc
+	push	hl
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
+	call	_e4vm_utils_add_core_word
+	pop	af
+	pop	af
+	pop	af
+	inc	sp
+;e4vm_stack.c:85: __MOVE((CHAR*)"dup", _str__5, 4);
+	ld	hl, #16
+	add	hl, sp
+	ld	c, l
+	ld	b, h
+	push	hl
+	ld	de, #0x0004
+	push	de
+	ld	de, #___str_2
+	push	de
+	push	bc
+	call	_memcpy
+	pop	af
+	pop	af
+	pop	af
+	pop	hl
+;e4vm_stack.c:86: e4vm_utils_add_core_word(v, (void*)_str__5, e4vm_stack_dup, 0);
+	xor	a, a
+	push	af
+	inc	sp
+	ld	bc, #_e4vm_stack_dup
+	push	bc
+	push	hl
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
+	call	_e4vm_utils_add_core_word
+	pop	af
+	pop	af
+	pop	af
+	inc	sp
+;e4vm_stack.c:87: __MOVE((CHAR*)"over", _str__4, 5);
+	ld	hl, #24
+	add	hl, sp
+	ld	c, l
+	ld	b, h
+	push	hl
+	ld	de, #0x0005
+	push	de
+	ld	de, #___str_3
+	push	de
+	push	bc
+	call	_memcpy
+	pop	af
+	pop	af
+	pop	af
+	pop	hl
+;e4vm_stack.c:88: e4vm_utils_add_core_word(v, (void*)_str__4, e4vm_stack_over, 0);
+	xor	a, a
+	push	af
+	inc	sp
+	ld	bc, #_e4vm_stack_over
+	push	bc
+	push	hl
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
+	call	_e4vm_utils_add_core_word
+	pop	af
+	pop	af
+	pop	af
+	inc	sp
+;e4vm_stack.c:89: __MOVE((CHAR*)"rot", _str__3, 4);
+	ld	hl, #32
+	add	hl, sp
+	ld	c, l
+	ld	b, h
+	push	hl
+	ld	de, #0x0004
+	push	de
+	ld	de, #___str_4
+	push	de
+	push	bc
+	call	_memcpy
+	pop	af
+	pop	af
+	pop	af
+	pop	hl
+;e4vm_stack.c:90: e4vm_utils_add_core_word(v, (void*)_str__3, e4vm_stack_rot, 0);
+	xor	a, a
+	push	af
+	inc	sp
+	ld	bc, #_e4vm_stack_rot
+	push	bc
+	push	hl
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
+	call	_e4vm_utils_add_core_word
+	pop	af
+	pop	af
+	pop	af
+	inc	sp
+;e4vm_stack.c:91: __MOVE((CHAR*)"nrot", _str__2, 5);
+	ld	hl, #40
+	add	hl, sp
+	ld	c, l
+	ld	b, h
+	push	hl
+	ld	de, #0x0005
+	push	de
+	ld	de, #___str_5
+	push	de
+	push	bc
+	call	_memcpy
+	pop	af
+	pop	af
+	pop	af
+	pop	hl
+;e4vm_stack.c:92: e4vm_utils_add_core_word(v, (void*)_str__2, e4vm_stack_nrot, 0);
+	xor	a, a
+	push	af
+	inc	sp
+	ld	bc, #_e4vm_stack_nrot
+	push	bc
+	push	hl
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
+	call	_e4vm_utils_add_core_word
+;e4vm_stack.c:93: }
+	ld	sp,ix
+	pop	ix
+	ret
+___str_0:
+	.ascii "drop"
+	.db 0x00
+___str_1:
+	.ascii "swap"
+	.db 0x00
+___str_2:
+	.ascii "dup"
+	.db 0x00
+___str_3:
+	.ascii "over"
+	.db 0x00
+___str_4:
+	.ascii "rot"
+	.db 0x00
+___str_5:
+	.ascii "nrot"
+	.db 0x00
+;e4vm_stack.c:97: export void *e4vm_stack__init (void)
 ;	---------------------------------
 ; Function e4vm_stack__init
 ; ---------------------------------
 _e4vm_stack__init::
-;e4vm_stack.c:74: __DEFMOD;
+;e4vm_stack.c:99: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_stack.c:77: __IMPORT(e4vm_type__init);
-;e4vm_stack.c:81: }
-	jp  _e4vm_type__init
+;e4vm_stack.c:102: __IMPORT(e4vm_type__init);
+	call	_e4vm_type__init
+;e4vm_stack.c:103: __IMPORT(e4vm_utils__init);
+;e4vm_stack.c:107: }
+	jp  _e4vm_utils__init
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)

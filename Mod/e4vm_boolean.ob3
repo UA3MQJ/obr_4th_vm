@@ -139,6 +139,24 @@ BEGIN
   v.ds_p := v.ds_p - 1;
 END greater_eql;
 
+PROCEDURE add_core_words* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  e4vm_utils.add_core_word(@v, "true",   true,   FALSE);
+  e4vm_utils.add_core_word(@v, "false",  false,  FALSE);
+  e4vm_utils.add_core_word(@v, "not",    not,    FALSE);
+  e4vm_utils.add_core_word(@v, "invert", invert, FALSE);
+  e4vm_utils.add_core_word(@v, "or",     or,     FALSE);
+  e4vm_utils.add_core_word(@v, "and",    and,    FALSE);
+  e4vm_utils.add_core_word(@v, "xor",    xor,    FALSE);
+  e4vm_utils.add_core_word(@v, "<>",     not_eql, FALSE);
+  e4vm_utils.add_core_word(@v, "=",      eql,    FALSE);
+  e4vm_utils.add_core_word(@v, "<",      less,   FALSE);
+  e4vm_utils.add_core_word(@v, ">",      greater, FALSE);
+  e4vm_utils.add_core_word(@v, "<=",     less_eql, FALSE);
+  e4vm_utils.add_core_word(@v, ">=",     greater_eql, FALSE);
+
+END add_core_words;
+
 BEGIN
    
 	

@@ -34,6 +34,7 @@ BEGIN
 	    RETURN v.words[i].addr;
 	  END;
 	END;
+	C.WriteStr("look_up_word_address ERROR: unknown word "); C.WriteStrLn(word);
   RETURN -1;	
 END look_up_word_address;
 
@@ -93,9 +94,9 @@ BEGIN
   C.WriteStrLn(" ");
   C.WriteStr("ip:"); C.WriteInt(v.ip);
   C.WriteStr(" wp:"); C.WriteInt(v.wp);
-  C.WriteStr(" hereP:"); C.WriteInt(v.hereP);
-  C.WriteStr(" words_count:"); C.WriteInt(v.words_count);
-
+  C.WriteStr(" hereP:"); C.WriteInt(v.hereP);C.WriteStrLn(" ");
+(*  C.WriteStr(" words_count:"); C.WriteInt(v.words_count);C.WriteStrLn(" ");
+*)
   C.WriteStrLn(" ");
   C.WriteStr("rs_p:"); C.WriteInt(v.rs_p); C.WriteStrLn(" ");
 	C.WriteStrLn("rs: ["); FOR i:=0 TO (e4vm_type.stack_size-1) DO

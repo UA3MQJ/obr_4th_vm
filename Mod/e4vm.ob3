@@ -3,11 +3,11 @@ IMPORT SYSTEM, C := Console, Platform, B := Basic,
 
         e4vm_type ,
 				e4vm_core,
-				e4vm_utils
-	(*			e4vm_stack,
+				e4vm_core_ext,
+				e4vm_stack,
 				e4vm_math,
-				e4vm_boolean, 
-				e4vm_core_ext*)
+				e4vm_boolean,
+				e4vm_utils
 ;
 
 
@@ -45,7 +45,7 @@ BEGIN
 
   (* e4vm_utils.vm_stat(@v); *)
 
-  v.wp := 8; (* ט ס 5 ט ס 8 המכזםמ מענאבמעאעü *)
+  v.wp := 8 ; (* ט ס 5 ט ס 8 המכזםמ מענאבמעאעü *)
 
   e4vm_core.do_list(@v);
   e4vm_core.do_next(@v);
@@ -58,36 +58,25 @@ BEGIN
 	C.WriteStrLn(" ");
 END test1;
 
-(*
+
 PROCEDURE test_dolit(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("dolit ");
+  C.WriteStr("Test dolit ");
   e4vm_utils.init(@v);
+  e4vm_core.add_core_words(@v);
+  e4vm_core_ext.add_core_words(@v);
 
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := do_hello;
-	v.core[5] := do_lit;
+	e4vm_utils.here_to_wp(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-	v.mem[5] := 5; 
-
-	v.wp := 5;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "dolit");
+  e4vm_utils.add_op(@v, 555);
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 6] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 7] := 5; (* dolit   *)
-	v.mem[ 8] := 555; (* 555    *)
-	v.mem[ 9] := 3; (* exit*)
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
+	(* e4vm_utils.vm_stat(@v); *)
 	
 	IF v.ds[0] = 555 THEN
 	  C.WriteStrLn(" - ok");
@@ -98,75 +87,55 @@ END test_dolit;
 
 PROCEDURE test_drop(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("drop ");
+  C.WriteStr("Test drop ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_stack.drop;
+  e4vm_core.add_core_words(@v);
+  e4vm_stack.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "drop");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* drop   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 1);
-	stack_ds_push(@v, 2);
+	e4vm_utils.stack_ds_push(@v, 1);
+	e4vm_utils.stack_ds_push(@v, 2);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [2, 1] -> [1] *)
 	
-	e4vm_utils.vm_stat(@v);
-	
+	(* e4vm_utils.vm_stat(@v); *)
+		IF v.ds[v.ds_p -1] = 1 THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
 END test_drop;
 
 PROCEDURE test_swap(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("swap ");
+  C.WriteStr("Test swap ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_stack.swap;
+  e4vm_core.add_core_words(@v);
+  e4vm_stack.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "swap");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* swap   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 1);
-	stack_ds_push(@v, 2);
+	e4vm_utils.stack_ds_push(@v, 1);
+	e4vm_utils.stack_ds_push(@v, 2);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [2, 1] -> [1, 2] *)
 	
-	e4vm_utils.vm_stat(@v);
+	(*e4vm_utils.vm_stat(@v);*)
 	
-		IF ((v.ds[0] = 2)&(v.ds[1] = 1))  THEN
+	IF ((v.ds[0] = 2)&(v.ds[1] = 1))  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
@@ -176,78 +145,53 @@ END test_swap;
 
 PROCEDURE test_dup(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("dup ");
+  C.WriteStr("Test dup ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_stack.dup;
+  e4vm_core.add_core_words(@v);
+  e4vm_stack.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "dup");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* dup   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 1);
+	e4vm_utils.stack_ds_push(@v, 1);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [1] -> [1, 1] *)
 	
-	e4vm_utils.vm_stat(@v);
+	(*e4vm_utils.vm_stat(@v);*)
 	
 		IF ((v.ds[0] = v.ds[1])&(v.ds[0] = 1)&(v.ds_p = 2))  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
 	END;
-	
 END test_dup;
 
 PROCEDURE test_over(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("over ");
+  C.WriteStr("Test over ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_stack.over;
+  e4vm_core.add_core_words(@v);
+  e4vm_stack.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "over");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* over   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 1);
-	stack_ds_push(@v, 2);
+	e4vm_utils.stack_ds_push(@v, 1);
+	e4vm_utils.stack_ds_push(@v, 2);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [1, 2] -> [1, 2, 1] *)
 	
-	e4vm_utils.vm_stat(@v);
+	(* e4vm_utils.vm_stat(@v); *)
 	
 		IF ((v.ds[0] = 1)&(v.ds[1] = 2)&(v.ds[2] = 1)&(v.ds_p = 3))  THEN
 	  C.WriteStrLn(" - ok");
@@ -259,38 +203,26 @@ END test_over;
 
 PROCEDURE test_rot(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("rot ");
+  C.WriteStr("Test rot ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_stack.rot;
+  e4vm_core.add_core_words(@v);
+  e4vm_stack.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "rot");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* rot   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 1);
-	stack_ds_push(@v, 2);
-	stack_ds_push(@v, 3);
+	e4vm_utils.stack_ds_push(@v, 1);
+	e4vm_utils.stack_ds_push(@v, 2);
+	e4vm_utils.stack_ds_push(@v, 3);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [1, 2, 3] -> [2, 3, 1] *)
 	
-	e4vm_utils.vm_stat(@v);
+	(*e4vm_utils.vm_stat(@v);*)
 	
 	IF ((v.ds[0] = 2)&(v.ds[1] = 3)&(v.ds[2] = 1))  THEN
 	  C.WriteStrLn(" - ok");
@@ -301,38 +233,26 @@ END test_rot;
 
 PROCEDURE test_nrot(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("rot ");
+  C.WriteStr("Test nrot ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_stack.nrot;
+  e4vm_core.add_core_words(@v);
+  e4vm_stack.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "nrot");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* nrot   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 1);
-	stack_ds_push(@v, 2);
-	stack_ds_push(@v, 3);
+	e4vm_utils.stack_ds_push(@v, 1);
+	e4vm_utils.stack_ds_push(@v, 2);
+	e4vm_utils.stack_ds_push(@v, 3);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [1, 2, 3] -> [3, 1, 2] *)
 	
-	e4vm_utils.vm_stat(@v);
+	(* e4vm_utils.vm_stat(@v); *)
 	
 	IF ((v.ds[0] = 3)&(v.ds[1] = 1)&(v.ds[2] = 2))  THEN
 	  C.WriteStrLn(" - ok");
@@ -343,80 +263,87 @@ END test_nrot;
 
 PROCEDURE test_minus(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("math - ");
+  C.WriteStr("Test math -/+ ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_math.minus;
+  e4vm_core.add_core_words(@v);
+  e4vm_math.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "-");
+  e4vm_utils.add_op_from_string(@v, "+");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* -   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 1);
-	stack_ds_push(@v, 2);
+	e4vm_utils.stack_ds_push(@v, 1);
+	e4vm_utils.stack_ds_push(@v, 20);
+	e4vm_utils.stack_ds_push(@v, 3);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
-	(* [1, 2] -> [-1] *)
+	(* [1, 2, 3] -> [18] *)
+	(*e4vm_utils.vm_stat(@v);*)
 	
-	e4vm_utils.vm_stat(@v);
-	
-	IF (v.ds[0] = -1)  THEN
+	IF (v.ds[0] = 18)  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
 	END;
 END test_minus;
 
-PROCEDURE test_devide(VAR v: e4vm_type.x4thPtr);
+PROCEDURE test_mod(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("math / ");
+  C.WriteStr("Test mod ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_math.devide;
+  e4vm_core.add_core_words(@v);
+  e4vm_math.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "mod");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* /   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 10);
-	stack_ds_push(@v, 2);
+	e4vm_utils.stack_ds_push(@v, 10);
+	e4vm_utils.stack_ds_push(@v, 3);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
-	(* [10, 2] -> [5] *)
+	(* [10, 3] -> [1] *)
+	(*e4vm_utils.vm_stat(@v);*)
 	
-	e4vm_utils.vm_stat(@v);
+	IF (v.ds[v.ds_p-1] = 1)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+END test_mod;
+
+PROCEDURE test_devide(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("Test math (/, *) ");
+  e4vm_utils.init(@v);
+  e4vm_core.add_core_words(@v);
+  e4vm_math.add_core_words(@v);
 	
-	IF (v.ds[0] = 5)  THEN
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "/");
+  e4vm_utils.add_op_from_string(@v, "*");
+  e4vm_utils.add_op_from_string(@v, "exit");
+	
+	e4vm_utils.stack_ds_push(@v, 3);
+	e4vm_utils.stack_ds_push(@v, 10);
+	e4vm_utils.stack_ds_push(@v, 2);
+	
+	e4vm_core.do_list(@v);
+	e4vm_core.do_next(@v);
+	
+	(* [3, 10, 2] -> [5] *)
+	
+	(*e4vm_utils.vm_stat(@v);*)
+	
+	IF (v.ds[0] = 15)  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
@@ -425,38 +352,29 @@ END test_devide;
 
 PROCEDURE test_inc(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("math 1+ ");
+  C.WriteStr("Test math 1+ 1-");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_math.inc;
+  e4vm_core.add_core_words(@v);
+  e4vm_stack.add_core_words(@v);
+  e4vm_math.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "1+");
+  e4vm_utils.add_op_from_string(@v, "swap");
+  e4vm_utils.add_op_from_string(@v, "1-");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* 1+   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 10);
+	e4vm_utils.stack_ds_push(@v, 10);
+	e4vm_utils.stack_ds_push(@v, 20);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [10, 2] -> [5] *)
+	(*e4vm_utils.vm_stat(@v);*)
 	
-	e4vm_utils.vm_stat(@v);
-	
-	IF (v.ds[0] = 11)  THEN
+	IF ((v.ds[v.ds_p -1] = 9)&(v.ds[v.ds_p -2] = 21))  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
@@ -465,36 +383,23 @@ END test_inc;
 
 PROCEDURE test_true(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("true ");
+  C.WriteStr("Test true ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_boolean.true;
+  e4vm_core.add_core_words(@v);
+  e4vm_boolean.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
-	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* true   *)
-	v.mem[ 7] := 3; (* exit*)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "true");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [] -> [true] *)
+	(*e4vm_utils.vm_stat(@v);*)
 	
-	e4vm_utils.vm_stat(@v);
-	
-	IF (v.ds[0] = e4vm_utils.true_const(@vm))  THEN
+	IF (v.ds[v.ds_p-1] = e4vm_utils.true_const(@vm))  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
@@ -503,296 +408,179 @@ END test_true;
 
 
 PROCEDURE test_not(VAR v: e4vm_type.x4thPtr);
+VAR start_addr:INTEGER;
 BEGIN
-  C.WriteStr("not ");
+  C.WriteStr("Test not ");
   e4vm_utils.init(@v);
+  e4vm_core.add_core_words(@v);
+  e4vm_boolean.add_core_words(@v);
+	
 
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_boolean.not;
+	start_addr := v.hereP;
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "not");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.stack_ds_push(@v, e4vm_utils.true_const(@vm));
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* not   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, e4vm_utils.true_const(@vm));
-	
+	v.wp := start_addr;
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [true] -> [false] *)
 	
 	IF (v.ds[0] = e4vm_utils.false_const(@vm))  THEN
-	  C.WriteStrLn(" - ok");
+	  C.WriteStr(" - ok");
 	ELSE
-	  C.WriteStrLn(" - error");
+	  C.WriteStr(" - error");
 	END;
 	
-	v.wp := 4;
-	
+	v.wp := start_addr;
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [false] -> [true] *)
 	
   IF (v.ds[0] = e4vm_utils.true_const(@vm))  THEN
-	  C.WriteStrLn(" - ok");
+	  C.WriteStr(" - ok");
 	ELSE
-	  C.WriteStrLn(" - error");
+	  C.WriteStr(" - error");
 	END;
 	
 	v.ds[0] := 2;
-  v.wp := 4;
 	
+	v.wp := start_addr;
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	(* המכזםא בûעü מרטבךא *)
+	C.WriteStrLn(" - ok");
 		
 END test_not;
 
 
 PROCEDURE test_invert(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("invert ");
+  C.WriteStr("Test invert ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_boolean.invert;
+  e4vm_core.add_core_words(@v);
+  e4vm_boolean.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "invert");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* invert   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 15);
+	e4vm_utils.stack_ds_push(@v, 15);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [15] -> [-16] *)
-	e4vm_utils.vm_stat(@v);
+	(*e4vm_utils.vm_stat(@v);*)
 	
-	IF (v.ds[0] = -16)  THEN
+	IF (v.ds[v.ds_p-1] = -16)  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
 	END;
-	
-		
 END test_invert;
 
 
 PROCEDURE test_or(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("or ");
+  C.WriteStr("Test or ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_boolean.or;
+  e4vm_core.add_core_words(@v);
+  e4vm_boolean.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "or");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* or   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 1);
-	stack_ds_push(@v, 2);
+	e4vm_utils.stack_ds_push(@v, 1);
+	e4vm_utils.stack_ds_push(@v, 2);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [1, 2] -> [3] *)
-	e4vm_utils.vm_stat(@v);
+	(*e4vm_utils.vm_stat(@v);*)
 	
 	IF (v.ds[0] = 3)  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
 	END;
-	
-		
 END test_or;
 
 PROCEDURE test_and(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("and ");
+  C.WriteStr("Test and ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_boolean.and;
+  e4vm_core.add_core_words(@v);
+  e4vm_boolean.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "and");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* and   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 3);
-	stack_ds_push(@v, 6);
+	e4vm_utils.stack_ds_push(@v, 3);
+	e4vm_utils.stack_ds_push(@v, 6);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [3, 6] -> [2] *)
-	e4vm_utils.vm_stat(@v);
+	(*e4vm_utils.vm_stat(@v);*)
 	
 	IF (v.ds[0] = 2)  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
 	END;
-	
-		
 END test_and;
 
 PROCEDURE test_xor(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("xor ");
+  C.WriteStr("Test xor ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_boolean.xor;
+  e4vm_core.add_core_words(@v);
+  e4vm_boolean.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "xor");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* xor   *)
-	v.mem[ 7] := 3; (* exit*)
-	
-	stack_ds_push(@v, 6);
-	stack_ds_push(@v, 5);
+	e4vm_utils.stack_ds_push(@v, 6);
+	e4vm_utils.stack_ds_push(@v, 5);
 	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 	
 	(* [6, 5] -> [3] *)
-	e4vm_utils.vm_stat(@v);
+	(*e4vm_utils.vm_stat(@v);*)
 	
 	IF (v.ds[0] = 3)  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
 	END;
-	
-		
 END test_xor;
-
-PROCEDURE test_dolit(VAR v: e4vm_type.x4thPtr);
-BEGIN
-  C.WriteStr("dolit test");
-  e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_core_ext.do_lit;
-	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
-	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* do_lit   *)
-	v.mem[ 7] := 555; (* 555*)
-	v.mem[ 8] := 3; (* exit*)
-	
-
-	e4vm_core.do_list(@v);
-	e4vm_core.do_next(@v);
-	
-	(* [] -> [555] *)
-	(* e4vm_utils.vm_stat(@v); *)
-	
-	IF (v.ds[0] = 555)  THEN
-	  C.WriteStrLn(" - ok");
-	ELSE
-	  C.WriteStrLn(" - error");
-	END;
-	
-END test_dolit;
 
 PROCEDURE test_here(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("here test");
+  C.WriteStr("Test here ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_core_ext.get_here_addr;
+  e4vm_core.add_core_words(@v);
+  e4vm_core_ext.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
-	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* here   *)
-	v.mem[ 7] := 3; (* exit*)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "here");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
 	v.hereP := 555;
 
@@ -812,34 +600,21 @@ END test_here;
 
 PROCEDURE test_comma(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("comma test");
+  C.WriteStr("Test comma , ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_core_ext.comma;
+  e4vm_core.add_core_words(@v);
+  e4vm_core_ext.add_core_words(@v);
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-
-	v.wp := 4;
-	(* עוסעמגאÿ ןנמדנוללא *)
-	
-	v.mem[ 5] := 2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 6] := 4; (* comma   *)
-	v.mem[ 7] := 3; (* exit*)
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, ",");
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
 	v.hereP := 18; 
 	e4vm_utils.stack_ds_push(@v, 777);
 
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
-	
 	
 	(*e4vm_utils.vm_stat(@v); *)
 	
@@ -848,51 +623,44 @@ BEGIN
 	ELSE
 	  C.WriteStrLn(" - error");
 	END;
-	
 END test_comma;
 
+
 PROCEDURE test_branch(VAR v: e4vm_type.x4thPtr);
-VAR t:INTEGER;
+VAR jmp_addr, i:INTEGER;
 BEGIN
-  C.WriteStr("branch test");
-
+  C.WriteStr("Test branch ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_core_ext.branch;
-	v.core[5] := e4vm_core_ext.do_lit
+  e4vm_core.add_core_words(@v);
+  e4vm_core_ext.add_core_words(@v);
 	
+	e4vm_utils.here_to_wp(@v);
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "nop");
+  e4vm_utils.add_op_from_string(@v, "nop");
+  e4vm_utils.add_op_from_string(@v, "nop");
+  e4vm_utils.add_op_from_string(@v, "branch");
+  e4vm_utils.add_op(@v, 77);
+  e4vm_utils.add_op_from_string(@v, "dolit");
+  e4vm_utils.add_op(@v, 1);
+  e4vm_utils.add_op_from_string(@v, "exit");
+  jmp_addr := v.hereP;
+  e4vm_utils.add_op_from_string(@v, "dolit");
+  e4vm_utils.add_op(@v, 2);
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-	v.mem[5] := 5;
-
-	v.wp := 5;
-	(* עוסעמגאÿ ןנמדנוללא *)
-	
-	v.mem[ 6] :=  2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 7] :=  4; (* branch*)
-	v.mem[ 8] := 12; (* adr 12*)
-	v.mem[ 9] :=  5; (* lit   *)
-	v.mem[10] :=  1; (* 1*)
-	v.mem[11] :=  3; (* exit*)
-	v.mem[12] :=  5; (* lit   *)
-	v.mem[13] :=  2; (* 2*)
-	v.mem[14] :=  3; (* exit*)
-	
+	FOR i:=0 TO (e4vm_type.mem_size-1) DO
+	  IF (v.mem[i]=77) THEN
+	    v.mem[i]:=jmp_addr;
+	  END;
+	END;
 
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 
-	(* e4vm_utils.vm_stat(@v); *)
+	(* e4vm_utils.vm_stat(@v);*)
 	
-	IF (v.ds[0] = 2)  THEN
+	IF (v.ds[v.ds_p-1] = 2)  THEN
 	  C.WriteStrLn(" - ok");
 	ELSE
 	  C.WriteStrLn(" - error");
@@ -901,68 +669,63 @@ BEGIN
 END test_branch;
 
 PROCEDURE test_zbranch(VAR v: e4vm_type.x4thPtr);
-VAR t:INTEGER;
+VAR jmp_addr, i:INTEGER;
+VAR start_addr:INTEGER;
 BEGIN
-  C.WriteStr("zbranch test");
-
+  C.WriteStr("Test 0branch ");
   e4vm_utils.init(@v);
-
-	v.core[0] := e4vm_core.do_nop;
-  v.core[1] := e4vm_core.do_next;
-	v.core[2] := e4vm_core.do_list;
-	v.core[3] := e4vm_core.do_exit;
-	v.core[4] := e4vm_core_ext.zbranch;
-	v.core[5] := e4vm_core_ext.do_lit
+  e4vm_core.add_core_words(@v);
+  e4vm_core_ext.add_core_words(@v);
 	
+	e4vm_utils.here_to_wp(@v);
+	start_addr := v.hereP;
+	e4vm_utils.add_op_from_string(@v, "dolist");
+  e4vm_utils.add_op_from_string(@v, "nop");
+  e4vm_utils.add_op_from_string(@v, "nop");
+  e4vm_utils.add_op_from_string(@v, "nop");
+  e4vm_utils.add_op_from_string(@v, "0branch");
+  e4vm_utils.add_op(@v, 77);
+  e4vm_utils.add_op_from_string(@v, "dolit");
+  e4vm_utils.add_op(@v, 1);
+  e4vm_utils.add_op_from_string(@v, "exit");
+  jmp_addr := v.hereP;
+  e4vm_utils.add_op_from_string(@v, "dolit");
+  e4vm_utils.add_op(@v, 2);
+  e4vm_utils.add_op_from_string(@v, "exit");
 	
-	v.mem[0] := 0; 
-	v.mem[1] := 1; 
-	v.mem[2] := 2; 
-	v.mem[3] := 3; 
-	v.mem[4] := 4; 
-	v.mem[5] := 5;
-
-	v.wp := 5;
-	(* עוסעמגאÿ ןנמדנוללא *)
-	
-	v.mem[ 6] :=  2; (* do_list ןמהןנמדנאללא*)
-	v.mem[ 7] :=  4; (* branch*)
-	v.mem[ 8] := 12; (* adr 12*)
-	v.mem[ 9] :=  5; (* lit   *)
-	v.mem[10] :=  1; (* 1*)
-	v.mem[11] :=  3; (* exit*)
-	v.mem[12] :=  5; (* lit   *)
-	v.mem[13] :=  2; (* 2*)
-	v.mem[14] :=  3; (* exit*)
+	FOR i:=0 TO (e4vm_type.mem_size-1) DO
+	  IF (v.mem[i]=77) THEN
+	    v.mem[i]:=jmp_addr;
+	  END;
+	END;
 	
 	e4vm_utils.stack_ds_push(@v, 0);
-
+	
 	e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 
-	(* e4vm_utils.vm_stat(@v); *)
+	(* e4vm_utils.vm_stat(@v);*)
 	
-	IF (v.ds[v.ds_p - 1] = 2)  THEN
+	IF (v.ds[v.ds_p-1] = 2)  THEN
 	  C.WriteStr(" - ok");
 	ELSE
 	  C.WriteStr(" - error");
 	END;
 	
-	v.wp := 5;
-	
+	v.wp := start_addr;
 	e4vm_utils.stack_ds_push(@v, 1);
-
-	e4vm_core.do_list(@v);
+	
+  e4vm_core.do_list(@v);
 	e4vm_core.do_next(@v);
 
-	(* e4vm_utils.vm_stat(@v); *)
+	(* e4vm_utils.vm_stat(@v);*)
 	
-	IF (v.ds[v.ds_p - 1] = 1)  THEN
+	IF (v.ds[v.ds_p-1] = 1)  THEN
 	  C.WriteStr(" - ok");
 	ELSE
 	  C.WriteStr(" - error");
 	END;
-	C.WriteStrLn(" ");
+	
 END test_zbranch;
 
 PROCEDURE test_read_char(VAR v: e4vm_type.x4thPtr);
@@ -986,7 +749,7 @@ BEGIN
 	C.WriteStrLn(v.in_string);
 	C.WriteStr(" - ok");
 END test_read_string;
-*)
+
 
 BEGIN
   B.Init;
@@ -996,11 +759,8 @@ BEGIN
   vm := SYSTEM.VAL(e4vm_type.x4thPtr, SYSTEM.ADR(vm_static));
 
 	test1(@vm);
-	
-	(*
-	test2(@vm);
   test_dolit(@vm);
-	test_drop(@vm);
+  test_drop(@vm);
 	test_swap(@vm);
 	test_dup(@vm);
 	test_over(@vm);
@@ -1009,21 +769,23 @@ BEGIN
 	test_minus(@vm);
 	test_devide(@vm); 
 	test_inc(@vm);
+	test_mod(@vm);
+	
 	test_true(@vm);
 	test_not(@vm);
 	test_invert(@vm);
-	test_or(@vm);
+  test_or(@vm);
 	test_and(@vm);
 	test_xor(@vm);
-
-
 	
-	
-	test_dolit(@vm);
-	test_here(@vm);
+  test_here(@vm);
 	test_comma(@vm);
+
 	test_branch(@vm);
-  test_zbranch(@vm);
+	test_zbranch(@vm);
+	
+	(*
+  
   (* test_read_char(@vm); *)
   test_read_string(@vm);
 *)

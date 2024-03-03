@@ -1,0 +1,42 @@
+-mjwx
+-i e4vm_stack.ihx
+-b _CODE = 0x61a8
+-b _DATA = 0xc350
+-k C:\xdev\ZXDev\Lib
+-k C:\xdev\ZXDev\Bin\..\lib\z80
+-l XDev.lib
+-l Graph.lib
+-l Basic.lib
+-l Laser.lib
+-l MegaBasic.lib
+-l Best40.lib
+-l trdos.lib
+-l libspr.lib
+-l Supercode.lib
+-l NewSupercode.lib
+-l MiraMod2.lib
+-l Pt3xPlayer.lib
+-l Wham.lib
+-l ZX7.lib
+-l CalcZX.lib
+-l Laser2.lib
+-l Mem128.lib
+-l Out6x8.lib
+-l Cursor.lib
+-l StcPlayer.lib
+-l e4vm_type.lib
+-l e4vm_core.lib
+-l e4vm_utils.lib
+-l Pt3Player.lib
+-l KMouse.lib
+-l z80
+C:\xdev\ZXDev\Lib\crt0.rel
+e4vm_stack.rel
+e4vm_core.rel
+e4vm_core_ext.rel
+e4vm_utils.rel
+e4vm_stack.rel
+e4vm_math.rel
+e4vm_boolean.rel
+
+-e

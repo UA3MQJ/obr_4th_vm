@@ -190,23 +190,20 @@ _e4vm_core_do_next::
 ;e4vm_core.c:39: while (!((*v)->ip == 0)) {
 	ld	l, c
 	ld	h, b
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-;e4vm_core.c:41: (*v)->ip = (*v)->ip + 1;
-	ld	l, e
-	ld	h, d
 	ld	a, (hl)
 	inc	hl
 	ld	h, (hl)
 	ld	l, a
+;e4vm_core.c:41: (*v)->ip = (*v)->ip + 1;
+	ld	e, (hl)
 	inc	hl
-	ex	(sp), hl
-	ld	a, -2 (ix)
-	ld	(de), a
+	ld	d, (hl)
+	dec	hl
 	inc	de
-	ld	a, -1 (ix)
-	ld	(de), a
+	ld	a, d
+	ld	(hl), e
+	inc	hl
+	ld	(hl), a
 ;e4vm_core.c:42: word_index = (*v)->mem[(*v)->wp];
 	ld	l, c
 	ld	h, b

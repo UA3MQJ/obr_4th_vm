@@ -1,5 +1,5 @@
 MODULE e4vm_stack;
-IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type;
+IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type, e4vm_utils;
 
 (* удалить слово со стека ( x -- ) *)
 PROCEDURE drop* (VAR v: e4vm_type.x4thPtr);
@@ -58,6 +58,16 @@ BEGIN
   v.ds[v.ds_p - 2] := v.ds[v.ds_p - 3]
   v.ds[v.ds_p - 3] := T;
 END nrot;
+
+PROCEDURE add_core_words* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  e4vm_utils.add_core_word(@v, "drop",    drop, FALSE);
+  e4vm_utils.add_core_word(@v, "swap",    swap, FALSE);
+  e4vm_utils.add_core_word(@v, "dup",     dup,  FALSE);
+  e4vm_utils.add_core_word(@v, "over",    over, FALSE);
+  e4vm_utils.add_core_word(@v, "rot",     rot,  FALSE);
+  e4vm_utils.add_core_word(@v, "nrot",    nrot, FALSE);
+END add_core_words;
 
 BEGIN
 	

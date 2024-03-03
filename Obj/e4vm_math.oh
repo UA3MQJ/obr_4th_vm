@@ -9,6 +9,7 @@
 
 
 
+import void e4vm_math_add_core_words (e4vm_type_x4thPtr *v);
 import void e4vm_math_dec (e4vm_type_x4thPtr *v);
 import void e4vm_math_devide (e4vm_type_x4thPtr *v);
 import void e4vm_math_inc (e4vm_type_x4thPtr *v);

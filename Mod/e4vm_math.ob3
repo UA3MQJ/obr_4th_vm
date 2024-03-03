@@ -1,5 +1,5 @@
 MODULE e4vm_math;
-IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type;
+IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type, e4vm_utils;
 
 (* - *)
 PROCEDURE minus* (VAR v: e4vm_type.x4thPtr);
@@ -13,7 +13,7 @@ END minus;
 PROCEDURE plus* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   (* C.WriteStrLn("+"); *)
-  v.ds_p := v.ds_p - 1;
+  v.ds_p := v.ds_p + 1;
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 1] + v.ds[v.ds_p]
 END plus;
 
@@ -54,6 +54,17 @@ BEGIN
   (* C.WriteStrLn("1-"); *)
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 1] - 1;
 END dec;
+
+PROCEDURE add_core_words* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  e4vm_utils.add_core_word(@v, "-",   minus,    FALSE);
+  e4vm_utils.add_core_word(@v, "+",   plus,     FALSE);
+  e4vm_utils.add_core_word(@v, "*",   multiply, FALSE);
+  e4vm_utils.add_core_word(@v, "/",   devide,   FALSE);
+  e4vm_utils.add_core_word(@v, "mod", mod,      FALSE);
+  e4vm_utils.add_core_word(@v, "1+",  inc,      FALSE);
+  e4vm_utils.add_core_word(@v, "1-",  dec,      FALSE);
+END add_core_words;
 
 BEGIN
 	

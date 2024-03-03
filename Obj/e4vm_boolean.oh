@@ -9,6 +9,7 @@
 
 
 
+import void e4vm_boolean_add_core_words (e4vm_type_x4thPtr *v);
 import void e4vm_boolean_and (e4vm_type_x4thPtr *v);
 import void e4vm_boolean_eql (e4vm_type_x4thPtr *v);
 import void e4vm_boolean_false (e4vm_type_x4thPtr *v);
