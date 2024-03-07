@@ -31,6 +31,7 @@ static void e4vm_test_here (e4vm_type_x4thPtr *v);
 static void e4vm_test_immediate (e4vm_type_x4thPtr *v);
 static void e4vm_test_inc (e4vm_type_x4thPtr *v);
 static void e4vm_test_invert (e4vm_type_x4thPtr *v);
+static void e4vm_test_isconstant (e4vm_type_x4thPtr *v);
 static void e4vm_test_minus (e4vm_type_x4thPtr *v);
 static void e4vm_test_mod (e4vm_type_x4thPtr *v);
 static void e4vm_test_not (e4vm_type_x4thPtr *v);
@@ -149,20 +150,20 @@ static void e4vm_test_drop (e4vm_type_x4thPtr *v)
 
 static void e4vm_test_swap (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__106[10];
-  CHAR _str__105[10];
-  CHAR _str__104[10];
+  CHAR _str__111[10];
+  CHAR _str__110[10];
+  CHAR _str__109[10];
   Console_WriteStr((CHAR*)"Test swap ", 11);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_stack_add_core_words(v);
   e4vm_utils_here_to_wp(v);
-  __MOVE((CHAR*)"dolist", _str__106, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__106);
-  __MOVE((CHAR*)"swap", _str__105, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__105);
-  __MOVE((CHAR*)"exit", _str__104, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__104);
+  __MOVE((CHAR*)"dolist", _str__111, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__111);
+  __MOVE((CHAR*)"swap", _str__110, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__110);
+  __MOVE((CHAR*)"exit", _str__109, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__109);
   e4vm_utils_stack_ds_push(v, 1);
   e4vm_utils_stack_ds_push(v, 2);
   e4vm_core_do_list(v);
@@ -202,20 +203,20 @@ static void e4vm_test_dup (e4vm_type_x4thPtr *v)
 
 static void e4vm_test_over (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__95[10];
-  CHAR _str__94[10];
-  CHAR _str__93[10];
+  CHAR _str__100[10];
+  CHAR _str__99[10];
+  CHAR _str__98[10];
   Console_WriteStr((CHAR*)"Test over ", 11);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_stack_add_core_words(v);
   e4vm_utils_here_to_wp(v);
-  __MOVE((CHAR*)"dolist", _str__95, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__95);
-  __MOVE((CHAR*)"over", _str__94, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__94);
-  __MOVE((CHAR*)"exit", _str__93, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__93);
+  __MOVE((CHAR*)"dolist", _str__100, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__100);
+  __MOVE((CHAR*)"over", _str__99, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__99);
+  __MOVE((CHAR*)"exit", _str__98, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__98);
   e4vm_utils_stack_ds_push(v, 1);
   e4vm_utils_stack_ds_push(v, 2);
   e4vm_core_do_list(v);
@@ -229,20 +230,20 @@ static void e4vm_test_over (e4vm_type_x4thPtr *v)
 
 static void e4vm_test_rot (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__102[10];
-  CHAR _str__101[10];
-  CHAR _str__100[10];
+  CHAR _str__107[10];
+  CHAR _str__106[10];
+  CHAR _str__105[10];
   Console_WriteStr((CHAR*)"Test rot ", 10);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_stack_add_core_words(v);
   e4vm_utils_here_to_wp(v);
-  __MOVE((CHAR*)"dolist", _str__102, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__102);
-  __MOVE((CHAR*)"rot", _str__101, 4);
-  e4vm_utils_add_op_from_string(v, (void*)_str__101);
-  __MOVE((CHAR*)"exit", _str__100, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__100);
+  __MOVE((CHAR*)"dolist", _str__107, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__107);
+  __MOVE((CHAR*)"rot", _str__106, 4);
+  e4vm_utils_add_op_from_string(v, (void*)_str__106);
+  __MOVE((CHAR*)"exit", _str__105, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__105);
   e4vm_utils_stack_ds_push(v, 1);
   e4vm_utils_stack_ds_push(v, 2);
   e4vm_utils_stack_ds_push(v, 3);
@@ -257,20 +258,20 @@ static void e4vm_test_rot (e4vm_type_x4thPtr *v)
 
 static void e4vm_test_nrot (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__87[10];
-  CHAR _str__86[10];
-  CHAR _str__85[10];
+  CHAR _str__92[10];
+  CHAR _str__91[10];
+  CHAR _str__90[10];
   Console_WriteStr((CHAR*)"Test nrot ", 11);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_stack_add_core_words(v);
   e4vm_utils_here_to_wp(v);
-  __MOVE((CHAR*)"dolist", _str__87, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__87);
-  __MOVE((CHAR*)"nrot", _str__86, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__86);
-  __MOVE((CHAR*)"exit", _str__85, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__85);
+  __MOVE((CHAR*)"dolist", _str__92, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__92);
+  __MOVE((CHAR*)"nrot", _str__91, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__91);
+  __MOVE((CHAR*)"exit", _str__90, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__90);
   e4vm_utils_stack_ds_push(v, 1);
   e4vm_utils_stack_ds_push(v, 2);
   e4vm_utils_stack_ds_push(v, 3);
@@ -285,23 +286,23 @@ static void e4vm_test_nrot (e4vm_type_x4thPtr *v)
 
 static void e4vm_test_minus (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__75[10];
-  CHAR _str__74[10];
-  CHAR _str__73[10];
-  CHAR _str__72[10];
+  CHAR _str__80[10];
+  CHAR _str__79[10];
+  CHAR _str__78[10];
+  CHAR _str__77[10];
   Console_WriteStr((CHAR*)"Test math -/+ ", 15);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_math_add_core_words(v);
   e4vm_utils_here_to_wp(v);
-  __MOVE((CHAR*)"dolist", _str__75, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__75);
-  __MOVE((CHAR*)"-", _str__74, 2);
-  e4vm_utils_add_op_from_string(v, (void*)_str__74);
-  __MOVE((CHAR*)"+", _str__73, 2);
-  e4vm_utils_add_op_from_string(v, (void*)_str__73);
-  __MOVE((CHAR*)"exit", _str__72, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__72);
+  __MOVE((CHAR*)"dolist", _str__80, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__80);
+  __MOVE((CHAR*)"-", _str__79, 2);
+  e4vm_utils_add_op_from_string(v, (void*)_str__79);
+  __MOVE((CHAR*)"+", _str__78, 2);
+  e4vm_utils_add_op_from_string(v, (void*)_str__78);
+  __MOVE((CHAR*)"exit", _str__77, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__77);
   e4vm_utils_stack_ds_push(v, 1);
   e4vm_utils_stack_ds_push(v, 20);
   e4vm_utils_stack_ds_push(v, 3);
@@ -316,20 +317,20 @@ static void e4vm_test_minus (e4vm_type_x4thPtr *v)
 
 static void e4vm_test_mod (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__79[10];
-  CHAR _str__78[10];
-  CHAR _str__77[10];
+  CHAR _str__84[10];
+  CHAR _str__83[10];
+  CHAR _str__82[10];
   Console_WriteStr((CHAR*)"Test mod ", 10);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_math_add_core_words(v);
   e4vm_utils_here_to_wp(v);
-  __MOVE((CHAR*)"dolist", _str__79, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__79);
-  __MOVE((CHAR*)"mod", _str__78, 4);
-  e4vm_utils_add_op_from_string(v, (void*)_str__78);
-  __MOVE((CHAR*)"exit", _str__77, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__77);
+  __MOVE((CHAR*)"dolist", _str__84, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__84);
+  __MOVE((CHAR*)"mod", _str__83, 4);
+  e4vm_utils_add_op_from_string(v, (void*)_str__83);
+  __MOVE((CHAR*)"exit", _str__82, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__82);
   e4vm_utils_stack_ds_push(v, 10);
   e4vm_utils_stack_ds_push(v, 3);
   e4vm_core_do_list(v);
@@ -408,20 +409,20 @@ static void e4vm_test_inc (e4vm_type_x4thPtr *v)
 
 static void e4vm_test_true (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__110[10];
-  CHAR _str__109[10];
-  CHAR _str__108[10];
+  CHAR _str__115[10];
+  CHAR _str__114[10];
+  CHAR _str__113[10];
   Console_WriteStr((CHAR*)"Test true ", 11);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_boolean_add_core_words(v);
   e4vm_utils_here_to_wp(v);
-  __MOVE((CHAR*)"dolist", _str__110, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__110);
-  __MOVE((CHAR*)"true", _str__109, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__109);
-  __MOVE((CHAR*)"exit", _str__108, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__108);
+  __MOVE((CHAR*)"dolist", _str__115, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__115);
+  __MOVE((CHAR*)"true", _str__114, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__114);
+  __MOVE((CHAR*)"exit", _str__113, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__113);
   e4vm_core_do_list(v);
   e4vm_core_do_next(v);
   if ((*v)->ds[(*v)->ds_p - 1] == e4vm_utils_true_const(&e4vm_vm)) {
@@ -434,20 +435,20 @@ static void e4vm_test_true (e4vm_type_x4thPtr *v)
 static void e4vm_test_not (e4vm_type_x4thPtr *v)
 {
   SHORTINT start_addr;
-  CHAR _str__83[10];
-  CHAR _str__82[10];
-  CHAR _str__81[10];
+  CHAR _str__88[10];
+  CHAR _str__87[10];
+  CHAR _str__86[10];
   Console_WriteStr((CHAR*)"Test not ", 10);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_boolean_add_core_words(v);
   start_addr = (*v)->hereP;
-  __MOVE((CHAR*)"dolist", _str__83, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__83);
-  __MOVE((CHAR*)"not", _str__82, 4);
-  e4vm_utils_add_op_from_string(v, (void*)_str__82);
-  __MOVE((CHAR*)"exit", _str__81, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__81);
+  __MOVE((CHAR*)"dolist", _str__88, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__88);
+  __MOVE((CHAR*)"not", _str__87, 4);
+  e4vm_utils_add_op_from_string(v, (void*)_str__87);
+  __MOVE((CHAR*)"exit", _str__86, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__86);
   e4vm_utils_stack_ds_push(v, e4vm_utils_true_const(&e4vm_vm));
   (*v)->wp = start_addr;
   e4vm_core_do_list(v);
@@ -500,20 +501,20 @@ static void e4vm_test_invert (e4vm_type_x4thPtr *v)
 
 static void e4vm_test_or (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__91[10];
-  CHAR _str__90[10];
-  CHAR _str__89[10];
+  CHAR _str__96[10];
+  CHAR _str__95[10];
+  CHAR _str__94[10];
   Console_WriteStr((CHAR*)"Test or ", 9);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_boolean_add_core_words(v);
   e4vm_utils_here_to_wp(v);
-  __MOVE((CHAR*)"dolist", _str__91, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__91);
-  __MOVE((CHAR*)"or", _str__90, 3);
-  e4vm_utils_add_op_from_string(v, (void*)_str__90);
-  __MOVE((CHAR*)"exit", _str__89, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__89);
+  __MOVE((CHAR*)"dolist", _str__96, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__96);
+  __MOVE((CHAR*)"or", _str__95, 3);
+  e4vm_utils_add_op_from_string(v, (void*)_str__95);
+  __MOVE((CHAR*)"exit", _str__94, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__94);
   e4vm_utils_stack_ds_push(v, 1);
   e4vm_utils_stack_ds_push(v, 2);
   e4vm_core_do_list(v);
@@ -554,20 +555,20 @@ static void e4vm_test_and (e4vm_type_x4thPtr *v)
 
 static void e4vm_test_xor (e4vm_type_x4thPtr *v)
 {
-  CHAR _str__114[10];
-  CHAR _str__113[10];
-  CHAR _str__112[10];
+  CHAR _str__119[10];
+  CHAR _str__118[10];
+  CHAR _str__117[10];
   Console_WriteStr((CHAR*)"Test xor ", 10);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_boolean_add_core_words(v);
   e4vm_utils_here_to_wp(v);
-  __MOVE((CHAR*)"dolist", _str__114, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__114);
-  __MOVE((CHAR*)"xor", _str__113, 4);
-  e4vm_utils_add_op_from_string(v, (void*)_str__113);
-  __MOVE((CHAR*)"exit", _str__112, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__112);
+  __MOVE((CHAR*)"dolist", _str__119, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__119);
+  __MOVE((CHAR*)"xor", _str__118, 4);
+  e4vm_utils_add_op_from_string(v, (void*)_str__118);
+  __MOVE((CHAR*)"exit", _str__117, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__117);
   e4vm_utils_stack_ds_push(v, 6);
   e4vm_utils_stack_ds_push(v, 5);
   e4vm_core_do_list(v);
@@ -690,43 +691,43 @@ static void e4vm_test_branch (e4vm_type_x4thPtr *v)
 static void e4vm_test_zbranch (e4vm_type_x4thPtr *v)
 {
   SHORTINT jmp_addr, i, start_addr;
+  CHAR _str__129[10];
+  CHAR _str__128[10];
+  CHAR _str__127[10];
+  CHAR _str__126[10];
+  CHAR _str__125[10];
   CHAR _str__124[10];
   CHAR _str__123[10];
   CHAR _str__122[10];
   CHAR _str__121[10];
-  CHAR _str__120[10];
-  CHAR _str__119[10];
-  CHAR _str__118[10];
-  CHAR _str__117[10];
-  CHAR _str__116[10];
   Console_WriteStr((CHAR*)"Test 0branch ", 14);
   e4vm_utils_init(v);
   e4vm_core_add_core_words(v);
   e4vm_core_ext_add_core_words(v);
   e4vm_utils_here_to_wp(v);
   start_addr = (*v)->hereP;
-  __MOVE((CHAR*)"dolist", _str__124, 7);
-  e4vm_utils_add_op_from_string(v, (void*)_str__124);
-  __MOVE((CHAR*)"nop", _str__123, 4);
-  e4vm_utils_add_op_from_string(v, (void*)_str__123);
-  __MOVE((CHAR*)"nop", _str__122, 4);
-  e4vm_utils_add_op_from_string(v, (void*)_str__122);
-  __MOVE((CHAR*)"nop", _str__121, 4);
-  e4vm_utils_add_op_from_string(v, (void*)_str__121);
-  __MOVE((CHAR*)"0branch", _str__120, 8);
-  e4vm_utils_add_op_from_string(v, (void*)_str__120);
+  __MOVE((CHAR*)"dolist", _str__129, 7);
+  e4vm_utils_add_op_from_string(v, (void*)_str__129);
+  __MOVE((CHAR*)"nop", _str__128, 4);
+  e4vm_utils_add_op_from_string(v, (void*)_str__128);
+  __MOVE((CHAR*)"nop", _str__127, 4);
+  e4vm_utils_add_op_from_string(v, (void*)_str__127);
+  __MOVE((CHAR*)"nop", _str__126, 4);
+  e4vm_utils_add_op_from_string(v, (void*)_str__126);
+  __MOVE((CHAR*)"0branch", _str__125, 8);
+  e4vm_utils_add_op_from_string(v, (void*)_str__125);
   e4vm_utils_add_op(v, 77);
-  __MOVE((CHAR*)"dolit", _str__119, 6);
-  e4vm_utils_add_op_from_string(v, (void*)_str__119);
+  __MOVE((CHAR*)"dolit", _str__124, 6);
+  e4vm_utils_add_op_from_string(v, (void*)_str__124);
   e4vm_utils_add_op(v, 1);
-  __MOVE((CHAR*)"exit", _str__118, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__118);
+  __MOVE((CHAR*)"exit", _str__123, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__123);
   jmp_addr = (*v)->hereP;
-  __MOVE((CHAR*)"dolit", _str__117, 6);
-  e4vm_utils_add_op_from_string(v, (void*)_str__117);
+  __MOVE((CHAR*)"dolit", _str__122, 6);
+  e4vm_utils_add_op_from_string(v, (void*)_str__122);
   e4vm_utils_add_op(v, 2);
-  __MOVE((CHAR*)"exit", _str__116, 5);
-  e4vm_utils_add_op_from_string(v, (void*)_str__116);
+  __MOVE((CHAR*)"exit", _str__121, 5);
+  e4vm_utils_add_op_from_string(v, (void*)_str__121);
   i = 0;
   while (i <= 31) {
     if ((*v)->mem[i] == 77) {
@@ -768,11 +769,11 @@ static void e4vm_test_read_char (e4vm_type_x4thPtr *v)
 
 static void e4vm_test_read_string (e4vm_type_x4thPtr *v)
 {
-  e4vm_type_x4thPtr _ptr__98 = NIL;
+  e4vm_type_x4thPtr _ptr__103 = NIL;
   Console_WriteStr((CHAR*)"read_string test ", 18);
   e4vm_utils_read_string(v);
-  _ptr__98 = *v;
-  Console_WriteStrLn((void*)_ptr__98->in_string, 64);
+  _ptr__103 = *v;
+  Console_WriteStrLn((void*)_ptr__103->in_string, 64);
   Console_WriteStr((CHAR*)" - ok", 6);
 }
 
@@ -838,6 +839,44 @@ static void e4vm_test_execute1 (e4vm_type_x4thPtr *v)
   }
 }
 
+static void e4vm_test_isconstant (e4vm_type_x4thPtr *v)
+{
+  CHAR _str__75[10];
+  CHAR _str__74[10];
+  CHAR _str__73[10];
+  CHAR _str__72[10];
+  Console_WriteStrLn((CHAR*)"Test test_isconstant ", 22);
+  if (e4vm_utils_is_digit('9')) {
+    Console_WriteStrLn((CHAR*)"is_digit 1 - ok", 16);
+  } else {
+    Console_WriteStrLn((CHAR*)"is_digit 1 - error", 19);
+  }
+  if (__MOVE((CHAR*)"90", _str__75, 3), 
+    e4vm_utils_is_constant((void*)_str__75)) {
+    Console_WriteStrLn((CHAR*)"is_constant 90 - ok", 20);
+  } else {
+    Console_WriteStrLn((CHAR*)"is_constant 90 - error", 23);
+  }
+  if (__MOVE((CHAR*)"+90", _str__74, 4), 
+    e4vm_utils_is_constant((void*)_str__74)) {
+    Console_WriteStrLn((CHAR*)"is_constant +90 - ok", 21);
+  } else {
+    Console_WriteStrLn((CHAR*)"is_constant +90 - error", 24);
+  }
+  if (__MOVE((CHAR*)"-90", _str__73, 4), 
+    e4vm_utils_is_constant((void*)_str__73)) {
+    Console_WriteStrLn((CHAR*)"is_constant -90 - ok", 21);
+  } else {
+    Console_WriteStrLn((CHAR*)"is_constant -90 - error", 24);
+  }
+  if (__MOVE((CHAR*)"as", _str__72, 3), 
+    e4vm_utils_is_constant((void*)_str__72)) {
+    Console_WriteStrLn((CHAR*)"is_constant as - ok", 20);
+  } else {
+    Console_WriteStrLn((CHAR*)"is_constant as - error", 23);
+  }
+}
+
 
 int main (int argc, char **argv)
 {
@@ -857,8 +896,7 @@ int main (int argc, char **argv)
   Console_Clear(7);
   Console_SetColors(56);
   e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
-  e4vm_test_immediate(&e4vm_vm);
-  e4vm_test_execute1(&e4vm_vm);
+  e4vm_test_isconstant(&e4vm_vm);
   Basic_PAUSE(0);
   Basic_Quit();
   __FINI;

@@ -54,6 +54,24 @@ BEGIN
   RETURN -1;	
 END look_up_word_idx_by_address;
 
+PROCEDURE is_digit* (char: CHAR): BOOLEAN;
+BEGIN
+  RETURN ((char >= "0")&(char <= "9")); 
+END is_digit;
+
+PROCEDURE is_constant* (word: e4vm_type.word_string_type): BOOLEAN;
+BEGIN
+	RETURN (is_digit(word[0]))
+	        OR( (LEN(word)>=2)&((word[0] = "+")OR(word[0] = "-"))&(is_digit(word[1])) );
+END is_constant;
+
+PROCEDURE str2int* (word: e4vm_type.word_string_type): INTEGER;
+BEGIN
+  (* TODO *)
+  RETURN -1;
+END str2int;
+
+
 (* # добавляем операцию в память. то есть в память по адресу hereP кладем переданный адрес слова *)
 PROCEDURE here_to_wp* (
   VAR v: e4vm_type.x4thPtr

@@ -98,6 +98,45 @@ BEGIN
 	execute_addr(@v, v.ds[v.ds_p]);
 END execute;
 
+(* # исполням слово *)
+PROCEDURE interpreter_word* (
+  VAR v: e4vm_type.x4thPtr;
+  word: e4vm_type.word_string_type);
+VAR word_address:INTEGER;
+BEGIN
+	word_address := e4vm_utils.look_up_word_address(@v, word);
+	IF v.is_eval_mode THEN
+	  (*# eval mode*)
+	  (*# если это слово и оно определено - исполняем*)
+	  IF ~(word_address = -1) THEN
+	    execute_addr(@v, word_address);
+	  ELSIF e4vm_utils.is_constant(word) THEN
+	    (*# иначе, если это число - кладем на стек*)
+	    e4vm_utils.stack_ds_push(@v, e4vm_utils.str2int(word));
+	  ELSE
+	    (*# иначе, это ошибка - такого слова нет и это не константа*)
+			C.WriteStr("ERROR(1): undefined word "); C.WriteStrLn(word);
+	  END;
+	ELSE
+		(*# program mode*)
+		IF ~(word_address = -1) THEN
+			IF (v.words[word_address].immediate) THEN
+			  (*execute(vm, word_addr)*)
+			ELSE
+			  (*add_op(vm, word_addr)*)
+			END;
+	    execute_addr(@v, word_address);
+	  ELSIF e4vm_utils.is_constant(word) THEN
+	    (*# иначе, если это число - пишем в память dolit число*)
+	    e4vm_utils.add_op_from_string(@v, "dolit");
+	    e4vm_utils.add_op(@v, e4vm_utils.str2int(word));
+	  ELSE
+	    (*# иначе, это ошибка - такого слова нет и это не константа*)
+			C.WriteStr("ERROR(2): undefined word "); C.WriteStrLn(word);
+	  END;
+	END;
+END interpreter_word;
+
 PROCEDURE add_core_words* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   e4vm_utils.add_core_word(@v, "quit",    quit,    FALSE);

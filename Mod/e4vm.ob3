@@ -810,6 +810,41 @@ BEGIN
 	END;
 END test_execute1;
 
+PROCEDURE test_isconstant(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("Test test_isconstant ");
+	
+	IF (e4vm_utils.is_digit("9"))  THEN
+	  C.WriteStrLn("is_digit 1 - ok");
+	ELSE
+	  C.WriteStrLn("is_digit 1 - error");
+	END;
+	
+	IF (e4vm_utils.is_constant("90"))  THEN
+	  C.WriteStrLn("is_constant 90 - ok");
+	ELSE
+	  C.WriteStrLn("is_constant 90 - error");
+	END;
+	
+	IF (e4vm_utils.is_constant("+90"))  THEN
+	  C.WriteStrLn("is_constant +90 - ok");
+	ELSE
+	  C.WriteStrLn("is_constant +90 - error");
+	END;
+	
+	IF (e4vm_utils.is_constant("-90"))  THEN
+	  C.WriteStrLn("is_constant -90 - ok");
+	ELSE
+	  C.WriteStrLn("is_constant -90 - error");
+	END;
+	
+	IF (e4vm_utils.is_constant("as"))  THEN
+	  C.WriteStrLn("is_constant as - ok");
+	ELSE
+	  C.WriteStrLn("is_constant as - error");
+	END;
+END test_isconstant;
+
 BEGIN
   B.Init;
   C.Clear(C.White);
@@ -848,9 +883,10 @@ BEGIN
   test_read_string(@vm);
   test_immediate(@vm);
 
-*)
-test_immediate(@vm);
-  test_execute1(@vm);
+  test_immediate(@vm);
+  test_execute1(@vm); *)
+
+  test_isconstant(@vm);
 
   B.PAUSE(0);
 	B.Quit;
