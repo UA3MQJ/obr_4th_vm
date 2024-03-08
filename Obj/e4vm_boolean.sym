@@ -11,7 +11,21 @@ Symbol Table
     _Console_WriteStr_C_COMPACT                                    **** GX
     ___sdcc_enter_ix                                               **** GX
   0 ___str_0                                                       0155 R
-  0 _e4vm_boolean__init                                            05C2 GR
+  0 ___str_1                                                       0814 R
+  0 ___str_10                                                      083A R
+  0 ___str_11                                                      083C R
+  0 ___str_12                                                      083E R
+  0 ___str_13                                                      0841 R
+  0 ___str_2                                                       0819 R
+  0 ___str_3                                                       081F R
+  0 ___str_4                                                       0823 R
+  0 ___str_5                                                       082A R
+  0 ___str_6                                                       082D R
+  0 ___str_7                                                       0831 R
+  0 ___str_8                                                       0835 R
+  0 ___str_9                                                       0838 R
+  0 _e4vm_boolean__init                                            0844 GR
+  0 _e4vm_boolean_add_core_words                                   05C2 GR
   0 _e4vm_boolean_and                                              01E5 GR
   0 _e4vm_boolean_eql                                              02A6 GR
   0 _e4vm_boolean_false                                            0044 GR
@@ -27,16 +41,17 @@ Symbol Table
   0 _e4vm_boolean_xor                                              024C GR
     _e4vm_type__init                                               **** GX
     _e4vm_utils__init                                              **** GX
+    _e4vm_utils_add_core_word                                      **** GX
     _e4vm_utils_false_const                                        **** GX
     _e4vm_utils_true_const                                         **** GX
-
+    _memcpy                                                        **** GX
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  5CD   flags    0
+   0 _CODE                                      size  84F   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

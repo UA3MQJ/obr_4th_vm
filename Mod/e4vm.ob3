@@ -24,7 +24,7 @@ BEGIN
   v.mem[30] := 1;
 END do_hello;
 
-
+(*
 PROCEDURE test1(VAR v: e4vm_type.x4thPtr);
 BEGIN
   (* проверяется визуально. должно выполнить NoP hello nop*)
@@ -321,7 +321,7 @@ END test_mod;
 
 PROCEDURE test_devide(VAR v: e4vm_type.x4thPtr);
 BEGIN
-  C.WriteStr("Test math (/, *) ");
+  C.WriteStr("Test math /, * ");
   e4vm_utils.init(@v);
   e4vm_core.add_core_words(@v);
   e4vm_math.add_core_words(@v);
@@ -728,28 +728,6 @@ BEGIN
 	
 END test_zbranch;
 
-PROCEDURE test_read_char(VAR v: e4vm_type.x4thPtr);
-VAR t:INTEGER; ch: SYSTEM.BYTE; c: CHAR;
-BEGIN
-  C.WriteStr("read_char test ");
-
-  e4vm_utils.init(@v);
-
-	ch:=e4vm_utils.read_char(@v);
-	
-	C.WriteInt(ch); C.WriteCh(CHR(ch));
-	C.WriteStr(" - ok");
-END test_read_char;
-
-PROCEDURE test_read_string(VAR v: e4vm_type.x4thPtr);
-BEGIN
-  C.WriteStr("read_string test ");
-
-	e4vm_utils.read_string(@v);
-	C.WriteStrLn(v.in_string);
-	C.WriteStr(" - ok");
-END test_read_string;
-
 PROCEDURE test_immediate(VAR v: e4vm_type.x4thPtr);
 BEGIN
   C.WriteStr("Test immediate ");
@@ -808,7 +786,7 @@ BEGIN
 	ELSE
 	  C.WriteStrLn(" - error");
 	END;
-END test_execute1;
+END test_execute1; 
 
 PROCEDURE test_isconstant(VAR v: e4vm_type.x4thPtr);
 BEGIN
@@ -843,7 +821,249 @@ BEGIN
 	ELSE
 	  C.WriteStrLn("is_constant as - error");
 	END;
+	
+	IF (e4vm_utils.str2int("12345")=12345)  THEN
+	  C.WriteStrLn("str2int pos - ok");
+	ELSE
+	  C.WriteStrLn("str2int pos - error");
+	END;
+	
+	IF (e4vm_utils.str2int("-12345")=-12345)  THEN
+	  C.WriteStrLn("str2int neg - ok");
+	ELSE
+	  C.WriteStrLn("str2int neg - error");
+	END;
+	
 END test_isconstant;
+
+PROCEDURE test_interpreter_word(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("Test interpreter_word ");
+  e4vm_utils.init(@v);
+  e4vm_core.add_core_words(@v);
+  e4vm_core_ext.add_core_words(@v);
+  e4vm_utils.add_core_word(@v, "hello", do_hello,  FALSE);
+  e4vm_utils.add_core_word(@v, "hello_imm", do_hello,  TRUE);
+	
+
+	
+	v.mem[30] := 0;
+	e4vm_core_ext.interpreter_word(@v, "hello");
+	
+	IF (v.mem[30] = 1)  THEN
+	  C.WriteStrLn(" is_eval_mode word - ok");
+	ELSE
+	  C.WriteStrLn(" is_eval_mode word  - error");
+	END;
+	
+	e4vm_core_ext.interpreter_word(@v, "123");
+	IF (v.ds[v.ds_p-1] = 123)  THEN
+	  C.WriteStrLn(" is_eval_mode const - ok");
+	ELSE
+	  C.WriteStrLn(" is_eval_mode const  - error");
+	END;
+	
+	v.is_eval_mode := FALSE;
+	
+	e4vm_core_ext.interpreter_word(@v, "123");
+	IF ((v.mem[v.hereP-1] = 123)&(v.mem[v.hereP-2] = e4vm_utils.look_up_word_address(@v, "dolit")))  THEN
+	  C.WriteStrLn(" program mode const - ok");
+	ELSE
+	  C.WriteStrLn(" program mode const  - error");
+	END;
+	
+	v.mem[30] := 0;
+	e4vm_core_ext.interpreter_word(@v, "hello_imm");
+	IF (v.mem[30] = 1)  THEN
+	  C.WriteStrLn(" program mode imm word - ok");
+	ELSE
+	  C.WriteStrLn(" program mode imm word  - error");
+	END;
+	
+	v.mem[30] := 0;
+	e4vm_core_ext.interpreter_word(@v, "hello");
+	IF ((v.mem[30] = 0)&(v.mem[v.hereP-1] = e4vm_utils.look_up_word_address(@v, "hello")))  THEN
+	  C.WriteStrLn(" program mode word - ok");
+	ELSE
+	  C.WriteStrLn(" program mode word  - error");
+	END;
+	
+	(*e4vm_utils.vm_stat(@v);*)
+
+END test_interpreter_word; *)
+
+(*
+PROCEDURE test_read_char2(VAR v: e4vm_type.x4thPtr);
+VAR t:INTEGER; ch: SYSTEM.BYTE; c: CHAR;
+BEGIN
+  C.WriteStr("read_char test ");
+
+  e4vm_utils.init(@v);
+
+	ch:=e4vm_utils.read_char(@v);
+	
+	C.WriteInt(ch); C.WriteCh(CHR(ch));
+	C.WriteStr(" - ok");
+END test_read_char;
+
+PROCEDURE test_read_string2(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("read_string test ");
+
+	e4vm_utils.read_string(@v);
+	C.WriteStrLn(v.in_string);
+	C.WriteStr(" - ok");
+END test_read_string;*)
+
+PROCEDURE test_read_char(VAR v: e4vm_type.x4thPtr);
+VAR t:INTEGER; ch: SYSTEM.BYTE; c: CHAR;
+BEGIN
+  C.WriteStr("read_char test ");
+
+  e4vm_utils.init(@v);
+
+  v.buffer[0]:="a";
+  v.buffer[1]:="b";
+
+	IF ((e4vm_utils.read_char(@v)="a")&(e4vm_utils.read_char(@v)="b")&(e4vm_utils.read_char(@v)=CHR(0))&(e4vm_utils.read_char(@v)=CHR(0)))  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;;
+END test_read_char;
+
+PROCEDURE test_read_word(VAR v: e4vm_type.x4thPtr);
+VAR t:BOOLEAN;
+BEGIN
+  C.WriteStr("read_word test ");
+
+  e4vm_utils.init(@v);
+
+  v.buffer := "   some  len     string ";
+  v.buffer_idx := 0;
+
+  t:=e4vm_utils.read_word(@v);
+
+	IF ((t)&(v.readed_word = "some"))  THEN
+	  C.WriteStrLn("2 - ok");
+	ELSE
+	  C.WriteStrLn("2 - error");
+	  C.WriteStr("'");
+	  C.WriteStr(v.readed_word);
+	  C.WriteStrLn("'");
+	END;
+	
+	
+  t:=e4vm_utils.read_word(@v);
+
+	IF ((t)&(v.readed_word = "len"))  THEN
+	  C.WriteStrLn("3 - ok");
+	ELSE
+	  C.WriteStrLn("3 - error");
+	  C.WriteStr("'");
+	  C.WriteStr(v.readed_word);
+	  C.WriteStrLn("'");
+	END;
+
+	t:=e4vm_utils.read_word(@v);
+
+	IF ((t)&(v.readed_word = "string"))  THEN
+	  C.WriteStrLn("4 - ok");
+	ELSE
+	  C.WriteStrLn("4 - error");
+	  C.WriteStr("'");
+	  C.WriteStr(v.readed_word);
+	  C.WriteStrLn("'");
+	END;
+	
+	t:=e4vm_utils.read_word(@v);
+	
+	IF (~(t))  THEN
+	  C.WriteStrLn("5 - ok");
+	ELSE
+	  C.WriteStrLn("5 - error");
+	END;
+END test_read_word;
+
+PROCEDURE test_interpreter(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("interpreter test ");
+
+  e4vm_utils.init(@v);
+  e4vm_core.add_core_words(@v);
+  e4vm_core_ext.add_core_words(@v);
+	
+  v.buffer := "1  2 3 ";
+  v.buffer_idx := 0;
+
+	e4vm_core_ext.interpreter(@v);
+
+	IF (v.ds[v.ds_p-1]=3)&(v.ds[v.ds_p-2]=2)&(v.ds[v.ds_p-3]=1)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+END test_interpreter;
+
+PROCEDURE test_eval(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr("eval test ");
+
+  e4vm_utils.init(@v);
+  e4vm_core.add_core_words(@v);
+  e4vm_core_ext.add_core_words(@v);
+	
+  v.buffer := "1  2 3 ";
+  v.buffer_idx := 0;
+
+	e4vm_core_ext.eval(@v, "1  2 3 ");
+
+	IF (v.ds[v.ds_p-1]=3)&(v.ds[v.ds_p-2]=2)&(v.ds[v.ds_p-3]=1)  THEN
+	  C.WriteStrLn(" - ok");
+	ELSE
+	  C.WriteStrLn(" - error");
+	END;
+END test_eval;
+
+PROCEDURE test_math_evals(
+ VAR v: e4vm_type.x4thPtr;
+ true_res: INTEGER
+);
+BEGIN
+  v.buffer_idx := 0;
+
+  C.WriteStr(v.buffer); C.WriteStr(" -> ");
+	e4vm_core_ext.interpreter(@v);
+
+	IF (v.ds[v.ds_p-1]=true_res)  THEN
+	  C.WriteInt(v.ds[v.ds_p-1]);
+	  C.WriteStrLn(" - ok");
+	ELSE
+		C.WriteInt(v.ds[v.ds_p-1]);
+	  C.WriteStrLn(" - error");
+	END;
+END test_math_evals;
+
+PROCEDURE test_math_eval(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("eval math test ");
+
+  e4vm_utils.init(@v);
+  e4vm_core.add_core_words(@v);
+  e4vm_core_ext.add_core_words(@v);
+	e4vm_math.add_core_words(@v);
+	
+	v.buffer := "10 2 -"; test_math_evals(@v, 8)
+	v.buffer := "4 10 -"; test_math_evals(@v, -6)
+	v.buffer := "4 10 +"; test_math_evals(@v, 14)
+  v.buffer := "10 2 *"; test_math_evals(@v, 20)
+  v.buffer := "10 2 /"; test_math_evals(@v, 5)
+  v.buffer := "10 2 mod"; test_math_evals(@v, 0)
+  v.buffer := "10 1+"; test_math_evals(@v, 11)
+  v.buffer := "10 1-"; test_math_evals(@v, 9)
+END test_math_eval;
+
+
 
 BEGIN
   B.Init;
@@ -879,14 +1099,22 @@ BEGIN
 	test_branch(@vm);
 	test_zbranch(@vm);
 
-  test_read_char(@vm);
-  test_read_string(@vm);
+  test_read_char2(@vm);
+  test_read_string2(@vm);
   test_immediate(@vm);
 
   test_immediate(@vm);
-  test_execute1(@vm); *)
+  test_execute1(@vm); 
 
   test_isconstant(@vm);
+  test_interpreter_word(@vm);
+
+  test_read_char(@vm);
+  test_read_word(@vm);
+  test_interpreter(@vm); *)
+
+  test_eval(@vm);
+  test_math_eval(@vm);
 
   B.PAUSE(0);
 	B.Quit;

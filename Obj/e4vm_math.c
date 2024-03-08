@@ -31,7 +31,7 @@ void e4vm_math_minus (e4vm_type_x4thPtr *v)
 /*----------------------------------------------------------------------------*/
 void e4vm_math_plus (e4vm_type_x4thPtr *v)
 {
-  (*v)->ds_p = (*v)->ds_p + 1;
+  (*v)->ds_p = (*v)->ds_p - 1;
   (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] + (*v)->ds[(*v)->ds_p];
 }
 

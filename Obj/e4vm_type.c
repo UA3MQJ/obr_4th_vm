@@ -29,6 +29,9 @@ typedef
     e4vm_type_core_word words[32];
     SHORTINT words_count;
     CHAR in_string[64];
+    CHAR buffer[64];
+    SHORTINT buffer_idx;
+    e4vm_type_word_string_type readed_word;
   } e4vm_type_x4th;
 
 

@@ -15,10 +15,12 @@ export void e4vm_core_ext_add_core_words (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_branch (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_comma (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_do_lit (e4vm_type_x4thPtr *v);
+export void e4vm_core_ext_eval (e4vm_type_x4thPtr *v, CHAR str[64]);
 export void e4vm_core_ext_execute (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_execute_addr (e4vm_type_x4thPtr *v, SHORTINT word_address);
 export void e4vm_core_ext_get_here_addr (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_immediate (e4vm_type_x4thPtr *v);
+export void e4vm_core_ext_interpreter (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_interpreter_word (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word);
 export void e4vm_core_ext_lbrac (e4vm_type_x4thPtr *v);
 export void e4vm_core_ext_quit (e4vm_type_x4thPtr *v);
@@ -113,6 +115,7 @@ void e4vm_core_ext_execute (e4vm_type_x4thPtr *v)
 void e4vm_core_ext_interpreter_word (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word)
 {
   SHORTINT word_address;
+  CHAR _str__22[10];
   word_address = e4vm_utils_look_up_word_address(v, word);
   if ((*v)->is_eval_mode) {
     if (!(word_address == -1)) {
@@ -120,10 +123,50 @@ void e4vm_core_ext_interpreter_word (e4vm_type_x4thPtr *v, e4vm_type_word_string
     } else if (e4vm_utils_is_constant(word)) {
       e4vm_utils_stack_ds_push(v, e4vm_utils_str2int(word));
     } else {
-      Console_WriteStr((CHAR*)"ERROR: undefined word ", 23);
+      Console_WriteStr((CHAR*)"ERROR(1): undefined word ", 26);
+      Console_WriteStrLn((void*)word, 10);
+    }
+  } else {
+    if (!(word_address == -1)) {
+      if ((*v)->words[word_address].immediate) {
+        e4vm_core_ext_execute_addr(v, word_address);
+      } else {
+        e4vm_utils_add_op(v, word_address);
+      }
+    } else if (e4vm_utils_is_constant(word)) {
+      __MOVE((CHAR*)"dolit", _str__22, 6);
+      e4vm_utils_add_op_from_string(v, (void*)_str__22);
+      e4vm_utils_add_op(v, e4vm_utils_str2int(word));
+    } else {
+      Console_WriteStr((CHAR*)"ERROR(2): undefined word ", 26);
       Console_WriteStrLn((void*)word, 10);
     }
   }
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_core_ext_interpreter (e4vm_type_x4thPtr *v)
+{
+  BOOLEAN t;
+  t = e4vm_utils_read_word(v);
+  while (t) {
+    e4vm_core_ext_interpreter_word(v, (*v)->readed_word);
+    t = e4vm_utils_read_word(v);
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_core_ext_eval (e4vm_type_x4thPtr *v, CHAR str[64])
+{
+  SHORTINT i;
+  i = 0;
+  while (!((SHORTINT)str[i] == 0)) {
+    (*v)->buffer[i] = str[i];
+    i = i + 1;
+    (*v)->buffer[i] = 0x00;
+  }
+  (*v)->buffer_idx = 0;
+  e4vm_core_ext_interpreter(v);
 }
 
 /*----------------------------------------------------------------------------*/

@@ -34,7 +34,7 @@ BEGIN
 	    RETURN v.words[i].addr;
 	  END;
 	END;
-	C.WriteStr("look_up_word_address ERROR: unknown word "); C.WriteStrLn(word);
+	(*C.WriteStr("look_up_word_address ERROR: unknown word "); C.WriteStrLn(word);*)
   RETURN -1;	
 END look_up_word_address;
 
@@ -50,7 +50,7 @@ BEGIN
 	    RETURN i;
 	  END;
 	END;
-	C.WriteStr("look_up_word_idx_by_address ERROR: unknown word "); C.WriteInt(word_address);
+	(*C.WriteStr("look_up_word_idx_by_address ERROR: unknown word "); C.WriteInt(word_address);*)
   RETURN -1;	
 END look_up_word_idx_by_address;
 
@@ -66,9 +66,24 @@ BEGIN
 END is_constant;
 
 PROCEDURE str2int* (word: e4vm_type.word_string_type): INTEGER;
+VAR res, i:INTEGER;
 BEGIN
-  (* TODO *)
-  RETURN -1;
+  res := 0; i:=0;
+  IF ((word[0]="+")OR(word[0]="-")) THEN
+    i:=1;
+  END;
+
+  WHILE ((ORD(word[i]))>0) DO
+    res := res * 10;
+    res := res + ((ORD(word[i])) - (ORD("0")));
+    i := i + 1;
+  END;
+
+  IF (word[0]="-") THEN
+    res := -res;
+  END;
+  
+  RETURN res;
 END str2int;
 
 
@@ -111,12 +126,14 @@ BEGIN
 	v.words_count := 0;
 	v.cell_bit_size := e4vm_type.alu_bit_width;
 	v.is_eval_mode := TRUE;
+	v.buffer_idx := 0;
+	
 	FOR i:=0 TO (e4vm_type.mem_size-1) DO
 	  v.mem[i] := 0;
 	END;
-	(* FOR i:=0 TO (e4vm_type.core_size-1) DO
-	  v.core[i] := NIL;
-	END; *)
+	FOR i:=0 TO (e4vm_type.buffer_size-1) DO
+	  v.buffer[i] := CHR(0);
+	END;
 	FOR i:=0 TO (e4vm_type.stack_size-1) DO
 	  v.rs[i] := 0; v.ds[i] := 0;
 	END;
@@ -170,6 +187,7 @@ BEGIN
   v.rs[v.rs_p]:=x; v.rs_p := v.rs_p + 1;
 END stack_rs_push;
 
+(*
 PROCEDURE read_char* (VAR v: e4vm_type.x4thPtr) : SYSTEM.BYTE;
 BEGIN
   REPEAT UNTIL ~(B.PEEK(23556) = 255);
@@ -181,6 +199,35 @@ VAR str: ARRAY 64 OF CHAR;
 BEGIN
   C.ReadStr(@v.in_string, e4vm_type.in_str_size);
 END read_string;
+*)
+PROCEDURE read_char* (VAR v: e4vm_type.x4thPtr) : CHAR;
+VAR c:CHAR;
+BEGIN
+	c := v.buffer[v.buffer_idx];
+	IF ~(ORD(c)=0) THEN
+	  v.buffer_idx:=v.buffer_idx+1;
+	END;
+	RETURN c;
+END read_char;
+
+PROCEDURE read_word* (VAR v: e4vm_type.x4thPtr):BOOLEAN;
+VAR c:CHAR; fl:BOOLEAN; i:INTEGER;
+BEGIN
+  fl:=FALSE; i:=0;
+	c:=read_char(@v);
+	WHILE (c=" ") DO
+	  c:=read_char(@v);
+	END;
+	
+	WHILE ~((c=" ")OR(ORD(c)=0)) DO
+	  fl:=TRUE;
+	  v.readed_word[i] := c; i:=i+1;
+	  v.readed_word[i] := CHR(0);
+	  c:=read_char(@v);
+	END;
+
+  RETURN fl;
+END read_word;
 
 	
 END e4vm_utils.

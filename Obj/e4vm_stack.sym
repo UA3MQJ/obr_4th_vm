@@ -8,19 +8,19 @@ Symbol Table
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
     ___sdcc_enter_ix                                               **** GX
-  0 ___str_0                                                       0380 R
-  0 ___str_1                                                       0385 R
-  0 ___str_2                                                       038A R
-  0 ___str_3                                                       038E R
-  0 ___str_4                                                       0393 R
-  0 ___str_5                                                       0397 R
-  0 _e4vm_stack__init                                              039C GR
-  0 _e4vm_stack_add_core_words                                     0263 GR
+  0 ___str_0                                                       039F R
+  0 ___str_1                                                       03A4 R
+  0 ___str_2                                                       03A9 R
+  0 ___str_3                                                       03AD R
+  0 ___str_4                                                       03B2 R
+  0 ___str_5                                                       03B6 R
+  0 _e4vm_stack__init                                              03BB GR
+  0 _e4vm_stack_add_core_words                                     0288 GR
   0 _e4vm_stack_drop                                               0000 GR
-  0 _e4vm_stack_dup                                                0092 GR
-  0 _e4vm_stack_nrot                                               01C1 GR
-  0 _e4vm_stack_over                                               00D9 GR
-  0 _e4vm_stack_rot                                                0121 GR
+  0 _e4vm_stack_dup                                                0097 GR
+  0 _e4vm_stack_nrot                                               01D6 GR
+  0 _e4vm_stack_over                                               00DE GR
+  0 _e4vm_stack_rot                                                0126 GR
   0 _e4vm_stack_swap                                               001B GR
     _e4vm_type__init                                               **** GX
     _e4vm_utils__init                                              **** GX
@@ -33,7 +33,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  3A7   flags    0
+   0 _CODE                                      size  3C6   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

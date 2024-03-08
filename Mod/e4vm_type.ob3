@@ -8,6 +8,7 @@ CONST
 	core_size* = 32;
 	alu_bit_width* = 16;
 	in_str_size* = 64;
+	buffer_size* = 64; 
 	
 	
 TYPE
@@ -41,6 +42,9 @@ TYPE
 	  words*: ARRAY core_size OF core_word;
 	  words_count*: INTEGER;
 	  in_string*: ARRAY in_str_size OF CHAR;
+	  buffer*: ARRAY buffer_size OF CHAR;
+	  buffer_idx*: INTEGER;
+	  readed_word*: word_string_type;
   END;
 
 	

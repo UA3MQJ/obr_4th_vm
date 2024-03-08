@@ -40,15 +40,15 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;e4vm_type.c:42: export void *e4vm_type__init (void)
+;e4vm_type.c:45: export void *e4vm_type__init (void)
 ;	---------------------------------
 ; Function e4vm_type__init
 ; ---------------------------------
 _e4vm_type__init::
-;e4vm_type.c:44: __DEFMOD;
+;e4vm_type.c:47: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_type.c:48: }
+;e4vm_type.c:51: }
 	ret
 	.area _CODE
 	.area _INITIALIZER

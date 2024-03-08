@@ -121,11 +121,10 @@ BEGIN
 		(*# program mode*)
 		IF ~(word_address = -1) THEN
 			IF (v.words[word_address].immediate) THEN
-			  (*execute(vm, word_addr)*)
+			  execute_addr(@v, word_address);
 			ELSE
-			  (*add_op(vm, word_addr)*)
-			END;
-	    execute_addr(@v, word_address);
+			  e4vm_utils.add_op(@v, word_address);
+			END; 
 	  ELSIF e4vm_utils.is_constant(word) THEN
 	    (*# иначе, если это число - пишем в память dolit число*)
 	    e4vm_utils.add_op_from_string(@v, "dolit");
@@ -136,6 +135,31 @@ BEGIN
 	  END;
 	END;
 END interpreter_word;
+
+(*# читаем слова из буфера, пока они не кончились. и сполняем*)
+PROCEDURE interpreter* (VAR v: e4vm_type.x4thPtr);
+VAR t:BOOLEAN;
+BEGIN
+  t:=e4vm_utils.read_word(@v);
+	WHILE t DO
+		interpreter_word(@v, v.readed_word);
+		t:=e4vm_utils.read_word(@v);
+  END;
+END interpreter;
+
+(*EVAL выполнить выражение в строке*)
+PROCEDURE eval* (VAR v: e4vm_type.x4thPtr; str:ARRAY e4vm_type.buffer_size OF CHAR);
+VAR i:INTEGER;
+BEGIN
+  i:=0;
+	WHILE ~(ORD(str[i])=0) DO
+	  v.buffer[i] := str[i];
+	  i:=i+1;
+	  v.buffer[i] := CHR(0);
+	END;
+  v.buffer_idx := 0;
+  interpreter(@v);
+END eval;
 
 PROCEDURE add_core_words* (VAR v: e4vm_type.x4thPtr);
 BEGIN

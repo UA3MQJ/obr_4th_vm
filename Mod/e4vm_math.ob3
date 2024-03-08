@@ -13,7 +13,7 @@ END minus;
 PROCEDURE plus* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   (* C.WriteStrLn("+"); *)
-  v.ds_p := v.ds_p + 1;
+  v.ds_p := v.ds_p - 1;
   v.ds[v.ds_p - 1] := v.ds[v.ds_p - 1] + v.ds[v.ds_p]
 END plus;
 

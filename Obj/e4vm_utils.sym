@@ -7,54 +7,51 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-    _Console_ReadStr_COMPACT                                       **** GX
     _Console_WriteInt_COMPACT                                      **** GX
     _Console_WriteLn_COMPACT                                       **** GX
     _Console_WriteStr_C_COMPACT                                    **** GX
     _SYSTEM_STRCMPCC                                               **** GX
     ___sdcc_enter_ix                                               **** GX
-  0 ___str_0                                                       01D5 R
-  0 ___str_1                                                       02A6 R
-  0 ___str_10                                                      066F R
-  0 ___str_11                                                      0675 R
-  0 ___str_12                                                      06AB R
-  0 ___str_13                                                      06B3 R
-  0 ___str_2                                                       0648 R
-  0 ___str_3                                                       064A R
-  0 ___str_4                                                       064E R
-  0 ___str_5                                                       0653 R
-  0 ___str_6                                                       065B R
-  0 ___str_7                                                       0661 R
-  0 ___str_8                                                       0667 R
-  0 ___str_9                                                       0669 R
+  0 ___str_0                                                       0658 R
+  0 ___str_1                                                       065A R
+  0 ___str_10                                                      06BB R
+  0 ___str_11                                                      06C3 R
+  0 ___str_2                                                       065E R
+  0 ___str_3                                                       0663 R
+  0 ___str_4                                                       066B R
+  0 ___str_5                                                       0671 R
+  0 ___str_6                                                       0677 R
+  0 ___str_7                                                       0679 R
+  0 ___str_8                                                       067F R
+  0 ___str_9                                                       0685 R
     _e4vm_type__init                                               **** GX
-  0 _e4vm_utils__init                                              076C GR
+  0 _e4vm_utils__init                                              07F0 GR
   0 _e4vm_utils_add_core_word                                      0000 GR
-  0 _e4vm_utils_add_op                                             0347 GR
-  0 _e4vm_utils_add_op_from_string                                 0388 GR
-  0 _e4vm_utils_error                                              068E GR
-  0 _e4vm_utils_false_const                                        0685 GR
-  0 _e4vm_utils_here_to_wp                                         0327 GR
-  0 _e4vm_utils_init                                               03AD GR
-  0 _e4vm_utils_is_constant                                        02F1 GR
-  0 _e4vm_utils_is_digit                                           02D7 GR
+  0 _e4vm_utils_add_op                                             0327 GR
+  0 _e4vm_utils_add_op_from_string                                 0368 GR
+  0 _e4vm_utils_error                                              069E GR
+  0 _e4vm_utils_false_const                                        0695 GR
+  0 _e4vm_utils_here_to_wp                                         0307 GR
+  0 _e4vm_utils_init                                               038D GR
+  0 _e4vm_utils_is_constant                                        0248 GR
+  0 _e4vm_utils_is_digit                                           022E GR
   0 _e4vm_utils_look_up_word_address                               0111 GR
-  0 _e4vm_utils_look_up_word_idx_by_address                        01FF GR
-  0 _e4vm_utils_read_char                                          0736 GR
-  0 _e4vm_utils_read_string                                        0746 GR
-  0 _e4vm_utils_stack_ds_push                                      06B4 GR
-  0 _e4vm_utils_stack_rs_push                                      06F5 GR
-  0 _e4vm_utils_true_const                                         067C GR
-  0 _e4vm_utils_vm_stat                                            0496 GR
+  0 _e4vm_utils_look_up_word_idx_by_address                        01B0 GR
+  0 _e4vm_utils_read_char                                          0746 GR
+  0 _e4vm_utils_read_word                                          0774 GR
+  0 _e4vm_utils_stack_ds_push                                      06C4 GR
+  0 _e4vm_utils_stack_rs_push                                      0705 GR
+  0 _e4vm_utils_str2int                                            027E GR
+  0 _e4vm_utils_true_const                                         068C GR
+  0 _e4vm_utils_vm_stat                                            04A6 GR
     _memcpy                                                        **** GX
-
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  774   flags    0
+   0 _CODE                                      size  7F8   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

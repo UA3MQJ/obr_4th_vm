@@ -21,7 +21,7 @@ export BOOLEAN e4vm_utils_is_digit (CHAR char_);
 export SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word);
 export SHORTINT e4vm_utils_look_up_word_idx_by_address (e4vm_type_x4thPtr *v, SHORTINT word_address);
 export CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v);
-export void e4vm_utils_read_string (e4vm_type_x4thPtr *v);
+export BOOLEAN e4vm_utils_read_word (e4vm_type_x4thPtr *v);
 export void e4vm_utils_stack_ds_push (e4vm_type_x4thPtr *v, SHORTINT x);
 export void e4vm_utils_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x);
 export SHORTINT e4vm_utils_str2int (e4vm_type_word_string_type word);
@@ -55,8 +55,6 @@ SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_s
     }
     i += 1;
   }
-  Console_WriteStr((CHAR*)"look_up_word_address ERROR: unknown word ", 42);
-  Console_WriteStrLn((void*)word, 10);
   return -1;
 }
 
@@ -72,8 +70,6 @@ SHORTINT e4vm_utils_look_up_word_idx_by_address (e4vm_type_x4thPtr *v, SHORTINT 
     }
     i += 1;
   }
-  Console_WriteStr((CHAR*)"look_up_word_idx_by_address ERROR: unknown word ", 49);
-  Console_WriteInt(word_address);
   return -1;
 }
 
@@ -92,7 +88,21 @@ BOOLEAN e4vm_utils_is_constant (e4vm_type_word_string_type word)
 /*----------------------------------------------------------------------------*/
 SHORTINT e4vm_utils_str2int (e4vm_type_word_string_type word)
 {
-  return -1;
+  SHORTINT res, i;
+  res = 0;
+  i = 0;
+  if (word[0] == '+' || word[0] == '-') {
+    i = 1;
+  }
+  while ((SHORTINT)word[i] > 0) {
+    res = res * 10;
+    res = res + ((SHORTINT)word[i] - 48);
+    i = i + 1;
+  }
+  if (word[0] == '-') {
+    res = -res;
+  }
+  return res;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -126,9 +136,15 @@ void e4vm_utils_init (e4vm_type_x4thPtr *v)
   (*v)->words_count = 0;
   (*v)->cell_bit_size = 16;
   (*v)->is_eval_mode = 1;
+  (*v)->buffer_idx = 0;
   i = 0;
   while (i <= 31) {
     (*v)->mem[i] = 0;
+    i += 1;
+  }
+  i = 0;
+  while (i <= 63) {
+    (*v)->buffer[i] = 0x00;
     i += 1;
   }
   i = 0;
@@ -221,18 +237,34 @@ void e4vm_utils_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x)
 /*----------------------------------------------------------------------------*/
 CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v)
 {
-  do {
-  } while (!(!(Basic_PEEK(23556) == 255)));
-  return Basic_PEEK(23560);
+  CHAR c;
+  c = (*v)->buffer[(*v)->buffer_idx];
+  if (!((SHORTINT)c == 0)) {
+    (*v)->buffer_idx = (*v)->buffer_idx + 1;
+  }
+  return c;
 }
 
 /*----------------------------------------------------------------------------*/
-void e4vm_utils_read_string (e4vm_type_x4thPtr *v)
+BOOLEAN e4vm_utils_read_word (e4vm_type_x4thPtr *v)
 {
-  CHAR str[64];
-  e4vm_type_x4thPtr _ptr__16 = NIL;
-  _ptr__16 = *v;
-  Console_ReadStr((void*)_ptr__16->in_string, 64, 64);
+  CHAR c;
+  BOOLEAN fl;
+  SHORTINT i;
+  fl = 0;
+  i = 0;
+  c = e4vm_utils_read_char(v);
+  while (c == ' ') {
+    c = e4vm_utils_read_char(v);
+  }
+  while (!(c == ' ' || (SHORTINT)c == 0)) {
+    fl = 1;
+    (*v)->readed_word[i] = c;
+    i = i + 1;
+    (*v)->readed_word[i] = 0x00;
+    c = e4vm_utils_read_char(v);
+  }
+  return fl;
 }
 
 /*----------------------------------------------------------------------------*/

@@ -131,7 +131,7 @@ _e4vm_math_minus::
 ; ---------------------------------
 _e4vm_math_plus::
 	call	___sdcc_enter_ix
-;e4vm_math.c:34: (*v)->ds_p = (*v)->ds_p + 1;
+;e4vm_math.c:34: (*v)->ds_p = (*v)->ds_p - 1;
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	l, c
@@ -145,11 +145,10 @@ _e4vm_math_plus::
 	inc	hl
 	ld	d, (hl)
 	dec	hl
-	inc	de
-	ld	a, d
+	dec	de
 	ld	(hl), e
 	inc	hl
-	ld	(hl), a
+	ld	(hl), d
 ;e4vm_math.c:35: (*v)->ds[(*v)->ds_p - 1] = (*v)->ds[(*v)->ds_p - 1] + (*v)->ds[(*v)->ds_p];
 	ld	l, c
 	ld	h, b

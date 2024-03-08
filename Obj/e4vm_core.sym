@@ -9,19 +9,28 @@ Symbol Table
     .__.H$L.                                                    =  0000 L
     ___sdcc_call_hl                                                **** GX
     ___sdcc_enter_ix                                               **** GX
-  0 _e4vm_core__init                                               0146 GR
-  0 _e4vm_core_do_exit                                             0109 GR
+  0 ___str_0                                                       01DC R
+  0 ___str_1                                                       01E0 R
+  0 ___str_2                                                       01E7 R
+  0 ___str_3                                                       01EC R
+  0 _e4vm_core__init                                               01F1 GR
+  0 _e4vm_core_add_core_words                                      011F GR
+  0 _e4vm_core_do_exit                                             00E2 GR
   0 _e4vm_core_do_list                                             0001 GR
   0 _e4vm_core_do_next                                             005C GR
   0 _e4vm_core_do_nop                                              0000 GR
     _e4vm_type__init                                               **** GX
+    _e4vm_utils__init                                              **** GX
+    _e4vm_utils_add_core_word                                      **** GX
+    _memcpy                                                        **** GX
+
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  14E   flags    0
+   0 _CODE                                      size  1FC   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

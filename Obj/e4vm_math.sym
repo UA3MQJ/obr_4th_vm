@@ -10,16 +10,27 @@ Symbol Table
     _SYSTEM_DIVS                                                   **** GX
     _SYSTEM_MODS                                                   **** GX
     ___sdcc_enter_ix                                               **** GX
+  0 ___str_0                                                       0329 R
+  0 ___str_1                                                       032B R
+  0 ___str_2                                                       032D R
+  0 ___str_3                                                       032F R
+  0 ___str_4                                                       0331 R
+  0 ___str_5                                                       0335 R
+  0 ___str_6                                                       0338 R
     __mulint                                                       **** GX
-  0 _e4vm_math__init                                               01E4 GR
-  0 _e4vm_math_dec                                                 01BB GR
-  0 _e4vm_math_devide                                              00EB GR
-  0 _e4vm_math_inc                                                 0191 GR
+  0 _e4vm_math__init                                               033B GR
+  0 _e4vm_math_add_core_words                                      01E5 GR
+  0 _e4vm_math_dec                                                 01BC GR
+  0 _e4vm_math_devide                                              00EC GR
+  0 _e4vm_math_inc                                                 0192 GR
   0 _e4vm_math_minus                                               0000 GR
-  0 _e4vm_math_mod                                                 013E GR
-  0 _e4vm_math_multiply                                            0098 GR
+  0 _e4vm_math_mod                                                 013F GR
+  0 _e4vm_math_multiply                                            0099 GR
   0 _e4vm_math_plus                                                004D GR
     _e4vm_type__init                                               **** GX
+    _e4vm_utils__init                                              **** GX
+    _e4vm_utils_add_core_word                                      **** GX
+    _memcpy                                                        **** GX
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
@@ -27,7 +38,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  1EC   flags    0
+   0 _CODE                                      size  346   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

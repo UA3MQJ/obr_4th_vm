@@ -10,275 +10,89 @@ Symbol Table
     _Basic_PAUSE_EI                                                **** GX
     _Basic_Quit_IM1                                                **** GX
     _Console_Clear_COMPACT                                         **** GX
-    _Console_WriteCh_COMPACT                                       **** GX
     _Console_WriteInt_COMPACT                                      **** GX
     _Console_WriteLn_COMPACT                                       **** GX
     _Console_WriteStr_C_COMPACT                                    **** GX
     _Console_attrib                                                **** GX
+    _SYSTEM_STRCMPCC                                               **** GX
     ___sdcc_enter_ix                                               **** GX
-  0 ___str_0                                                       01C0 R
-  0 ___str_1                                                       01D1 R
-  0 ___str_10                                                      0307 R
-  0 ___str_100                                                     1650 R
-  0 ___str_101                                                     1656 R
-  0 ___str_102                                                     1766 R
-  0 ___str_103                                                     1770 R
-  0 ___str_104                                                     1777 R
-  0 ___str_105                                                     177B R
-  0 ___str_106                                                     1780 R
-  0 ___str_107                                                     1786 R
-  0 ___str_108                                                     1896 R
-  0 ___str_109                                                     18A0 R
-  0 ___str_11                                                      030D R
-  0 ___str_110                                                     18A7 R
-  0 ___str_111                                                     18AB R
-  0 ___str_112                                                     18B0 R
-  0 ___str_113                                                     18B6 R
-  0 ___str_114                                                     19B6 R
-  0 ___str_115                                                     19C1 R
-  0 ___str_116                                                     19C8 R
-  0 ___str_117                                                     19CD R
-  0 ___str_118                                                     19D2 R
-  0 ___str_119                                                     19D8 R
-  0 ___str_12                                                      0312 R
-  0 ___str_120                                                     1AE8 R
-  0 ___str_121                                                     1AF6 R
-  0 ___str_122                                                     1AFD R
-  0 ___str_123                                                     1AFF R
-  0 ___str_124                                                     1B04 R
-  0 ___str_125                                                     1B0A R
-  0 ___str_126                                                     1DA6 R
-  0 ___str_127                                                     1DB3 R
-  0 ___str_128                                                     1DBA R
-  0 ___str_129                                                     1DBE R
-  0 ___str_13                                                      0318 R
-  0 ___str_130                                                     1DC5 R
-  0 ___str_131                                                     1DCB R
-  0 ___str_132                                                     1DD0 R
-  0 ___str_133                                                     1DD6 R
-  0 ___str_134                                                     20F7 R
-  0 ___str_135                                                     2105 R
+  0 ___str_0                                                       0097 R
+  0 ___str_1                                                       00A7 R
+  0 ___str_10                                                      0266 R
+  0 ___str_11                                                      026D R
+  0 ___str_12                                                      0277 R
+  0 ___str_13                                                      027E R
+  0 ___str_14                                                      0285 R
+  0 ___str_15                                                      028F R
+  0 ___str_16                                                      0296 R
+  0 ___str_17                                                      0355 R
+  0 ___str_18                                                      0367 R
+  0 ___str_19                                                      036F R
+  0 ___str_2                                                       00AD R
+  0 ___str_20                                                      0375 R
+  0 ___str_21                                                      0460 R
+  0 ___str_22                                                      046B R
+  0 ___str_23                                                      0473 R
+  0 ___str_24                                                      0479 R
+  0 ___str_25                                                      04F7 R
+  0 ___str_26                                                      04FC R
+  0 ___str_27                                                      0502 R
+  0 ___str_28                                                      067A R
+  0 ___str_29                                                      068A R
+  0 ___str_3                                                       0221 R
+  0 ___str_30                                                      0691 R
+  0 ___str_31                                                      0698 R
+  0 ___str_32                                                      069F R
+  0 ___str_33                                                      06A6 R
+  0 ___str_34                                                      06AD R
+  0 ___str_35                                                      06B6 R
+  0 ___str_36                                                      06BC R
+  0 ___str_4                                                       0231 R
+  0 ___str_5                                                       024A R
+  0 ___str_6                                                       024F R
+  0 ___str_7                                                       0256 R
+  0 ___str_8                                                       0260 R
+  0 ___str_9                                                       0262 R
+    _e4vm_boolean__init                                            **** GX
+    _e4vm_core__init                                               **** GX
+    _e4vm_core_add_core_words                                      **** GX
+    _e4vm_core_ext__init                                           **** GX
+    _e4vm_core_ext_add_core_words                                  **** GX
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Symbol Table
 
-  0 ___str_136                                                     210C R
-  0 ___str_137                                                     2110 R
-  0 ___str_138                                                     2118 R
-  0 ___str_139                                                     211E R
-  0 ___str_14                                                      0434 R
-  0 ___str_140                                                     2123 R
-  0 ___str_141                                                     2129 R
-  0 ___str_142                                                     2166 R
-  0 ___str_143                                                     2176 R
-  0 ___str_144                                                     21AB R
-  0 ___str_145                                                     21BD R
-  0 ___str_146                                                     2303 R
-  0 ___str_147                                                     2313 R
-  0 ___str_148                                                     2319 R
-  0 ___str_149                                                     2320 R
-  0 ___str_15                                                      043F R
-  0 ___str_150                                                     232A R
-  0 ___str_151                                                     232F R
-  0 ___str_152                                                     2335 R
-  0 ___str_153                                                     2488 R
-  0 ___str_154                                                     24A0 R
-  0 ___str_155                                                     24A6 R
-  0 ___str_156                                                     24AD R
-  0 ___str_157                                                     24B5 R
-  0 ___str_158                                                     24BA R
-  0 ___str_159                                                     24C0 R
-  0 ___str_16                                                      0446 R
-  0 ___str_160                                                     25CB R
-  0 ___str_161                                                     25E1 R
-  0 ___str_162                                                     25F1 R
-  0 ___str_163                                                     2604 R
-  0 ___str_164                                                     2607 R
-  0 ___str_165                                                     261B R
-  0 ___str_166                                                     2632 R
-  0 ___str_167                                                     2636 R
-  0 ___str_168                                                     264B R
-  0 ___str_169                                                     2663 R
-  0 ___str_17                                                      044B R
-  0 ___str_170                                                     2667 R
-  0 ___str_171                                                     267C R
-  0 ___str_172                                                     2694 R
-  0 ___str_173                                                     2697 R
-  0 ___str_174                                                     26AB R
-  0 ___str_18                                                      0450 R
-  0 ___str_19                                                      0456 R
-  0 ___str_2                                                       01D7 R
-  0 ___str_20                                                      0575 R
-  0 ___str_21                                                      0580 R
-  0 ___str_22                                                      0587 R
-  0 ___str_23                                                      058C R
-  0 ___str_24                                                      0591 R
-  0 ___str_25                                                      0597 R
-  0 ___str_26                                                      06C8 R
-  0 ___str_27                                                      06D2 R
-  0 ___str_28                                                      06D9 R
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 3.
-Hexadecimal [16-Bits]
-
-Symbol Table
-
-  0 ___str_29                                                      06DD R
-  0 ___str_3                                                       01DE R
-  0 ___str_30                                                      06E2 R
-  0 ___str_31                                                      06E8 R
-  0 ___str_32                                                      0824 R
-  0 ___str_33                                                      082F R
-  0 ___str_34                                                      0836 R
-  0 ___str_35                                                      083B R
-  0 ___str_36                                                      0840 R
-  0 ___str_37                                                      0846 R
-  0 ___str_38                                                      0983 R
-  0 ___str_39                                                      098D R
-  0 ___str_4                                                       01E3 R
-  0 ___str_40                                                      0994 R
-  0 ___str_41                                                      0998 R
-  0 ___str_42                                                      099D R
-  0 ___str_43                                                      09A3 R
-  0 ___str_44                                                      0AE0 R
-  0 ___str_45                                                      0AEB R
-  0 ___str_46                                                      0AF2 R
-  0 ___str_47                                                      0AF7 R
-  0 ___str_48                                                      0AFC R
-  0 ___str_49                                                      0B02 R
-  0 ___str_5                                                       01E7 R
-  0 ___str_50                                                      0C44 R
-  0 ___str_51                                                      0C53 R
-  0 ___str_52                                                      0C5A R
-  0 ___str_53                                                      0C5C R
-  0 ___str_54                                                      0C5E R
-  0 ___str_55                                                      0C63 R
-  0 ___str_56                                                      0C69 R
-  0 ___str_57                                                      0D85 R
-  0 ___str_58                                                      0D8F R
-  0 ___str_59                                                      0D96 R
-  0 ___str_6                                                       01ED R
-  0 ___str_60                                                      0D9A R
-  0 ___str_61                                                      0D9F R
-  0 ___str_62                                                      0DA5 R
-  0 ___str_63                                                      0EE7 R
-  0 ___str_64                                                      0EF9 R
-  0 ___str_65                                                      0F00 R
-  0 ___str_66                                                      0F02 R
-  0 ___str_67                                                      0F04 R
-  0 ___str_68                                                      0F09 R
-  0 ___str_69                                                      0F0F R
-  0 ___str_7                                                       01F6 R
-  0 ___str_70                                                      108F R
-  0 ___str_71                                                      109F R
-  0 ___str_72                                                      10A6 R
-  0 ___str_73                                                      10A9 R
-  0 ___str_74                                                      10AE R
-  0 ___str_75                                                      10B1 R
-  0 ___str_76                                                      10B6 R
-  0 ___str_77                                                      10BC R
-  0 ___str_78                                                      11C9 R
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 4.
-Hexadecimal [16-Bits]
-
-Symbol Table
-
-  0 ___str_79                                                      11D4 R
-  0 ___str_8                                                       02F4 R
-  0 ___str_80                                                      11DB R
-  0 ___str_81                                                      11E0 R
-  0 ___str_82                                                      11E5 R
-  0 ___str_83                                                      11EB R
-  0 ___str_84                                                      13D2 R
-  0 ___str_85                                                      13DC R
-  0 ___str_86                                                      13E3 R
-  0 ___str_87                                                      13E7 R
-  0 ___str_88                                                      13EC R
-  0 ___str_89                                                      13F2 R
-  0 ___str_9                                                       0300 R
-  0 ___str_90                                                      1502 R
-  0 ___str_91                                                      150F R
-  0 ___str_92                                                      1516 R
-  0 ___str_93                                                      151D R
-  0 ___str_94                                                      1522 R
-  0 ___str_95                                                      1528 R
-  0 ___str_96                                                      1638 R
-  0 ___str_97                                                      1641 R
-  0 ___str_98                                                      1648 R
-  0 ___str_99                                                      164B R
-    _e4vm_boolean__init                                            **** GX
-    _e4vm_boolean_add_core_words                                   **** GX
-    _e4vm_core__init                                               **** GX
-    _e4vm_core_add_core_words                                      **** GX
-    _e4vm_core_do_list                                             **** GX
-    _e4vm_core_do_next                                             **** GX
-    _e4vm_core_ext__init                                           **** GX
-    _e4vm_core_ext_add_core_words                                  **** GX
+    _e4vm_core_ext_eval                                            **** GX
+    _e4vm_core_ext_interpreter                                     **** GX
   0 _e4vm_do_hello                                                 0000 R
     _e4vm_math__init                                               **** GX
     _e4vm_math_add_core_words                                      **** GX
     _e4vm_stack__init                                              **** GX
-    _e4vm_stack_add_core_words                                     **** GX
-  0 _e4vm_test1                                                    0018 R
-  0 _e4vm_test_and                                                 165F R
-  0 _e4vm_test_branch                                              1B13 R
-  0 _e4vm_test_comma                                               19E1 R
-  0 _e4vm_test_devide                                              0DAE R
-  0 _e4vm_test_dolit                                               01F8 R
-  0 _e4vm_test_drop                                                0321 R
-  0 _e4vm_test_dup                                                 05A0 R
-  0 _e4vm_test_execute1                                            233E R
-  0 _e4vm_test_here                                                18BF R
-  0 _e4vm_test_immediate                                           21C3 R
-  0 _e4vm_test_inc                                                 0F18 R
-  0 _e4vm_test_invert                                              13FB R
-  0 _e4vm_test_isconstant                                          24C9 R
-  0 _e4vm_test_minus                                               0B0B R
-  0 _e4vm_test_mod                                                 0C72 R
-  0 _e4vm_test_not                                                 11F4 R
-  0 _e4vm_test_nrot                                                09AC R
-  0 _e4vm_test_or                                                  1531 R
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 5.
-Hexadecimal [16-Bits]
-
-Symbol Table
-
-  0 _e4vm_test_over                                                06F1 R
-  0 _e4vm_test_read_char                                           2132 R
-  0 _e4vm_test_read_string                                         217C R
-  0 _e4vm_test_rot                                                 084F R
-  0 _e4vm_test_swap                                                045F R
-  0 _e4vm_test_true                                                10C5 R
-  0 _e4vm_test_xor                                                 178F R
-  0 _e4vm_test_zbranch                                             1DDF R
+  0 _e4vm_test_eval                                                037E R
+  0 _e4vm_test_interpreter                                         02A0 R
+  0 _e4vm_test_math_eval                                           050B R
+  0 _e4vm_test_math_evals                                          0482 R
+  0 _e4vm_test_read_char                                           0018 R
+  0 _e4vm_test_read_word                                           00B6 R
     _e4vm_type__init                                               **** GX
     _e4vm_utils__init                                              **** GX
-    _e4vm_utils_add_core_word                                      **** GX
-    _e4vm_utils_add_op                                             **** GX
-    _e4vm_utils_add_op_from_string                                 **** GX
-    _e4vm_utils_false_const                                        **** GX
-    _e4vm_utils_here_to_wp                                         **** GX
     _e4vm_utils_init                                               **** GX
-    _e4vm_utils_is_constant                                        **** GX
-    _e4vm_utils_is_digit                                           **** GX
-    _e4vm_utils_look_up_word_address                               **** GX
     _e4vm_utils_read_char                                          **** GX
-    _e4vm_utils_read_string                                        **** GX
-    _e4vm_utils_stack_ds_push                                      **** GX
-    _e4vm_utils_true_const                                         **** GX
-  1 _e4vm_vm                                                       030F R
+    _e4vm_utils_read_word                                          **** GX
+  1 _e4vm_vm                                                       035B R
   1 _e4vm_vm_static                                                0000 R
-  0 _main                                                          26C2 GR
+  0 _main                                                          06C2 GR
     _memcpy                                                        **** GX
 
 
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 6.
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 3.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size 26FF   flags    0
-   1 _DATA                                      size  311   flags    0
+   0 _CODE                                      size  706   flags    0
+   1 _DATA                                      size  35D   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8
    4 _HOME                                      size    0   flags    0
