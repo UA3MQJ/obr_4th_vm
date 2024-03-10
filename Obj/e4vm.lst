@@ -16,198 +16,660 @@
                              16 	.globl _e4vm_mem__init
                              17 	.globl _e4vm_mem_add_core_words
                              18 	.globl _e4vm_utils__init
-                             19 	.globl _e4vm_utils_keyboard_read_string
-                             20 	.globl _e4vm_utils_init
-                             21 	.globl _e4vm_boolean__init
-                             22 	.globl _e4vm_boolean_add_core_words
-                             23 	.globl _e4vm_math__init
-                             24 	.globl _e4vm_math_add_core_words
-                             25 	.globl _e4vm_stack__init
-                             26 	.globl _e4vm_stack_add_core_words
-                             27 	.globl _e4vm_core_ext__init
-                             28 	.globl _e4vm_core_ext_interpreter
-                             29 	.globl _e4vm_core_ext_add_core_words
-                             30 	.globl _e4vm_core__init
-                             31 	.globl _e4vm_core_add_core_words
-                             32 	.globl _e4vm_type__init
-                             33 	.globl _Basic_Quit_IM1
-                             34 	.globl _Basic_PAUSE_EI
-                             35 	.globl _Console_Clear_COMPACT
-                             36 	.globl _Console_WriteStr_C_COMPACT
-                             37 	.globl _Console_WriteLn_COMPACT
-                             38 ;--------------------------------------------------------
-                             39 ; special function registers
-                             40 ;--------------------------------------------------------
-                             41 ;--------------------------------------------------------
-                             42 ; ram data
-                             43 ;--------------------------------------------------------
-                             44 	.area _DATA
-   0000                      45 _e4vm_vm_static:
-   0000                      46 	.ds 1371
-   055B                      47 _e4vm_vm:
-   055B                      48 	.ds 2
-                             49 ;--------------------------------------------------------
-                             50 ; ram data
-                             51 ;--------------------------------------------------------
-                             52 	.area _INITIALIZED
-                             53 ;--------------------------------------------------------
-                             54 ; absolute external ram data
-                             55 ;--------------------------------------------------------
-                             56 	.area _DABS (ABS)
-                             57 ;--------------------------------------------------------
-                             58 ; global & static initialisations
-                             59 ;--------------------------------------------------------
-                             60 	.area _HOME
-                             61 	.area _GSINIT
-                             62 	.area _GSFINAL
-                             63 	.area _GSINIT
+                             19 	.globl _e4vm_utils_stack_ds_push
+                             20 	.globl _e4vm_utils_keyboard_read_string
+                             21 	.globl _e4vm_utils_init
+                             22 	.globl _e4vm_utils_here_to_wp
+                             23 	.globl _e4vm_utils_add_op_from_string
+                             24 	.globl _e4vm_utils_add_core_word
+                             25 	.globl _e4vm_boolean__init
+                             26 	.globl _e4vm_boolean_add_core_words
+                             27 	.globl _e4vm_math__init
+                             28 	.globl _e4vm_math_add_core_words
+                             29 	.globl _e4vm_stack__init
+                             30 	.globl _e4vm_stack_add_core_words
+                             31 	.globl _e4vm_core_ext__init
+                             32 	.globl _e4vm_core_ext_interpreter
+                             33 	.globl _e4vm_core_ext_add_core_words
+                             34 	.globl _e4vm_core__init
+                             35 	.globl _e4vm_core_do_next
+                             36 	.globl _e4vm_core_do_list
+                             37 	.globl _e4vm_core_add_core_words
+                             38 	.globl _e4vm_type__init
+                             39 	.globl _Basic_Quit_IM1
+                             40 	.globl _Basic_PAUSE_EI
+                             41 	.globl _Console_Clear_COMPACT
+                             42 	.globl _Console_WriteStr_C_COMPACT
+                             43 	.globl _Console_WriteLn_COMPACT
+                             44 	.globl _memcpy
+                             45 ;--------------------------------------------------------
+                             46 ; special function registers
+                             47 ;--------------------------------------------------------
+                             48 ;--------------------------------------------------------
+                             49 ; ram data
+                             50 ;--------------------------------------------------------
+                             51 	.area _DATA
+   0000                      52 _e4vm_vm_static:
+   0000                      53 	.ds 1371
+   055B                      54 _e4vm_vm:
+   055B                      55 	.ds 2
+                             56 ;--------------------------------------------------------
+                             57 ; ram data
+                             58 ;--------------------------------------------------------
+                             59 	.area _INITIALIZED
+                             60 ;--------------------------------------------------------
+                             61 ; absolute external ram data
+                             62 ;--------------------------------------------------------
+                             63 	.area _DABS (ABS)
                              64 ;--------------------------------------------------------
-                             65 ; Home
+                             65 ; global & static initialisations
                              66 ;--------------------------------------------------------
                              67 	.area _HOME
-                             68 	.area _HOME
-                             69 ;--------------------------------------------------------
-                             70 ; code
+                             68 	.area _GSINIT
+                             69 	.area _GSFINAL
+                             70 	.area _GSINIT
                              71 ;--------------------------------------------------------
-                             72 	.area _CODE
-                             73 ;e4vm.c:29: static void e4vm_do_hello (e4vm_type_x4thPtr *v)
-                             74 ;	---------------------------------
-                             75 ; Function e4vm_do_hello
-                             76 ; ---------------------------------
-   0000                      77 _e4vm_do_hello:
-   0000 CDr00r00      [17]   78 	call	___sdcc_enter_ix
-                             79 ;e4vm.c:31: (*v)->mem[30] = 1;
-   0003 DD 6E 04      [19]   80 	ld	l, 4 (ix)
-   0006 DD 66 05      [19]   81 	ld	h, 5 (ix)
-   0009 4E            [ 7]   82 	ld	c, (hl)
-   000A 23            [ 6]   83 	inc	hl
-   000B 46            [ 7]   84 	ld	b, (hl)
-   000C 21 C6 00      [10]   85 	ld	hl, #0x00c6
-   000F 09            [11]   86 	add	hl, bc
-   0010 36 01         [10]   87 	ld	(hl), #0x01
-   0012 23            [ 6]   88 	inc	hl
-   0013 36 00         [10]   89 	ld	(hl), #0x00
-                             90 ;e4vm.c:32: }
-   0015 DD E1         [14]   91 	pop	ix
-   0017 C9            [10]   92 	ret
-                             93 ;e4vm.c:34: static void e4vm_test_console (e4vm_type_x4thPtr *v)
-                             94 ;	---------------------------------
-                             95 ; Function e4vm_test_console
-                             96 ; ---------------------------------
-   0018                      97 _e4vm_test_console:
-   0018 CDr00r00      [17]   98 	call	___sdcc_enter_ix
-                             99 ;e4vm.c:36: Console_WriteLn();
-   001B CDr00r00      [17]  100 	call	_Console_WriteLn_COMPACT
-                            101 ;e4vm.c:37: e4vm_utils_init(v);
-   001E DD 6E 04      [19]  102 	ld	l, 4 (ix)
-   0021 DD 66 05      [19]  103 	ld	h, 5 (ix)
-   0024 E5            [11]  104 	push	hl
-   0025 CDr00r00      [17]  105 	call	_e4vm_utils_init
-                            106 ;e4vm.c:38: e4vm_core_add_core_words(&e4vm_vm);
-   0028 21r5Br05      [10]  107 	ld	hl, #_e4vm_vm
-   002B E3            [19]  108 	ex	(sp),hl
-   002C CDr00r00      [17]  109 	call	_e4vm_core_add_core_words
-                            110 ;e4vm.c:39: e4vm_core_ext_add_core_words(&e4vm_vm);
-   002F 21r5Br05      [10]  111 	ld	hl, #_e4vm_vm
-   0032 E3            [19]  112 	ex	(sp),hl
-   0033 CDr00r00      [17]  113 	call	_e4vm_core_ext_add_core_words
-                            114 ;e4vm.c:40: e4vm_stack_add_core_words(&e4vm_vm);
-   0036 21r5Br05      [10]  115 	ld	hl, #_e4vm_vm
-   0039 E3            [19]  116 	ex	(sp),hl
-   003A CDr00r00      [17]  117 	call	_e4vm_stack_add_core_words
-                            118 ;e4vm.c:41: e4vm_math_add_core_words(&e4vm_vm);
-   003D 21r5Br05      [10]  119 	ld	hl, #_e4vm_vm
-   0040 E3            [19]  120 	ex	(sp),hl
-   0041 CDr00r00      [17]  121 	call	_e4vm_math_add_core_words
-                            122 ;e4vm.c:42: e4vm_boolean_add_core_words(&e4vm_vm);
-   0044 21r5Br05      [10]  123 	ld	hl, #_e4vm_vm
-   0047 E3            [19]  124 	ex	(sp),hl
-   0048 CDr00r00      [17]  125 	call	_e4vm_boolean_add_core_words
-                            126 ;e4vm.c:43: e4vm_comment_add_core_words(&e4vm_vm);
-   004B 21r5Br05      [10]  127 	ld	hl, #_e4vm_vm
-   004E E3            [19]  128 	ex	(sp),hl
-   004F CDr00r00      [17]  129 	call	_e4vm_comment_add_core_words
-                            130 ;e4vm.c:44: e4vm_mem_add_core_words(&e4vm_vm);
-   0052 21r5Br05      [10]  131 	ld	hl, #_e4vm_vm
-   0055 E3            [19]  132 	ex	(sp),hl
-   0056 CDr00r00      [17]  133 	call	_e4vm_mem_add_core_words
-                            134 ;e4vm.c:45: e4vm_rw_add_core_words(&e4vm_vm);
-   0059 21r5Br05      [10]  135 	ld	hl, #_e4vm_vm
-   005C E3            [19]  136 	ex	(sp),hl
-   005D CDr00r00      [17]  137 	call	_e4vm_rw_add_core_words
-   0060 F1            [10]  138 	pop	af
-                            139 ;e4vm.c:46: while (1) {
-   0061                     140 00102$:
-                            141 ;e4vm.c:47: Console_WriteStr((CHAR*)">", 2);
-   0061 21r7Fr00      [10]  142 	ld	hl, #___str_0
-   0064 CDr00r00      [17]  143 	call	_Console_WriteStr_C_COMPACT
-                            144 ;e4vm.c:48: e4vm_utils_keyboard_read_string(&e4vm_vm);
-   0067 21r5Br05      [10]  145 	ld	hl, #_e4vm_vm
-   006A E5            [11]  146 	push	hl
-   006B CDr00r00      [17]  147 	call	_e4vm_utils_keyboard_read_string
-   006E F1            [10]  148 	pop	af
-                            149 ;e4vm.c:49: e4vm_core_ext_interpreter(v);
-   006F DD 6E 04      [19]  150 	ld	l, 4 (ix)
-   0072 DD 66 05      [19]  151 	ld	h, 5 (ix)
-   0075 E5            [11]  152 	push	hl
-   0076 CDr00r00      [17]  153 	call	_e4vm_core_ext_interpreter
-   0079 F1            [10]  154 	pop	af
-   007A 18 E5         [12]  155 	jr	00102$
-                            156 ;e4vm.c:51: }
-   007C DD E1         [14]  157 	pop	ix
-   007E C9            [10]  158 	ret
-   007F                     159 ___str_0:
-   007F 3E                  160 	.ascii ">"
-   0080 00                  161 	.db 0x00
-                            162 ;e4vm.c:54: int main (int argc, char **argv)
-                            163 ;	---------------------------------
-                            164 ; Function main
-                            165 ; ---------------------------------
-   0081                     166 _main::
-                            167 ;e4vm.c:59: __IMPORT(e4vm_boolean__init);
-   0081 CDr00r00      [17]  168 	call	_e4vm_boolean__init
-                            169 ;e4vm.c:60: __IMPORT(e4vm_comment__init);
-   0084 CDr00r00      [17]  170 	call	_e4vm_comment__init
-                            171 ;e4vm.c:61: __IMPORT(e4vm_core__init);
-   0087 CDr00r00      [17]  172 	call	_e4vm_core__init
-                            173 ;e4vm.c:62: __IMPORT(e4vm_core_ext__init);
-   008A CDr00r00      [17]  174 	call	_e4vm_core_ext__init
-                            175 ;e4vm.c:63: __IMPORT(e4vm_math__init);
-   008D CDr00r00      [17]  176 	call	_e4vm_math__init
-                            177 ;e4vm.c:64: __IMPORT(e4vm_mem__init);
-   0090 CDr00r00      [17]  178 	call	_e4vm_mem__init
-                            179 ;e4vm.c:65: __IMPORT(e4vm_rw__init);
-   0093 CDr00r00      [17]  180 	call	_e4vm_rw__init
-                            181 ;e4vm.c:66: __IMPORT(e4vm_stack__init);
-   0096 CDr00r00      [17]  182 	call	_e4vm_stack__init
-                            183 ;e4vm.c:67: __IMPORT(e4vm_type__init);
-   0099 CDr00r00      [17]  184 	call	_e4vm_type__init
-                            185 ;e4vm.c:68: __IMPORT(e4vm_utils__init);
-   009C CDr00r00      [17]  186 	call	_e4vm_utils__init
-                            187 ;e4vm.c:71: Basic_Init();
-   009F FD CB 01 A6   [23]  188 	res	4,1(iy) 
-   00A3 CD 42 16      [17]  189 	call 0x1642 
-                            190 ;e4vm.c:72: Console_Clear(7);
-   00A6 2E 07         [ 7]  191 	ld	l, #0x07
-   00A8 CDr00r00      [17]  192 	call	_Console_Clear_COMPACT
-                            193 ;e4vm.c:73: Console_SetColors(56);
-   00AB 21r00r00      [10]  194 	ld	hl, #_Console_attrib
-   00AE 36 38         [10]  195 	ld	(hl), #0x38
-                            196 ;e4vm.c:74: e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
-   00B0 21r00r00      [10]  197 	ld	hl, #_e4vm_vm_static
-   00B3 22r5Br05      [16]  198 	ld	(_e4vm_vm), hl
-                            199 ;e4vm.c:75: e4vm_test_console(&e4vm_vm);
-   00B6 21r5Br05      [10]  200 	ld	hl, #_e4vm_vm
-   00B9 E5            [11]  201 	push	hl
-   00BA CDr18r00      [17]  202 	call	_e4vm_test_console
-   00BD F1            [10]  203 	pop	af
-                            204 ;e4vm.c:76: Basic_PAUSE(0);
-   00BE 21 00 00      [10]  205 	ld	hl, #0x0000
-   00C1 CDr00r00      [17]  206 	call	_Basic_PAUSE_EI
-                            207 ;e4vm.c:77: Basic_Quit();
-                            208 ;e4vm.c:78: __FINI;
-                            209 ;e4vm.c:79: }
-   00C4 C3r00r00      [10]  210 	jp  _Basic_Quit_IM1
-                            211 	.area _CODE
-                            212 	.area _INITIALIZER
-                            213 	.area _CABS (ABS)
+                             72 ; Home
+                             73 ;--------------------------------------------------------
+                             74 	.area _HOME
+                             75 	.area _HOME
+                             76 ;--------------------------------------------------------
+                             77 ; code
+                             78 ;--------------------------------------------------------
+                             79 	.area _CODE
+                             80 ;e4vm.c:31: static void e4vm_do_hello (e4vm_type_x4thPtr *v)
+                             81 ;	---------------------------------
+                             82 ; Function e4vm_do_hello
+                             83 ; ---------------------------------
+   0000                      84 _e4vm_do_hello:
+   0000 CDr00r00      [17]   85 	call	___sdcc_enter_ix
+                             86 ;e4vm.c:33: (*v)->mem[30] = 1;
+   0003 DD 6E 04      [19]   87 	ld	l, 4 (ix)
+   0006 DD 66 05      [19]   88 	ld	h, 5 (ix)
+   0009 4E            [ 7]   89 	ld	c, (hl)
+   000A 23            [ 6]   90 	inc	hl
+   000B 46            [ 7]   91 	ld	b, (hl)
+   000C 21 C6 00      [10]   92 	ld	hl, #0x00c6
+   000F 09            [11]   93 	add	hl, bc
+   0010 36 01         [10]   94 	ld	(hl), #0x01
+   0012 23            [ 6]   95 	inc	hl
+   0013 36 00         [10]   96 	ld	(hl), #0x00
+                             97 ;e4vm.c:34: }
+   0015 DD E1         [14]   98 	pop	ix
+   0017 C9            [10]   99 	ret
+                            100 ;e4vm.c:36: static void e4vm_test_read_mem (e4vm_type_x4thPtr *v)
+                            101 ;	---------------------------------
+                            102 ; Function e4vm_test_read_mem
+                            103 ; ---------------------------------
+   0018                     104 _e4vm_test_read_mem:
+   0018 CDr00r00      [17]  105 	call	___sdcc_enter_ix
+   001B 21 E2 FF      [10]  106 	ld	hl, #-30
+   001E 39            [11]  107 	add	hl, sp
+   001F F9            [ 6]  108 	ld	sp, hl
+                            109 ;e4vm.c:41: Console_WriteStr((CHAR*)"Test mem op @ ", 15);
+   0020 21r32r01      [10]  110 	ld	hl, #___str_0
+   0023 CDr00r00      [17]  111 	call	_Console_WriteStr_C_COMPACT
+                            112 ;e4vm.c:42: e4vm_utils_init(v);
+   0026 DD 6E 04      [19]  113 	ld	l, 4 (ix)
+   0029 DD 66 05      [19]  114 	ld	h, 5 (ix)
+   002C E5            [11]  115 	push	hl
+   002D CDr00r00      [17]  116 	call	_e4vm_utils_init
+   0030 F1            [10]  117 	pop	af
+                            118 ;e4vm.c:43: e4vm_core_add_core_words(v);
+   0031 DD 6E 04      [19]  119 	ld	l, 4 (ix)
+   0034 DD 66 05      [19]  120 	ld	h, 5 (ix)
+   0037 E5            [11]  121 	push	hl
+   0038 CDr00r00      [17]  122 	call	_e4vm_core_add_core_words
+   003B F1            [10]  123 	pop	af
+                            124 ;e4vm.c:44: e4vm_core_ext_add_core_words(v);
+   003C DD 6E 04      [19]  125 	ld	l, 4 (ix)
+   003F DD 66 05      [19]  126 	ld	h, 5 (ix)
+   0042 E5            [11]  127 	push	hl
+   0043 CDr00r00      [17]  128 	call	_e4vm_core_ext_add_core_words
+   0046 F1            [10]  129 	pop	af
+                            130 ;e4vm.c:45: e4vm_mem_add_core_words(v);
+   0047 DD 6E 04      [19]  131 	ld	l, 4 (ix)
+   004A DD 66 05      [19]  132 	ld	h, 5 (ix)
+   004D E5            [11]  133 	push	hl
+   004E CDr00r00      [17]  134 	call	_e4vm_mem_add_core_words
+   0051 F1            [10]  135 	pop	af
+                            136 ;e4vm.c:46: e4vm_utils_here_to_wp(v);
+   0052 DD 6E 04      [19]  137 	ld	l, 4 (ix)
+   0055 DD 66 05      [19]  138 	ld	h, 5 (ix)
+   0058 E5            [11]  139 	push	hl
+   0059 CDr00r00      [17]  140 	call	_e4vm_utils_here_to_wp
+   005C F1            [10]  141 	pop	af
+                            142 ;e4vm.c:47: __MOVE((CHAR*)"dolist", _str__6, 7);
+   005D 21 00 00      [10]  143 	ld	hl, #0
+   0060 39            [11]  144 	add	hl, sp
+   0061 EB            [ 4]  145 	ex	de, hl
+   0062 4B            [ 4]  146 	ld	c, e
+   0063 42            [ 4]  147 	ld	b, d
+   0064 D5            [11]  148 	push	de
+   0065 21 07 00      [10]  149 	ld	hl, #0x0007
+   0068 E5            [11]  150 	push	hl
+   0069 21r41r01      [10]  151 	ld	hl, #___str_1
+   006C E5            [11]  152 	push	hl
+   006D C5            [11]  153 	push	bc
+   006E CDr00r00      [17]  154 	call	_memcpy
+   0071 F1            [10]  155 	pop	af
+   0072 F1            [10]  156 	pop	af
+   0073 F1            [10]  157 	pop	af
+   0074 DD 6E 04      [19]  158 	ld	l, 4 (ix)
+   0077 DD 66 05      [19]  159 	ld	h, 5 (ix)
+   007A E5            [11]  160 	push	hl
+   007B CDr00r00      [17]  161 	call	_e4vm_utils_add_op_from_string
+   007E F1            [10]  162 	pop	af
+   007F F1            [10]  163 	pop	af
+                            164 ;e4vm.c:49: __MOVE((CHAR*)"@", _str__5, 2);
+   0080 21 0A 00      [10]  165 	ld	hl, #10
+   0083 39            [11]  166 	add	hl, sp
+   0084 EB            [ 4]  167 	ex	de, hl
+   0085 4B            [ 4]  168 	ld	c, e
+   0086 42            [ 4]  169 	ld	b, d
+   0087 D5            [11]  170 	push	de
+   0088 21 02 00      [10]  171 	ld	hl, #0x0002
+   008B E5            [11]  172 	push	hl
+   008C 21r48r01      [10]  173 	ld	hl, #___str_2
+   008F E5            [11]  174 	push	hl
+   0090 C5            [11]  175 	push	bc
+   0091 CDr00r00      [17]  176 	call	_memcpy
+   0094 F1            [10]  177 	pop	af
+   0095 F1            [10]  178 	pop	af
+   0096 F1            [10]  179 	pop	af
+   0097 DD 6E 04      [19]  180 	ld	l, 4 (ix)
+   009A DD 66 05      [19]  181 	ld	h, 5 (ix)
+   009D E5            [11]  182 	push	hl
+   009E CDr00r00      [17]  183 	call	_e4vm_utils_add_op_from_string
+   00A1 F1            [10]  184 	pop	af
+   00A2 F1            [10]  185 	pop	af
+                            186 ;e4vm.c:51: __MOVE((CHAR*)"exit", _str__4, 5);
+   00A3 21 14 00      [10]  187 	ld	hl, #20
+   00A6 39            [11]  188 	add	hl, sp
+   00A7 EB            [ 4]  189 	ex	de, hl
+   00A8 4B            [ 4]  190 	ld	c, e
+   00A9 42            [ 4]  191 	ld	b, d
+   00AA D5            [11]  192 	push	de
+   00AB 21 05 00      [10]  193 	ld	hl, #0x0005
+   00AE E5            [11]  194 	push	hl
+   00AF 21r4Ar01      [10]  195 	ld	hl, #___str_3
+   00B2 E5            [11]  196 	push	hl
+   00B3 C5            [11]  197 	push	bc
+   00B4 CDr00r00      [17]  198 	call	_memcpy
+   00B7 F1            [10]  199 	pop	af
+   00B8 F1            [10]  200 	pop	af
+   00B9 F1            [10]  201 	pop	af
+   00BA DD 6E 04      [19]  202 	ld	l, 4 (ix)
+   00BD DD 66 05      [19]  203 	ld	h, 5 (ix)
+   00C0 E5            [11]  204 	push	hl
+   00C1 CDr00r00      [17]  205 	call	_e4vm_utils_add_op_from_string
+   00C4 F1            [10]  206 	pop	af
+                            207 ;e4vm.c:53: e4vm_utils_stack_ds_push(v, 30);
+   00C5 21 1E 00      [10]  208 	ld	hl, #0x001e
+   00C8 E3            [19]  209 	ex	(sp),hl
+   00C9 DD 6E 04      [19]  210 	ld	l, 4 (ix)
+   00CC DD 66 05      [19]  211 	ld	h, 5 (ix)
+   00CF E5            [11]  212 	push	hl
+   00D0 CDr00r00      [17]  213 	call	_e4vm_utils_stack_ds_push
+   00D3 F1            [10]  214 	pop	af
+   00D4 F1            [10]  215 	pop	af
+                            216 ;e4vm.c:54: (*v)->mem[30] = 5;
+   00D5 DD 4E 04      [19]  217 	ld	c, 4 (ix)
+   00D8 DD 46 05      [19]  218 	ld	b, 5 (ix)
+   00DB 69            [ 4]  219 	ld	l, c
+   00DC 60            [ 4]  220 	ld	h, b
+   00DD 5E            [ 7]  221 	ld	e, (hl)
+   00DE 23            [ 6]  222 	inc	hl
+   00DF 56            [ 7]  223 	ld	d, (hl)
+   00E0 21 C6 00      [10]  224 	ld	hl, #0x00c6
+   00E3 19            [11]  225 	add	hl, de
+   00E4 36 05         [10]  226 	ld	(hl), #0x05
+   00E6 23            [ 6]  227 	inc	hl
+   00E7 36 00         [10]  228 	ld	(hl), #0x00
+                            229 ;e4vm.c:55: e4vm_core_do_list(v);
+   00E9 C5            [11]  230 	push	bc
+   00EA C5            [11]  231 	push	bc
+   00EB CDr00r00      [17]  232 	call	_e4vm_core_do_list
+   00EE F1            [10]  233 	pop	af
+   00EF DD 6E 04      [19]  234 	ld	l, 4 (ix)
+   00F2 DD 66 05      [19]  235 	ld	h, 5 (ix)
+   00F5 E5            [11]  236 	push	hl
+   00F6 CDr00r00      [17]  237 	call	_e4vm_core_do_next
+   00F9 F1            [10]  238 	pop	af
+                            239 ;e4vm.c:57: if ((*v)->ds[(*v)->ds_p - 1] == 5) {
+   00FA E1            [10]  240 	pop	hl
+   00FB 4E            [ 7]  241 	ld	c, (hl)
+   00FC 23            [ 6]  242 	inc	hl
+   00FD 46            [ 7]  243 	ld	b, (hl)
+   00FE 21 44 00      [10]  244 	ld	hl, #0x0044
+   0101 09            [11]  245 	add	hl, bc
+   0102 EB            [ 4]  246 	ex	de, hl
+   0103 69            [ 4]  247 	ld	l, c
+   0104 60            [ 4]  248 	ld	h, b
+   0105 01 86 00      [10]  249 	ld	bc, #0x0086
+   0108 09            [11]  250 	add	hl, bc
+   0109 7E            [ 7]  251 	ld	a, (hl)
+   010A 3D            [ 4]  252 	dec	a
+   010B 87            [ 4]  253 	add	a, a
+   010C 6F            [ 4]  254 	ld	l, a
+   010D 26 00         [ 7]  255 	ld	h, #0x00
+   010F 19            [11]  256 	add	hl, de
+   0110 4E            [ 7]  257 	ld	c, (hl)
+   0111 23            [ 6]  258 	inc	hl
+   0112 46            [ 7]  259 	ld	b, (hl)
+   0113 79            [ 4]  260 	ld	a, c
+   0114 D6 05         [ 7]  261 	sub	a, #0x05
+   0116 B0            [ 4]  262 	or	a, b
+   0117 20 0B         [12]  263 	jr	NZ,00102$
+                            264 ;e4vm.c:58: Console_WriteStrLn((CHAR*)" - ok", 6);
+   0119 21r4Fr01      [10]  265 	ld	hl, #___str_4
+   011C CDr00r00      [17]  266 	call	_Console_WriteStr_C_COMPACT
+   011F CDr00r00      [17]  267 	call	_Console_WriteLn_COMPACT
+   0122 18 09         [12]  268 	jr	00104$
+   0124                     269 00102$:
+                            270 ;e4vm.c:60: Console_WriteStrLn((CHAR*)" - error", 9);
+   0124 21r55r01      [10]  271 	ld	hl, #___str_5
+   0127 CDr00r00      [17]  272 	call	_Console_WriteStr_C_COMPACT
+   012A CDr00r00      [17]  273 	call	_Console_WriteLn_COMPACT
+   012D                     274 00104$:
+                            275 ;e4vm.c:62: }
+   012D DD F9         [10]  276 	ld	sp, ix
+   012F DD E1         [14]  277 	pop	ix
+   0131 C9            [10]  278 	ret
+   0132                     279 ___str_0:
+   0132 54 65 73 74 20 6D   280 	.ascii "Test mem op @ "
+        65 6D 20 6F 70 20
+        40 20
+   0140 00                  281 	.db 0x00
+   0141                     282 ___str_1:
+   0141 64 6F 6C 69 73 74   283 	.ascii "dolist"
+   0147 00                  284 	.db 0x00
+   0148                     285 ___str_2:
+   0148 40                  286 	.ascii "@"
+   0149 00                  287 	.db 0x00
+   014A                     288 ___str_3:
+   014A 65 78 69 74         289 	.ascii "exit"
+   014E 00                  290 	.db 0x00
+   014F                     291 ___str_4:
+   014F 20 2D 20 6F 6B      292 	.ascii " - ok"
+   0154 00                  293 	.db 0x00
+   0155                     294 ___str_5:
+   0155 20 2D 20 65 72 72   295 	.ascii " - error"
+        6F 72
+   015D 00                  296 	.db 0x00
+                            297 ;e4vm.c:64: static void e4vm_test_write_mem (e4vm_type_x4thPtr *v)
+                            298 ;	---------------------------------
+                            299 ; Function e4vm_test_write_mem
+                            300 ; ---------------------------------
+   015E                     301 _e4vm_test_write_mem:
+   015E CDr00r00      [17]  302 	call	___sdcc_enter_ix
+   0161 21 D8 FF      [10]  303 	ld	hl, #-40
+   0164 39            [11]  304 	add	hl, sp
+   0165 F9            [ 6]  305 	ld	sp, hl
+                            306 ;e4vm.c:70: Console_WriteStr((CHAR*)"Test mem op ! ", 15);
+   0166 21rA7r02      [10]  307 	ld	hl, #___str_6
+   0169 CDr00r00      [17]  308 	call	_Console_WriteStr_C_COMPACT
+                            309 ;e4vm.c:71: e4vm_utils_init(v);
+   016C DD 6E 04      [19]  310 	ld	l, 4 (ix)
+   016F DD 66 05      [19]  311 	ld	h, 5 (ix)
+   0172 E5            [11]  312 	push	hl
+   0173 CDr00r00      [17]  313 	call	_e4vm_utils_init
+   0176 F1            [10]  314 	pop	af
+                            315 ;e4vm.c:72: e4vm_core_add_core_words(v);
+   0177 DD 6E 04      [19]  316 	ld	l, 4 (ix)
+   017A DD 66 05      [19]  317 	ld	h, 5 (ix)
+   017D E5            [11]  318 	push	hl
+   017E CDr00r00      [17]  319 	call	_e4vm_core_add_core_words
+   0181 F1            [10]  320 	pop	af
+                            321 ;e4vm.c:73: e4vm_core_ext_add_core_words(v);
+   0182 DD 6E 04      [19]  322 	ld	l, 4 (ix)
+   0185 DD 66 05      [19]  323 	ld	h, 5 (ix)
+   0188 E5            [11]  324 	push	hl
+   0189 CDr00r00      [17]  325 	call	_e4vm_core_ext_add_core_words
+   018C F1            [10]  326 	pop	af
+                            327 ;e4vm.c:74: e4vm_mem_add_core_words(v);
+   018D DD 6E 04      [19]  328 	ld	l, 4 (ix)
+   0190 DD 66 05      [19]  329 	ld	h, 5 (ix)
+   0193 E5            [11]  330 	push	hl
+   0194 CDr00r00      [17]  331 	call	_e4vm_mem_add_core_words
+   0197 F1            [10]  332 	pop	af
+                            333 ;e4vm.c:75: __MOVE((CHAR*)"hello", _str__11, 6);
+   0198 21 00 00      [10]  334 	ld	hl, #0
+   019B 39            [11]  335 	add	hl, sp
+   019C EB            [ 4]  336 	ex	de, hl
+   019D 4B            [ 4]  337 	ld	c, e
+   019E 42            [ 4]  338 	ld	b, d
+   019F D5            [11]  339 	push	de
+   01A0 21 06 00      [10]  340 	ld	hl, #0x0006
+   01A3 E5            [11]  341 	push	hl
+   01A4 21rB6r02      [10]  342 	ld	hl, #___str_7
+   01A7 E5            [11]  343 	push	hl
+   01A8 C5            [11]  344 	push	bc
+   01A9 CDr00r00      [17]  345 	call	_memcpy
+   01AC F1            [10]  346 	pop	af
+   01AD F1            [10]  347 	pop	af
+   01AE F1            [10]  348 	pop	af
+   01AF D1            [10]  349 	pop	de
+                            350 ;e4vm.c:76: e4vm_utils_add_core_word(v, (void*)_str__11, e4vm_do_hello, 0);
+   01B0 AF            [ 4]  351 	xor	a, a
+   01B1 F5            [11]  352 	push	af
+   01B2 33            [ 6]  353 	inc	sp
+   01B3 21r00r00      [10]  354 	ld	hl, #_e4vm_do_hello
+   01B6 E5            [11]  355 	push	hl
+   01B7 D5            [11]  356 	push	de
+   01B8 DD 6E 04      [19]  357 	ld	l, 4 (ix)
+   01BB DD 66 05      [19]  358 	ld	h, 5 (ix)
+   01BE E5            [11]  359 	push	hl
+   01BF CDr00r00      [17]  360 	call	_e4vm_utils_add_core_word
+   01C2 F1            [10]  361 	pop	af
+   01C3 F1            [10]  362 	pop	af
+   01C4 F1            [10]  363 	pop	af
+   01C5 33            [ 6]  364 	inc	sp
+                            365 ;e4vm.c:77: e4vm_utils_here_to_wp(v);
+   01C6 DD 6E 04      [19]  366 	ld	l, 4 (ix)
+   01C9 DD 66 05      [19]  367 	ld	h, 5 (ix)
+   01CC E5            [11]  368 	push	hl
+   01CD CDr00r00      [17]  369 	call	_e4vm_utils_here_to_wp
+   01D0 F1            [10]  370 	pop	af
+                            371 ;e4vm.c:78: __MOVE((CHAR*)"dolist", _str__10, 7);
+   01D1 21 0A 00      [10]  372 	ld	hl, #10
+   01D4 39            [11]  373 	add	hl, sp
+   01D5 EB            [ 4]  374 	ex	de, hl
+   01D6 4B            [ 4]  375 	ld	c, e
+   01D7 42            [ 4]  376 	ld	b, d
+   01D8 D5            [11]  377 	push	de
+   01D9 21 07 00      [10]  378 	ld	hl, #0x0007
+   01DC E5            [11]  379 	push	hl
+   01DD 21rBCr02      [10]  380 	ld	hl, #___str_8
+   01E0 E5            [11]  381 	push	hl
+   01E1 C5            [11]  382 	push	bc
+   01E2 CDr00r00      [17]  383 	call	_memcpy
+   01E5 F1            [10]  384 	pop	af
+   01E6 F1            [10]  385 	pop	af
+   01E7 F1            [10]  386 	pop	af
+   01E8 DD 6E 04      [19]  387 	ld	l, 4 (ix)
+   01EB DD 66 05      [19]  388 	ld	h, 5 (ix)
+   01EE E5            [11]  389 	push	hl
+   01EF CDr00r00      [17]  390 	call	_e4vm_utils_add_op_from_string
+   01F2 F1            [10]  391 	pop	af
+   01F3 F1            [10]  392 	pop	af
+                            393 ;e4vm.c:80: __MOVE((CHAR*)"!", _str__9, 2);
+   01F4 21 14 00      [10]  394 	ld	hl, #20
+   01F7 39            [11]  395 	add	hl, sp
+   01F8 EB            [ 4]  396 	ex	de, hl
+   01F9 4B            [ 4]  397 	ld	c, e
+   01FA 42            [ 4]  398 	ld	b, d
+   01FB D5            [11]  399 	push	de
+   01FC 21 02 00      [10]  400 	ld	hl, #0x0002
+   01FF E5            [11]  401 	push	hl
+   0200 21rC3r02      [10]  402 	ld	hl, #___str_9
+   0203 E5            [11]  403 	push	hl
+   0204 C5            [11]  404 	push	bc
+   0205 CDr00r00      [17]  405 	call	_memcpy
+   0208 F1            [10]  406 	pop	af
+   0209 F1            [10]  407 	pop	af
+   020A F1            [10]  408 	pop	af
+   020B DD 6E 04      [19]  409 	ld	l, 4 (ix)
+   020E DD 66 05      [19]  410 	ld	h, 5 (ix)
+   0211 E5            [11]  411 	push	hl
+   0212 CDr00r00      [17]  412 	call	_e4vm_utils_add_op_from_string
+   0215 F1            [10]  413 	pop	af
+   0216 F1            [10]  414 	pop	af
+                            415 ;e4vm.c:82: __MOVE((CHAR*)"exit", _str__8, 5);
+   0217 21 1E 00      [10]  416 	ld	hl, #30
+   021A 39            [11]  417 	add	hl, sp
+   021B EB            [ 4]  418 	ex	de, hl
+   021C 4B            [ 4]  419 	ld	c, e
+   021D 42            [ 4]  420 	ld	b, d
+   021E D5            [11]  421 	push	de
+   021F 21 05 00      [10]  422 	ld	hl, #0x0005
+   0222 E5            [11]  423 	push	hl
+   0223 21rC5r02      [10]  424 	ld	hl, #___str_10
+   0226 E5            [11]  425 	push	hl
+   0227 C5            [11]  426 	push	bc
+   0228 CDr00r00      [17]  427 	call	_memcpy
+   022B F1            [10]  428 	pop	af
+   022C F1            [10]  429 	pop	af
+   022D F1            [10]  430 	pop	af
+   022E DD 6E 04      [19]  431 	ld	l, 4 (ix)
+   0231 DD 66 05      [19]  432 	ld	h, 5 (ix)
+   0234 E5            [11]  433 	push	hl
+   0235 CDr00r00      [17]  434 	call	_e4vm_utils_add_op_from_string
+   0238 F1            [10]  435 	pop	af
+                            436 ;e4vm.c:84: e4vm_utils_stack_ds_push(v, 2);
+   0239 21 02 00      [10]  437 	ld	hl, #0x0002
+   023C E3            [19]  438 	ex	(sp),hl
+   023D DD 6E 04      [19]  439 	ld	l, 4 (ix)
+   0240 DD 66 05      [19]  440 	ld	h, 5 (ix)
+   0243 E5            [11]  441 	push	hl
+   0244 CDr00r00      [17]  442 	call	_e4vm_utils_stack_ds_push
+   0247 F1            [10]  443 	pop	af
+                            444 ;e4vm.c:85: e4vm_utils_stack_ds_push(v, 30);
+   0248 21 1E 00      [10]  445 	ld	hl, #0x001e
+   024B E3            [19]  446 	ex	(sp),hl
+   024C DD 6E 04      [19]  447 	ld	l, 4 (ix)
+   024F DD 66 05      [19]  448 	ld	h, 5 (ix)
+   0252 E5            [11]  449 	push	hl
+   0253 CDr00r00      [17]  450 	call	_e4vm_utils_stack_ds_push
+   0256 F1            [10]  451 	pop	af
+   0257 F1            [10]  452 	pop	af
+                            453 ;e4vm.c:86: (*v)->mem[30] = 0;
+   0258 DD 4E 04      [19]  454 	ld	c, 4 (ix)
+   025B DD 46 05      [19]  455 	ld	b, 5 (ix)
+   025E 69            [ 4]  456 	ld	l, c
+   025F 60            [ 4]  457 	ld	h, b
+   0260 5E            [ 7]  458 	ld	e, (hl)
+   0261 23            [ 6]  459 	inc	hl
+   0262 56            [ 7]  460 	ld	d, (hl)
+   0263 21 C6 00      [10]  461 	ld	hl, #0x00c6
+   0266 19            [11]  462 	add	hl, de
+   0267 AF            [ 4]  463 	xor	a, a
+   0268 77            [ 7]  464 	ld	(hl), a
+   0269 23            [ 6]  465 	inc	hl
+   026A 77            [ 7]  466 	ld	(hl), a
+                            467 ;e4vm.c:87: e4vm_core_do_list(v);
+   026B C5            [11]  468 	push	bc
+   026C C5            [11]  469 	push	bc
+   026D CDr00r00      [17]  470 	call	_e4vm_core_do_list
+   0270 F1            [10]  471 	pop	af
+   0271 DD 6E 04      [19]  472 	ld	l, 4 (ix)
+   0274 DD 66 05      [19]  473 	ld	h, 5 (ix)
+   0277 E5            [11]  474 	push	hl
+   0278 CDr00r00      [17]  475 	call	_e4vm_core_do_next
+   027B F1            [10]  476 	pop	af
+                            477 ;e4vm.c:89: if ((*v)->mem[30] == 2) {
+   027C E1            [10]  478 	pop	hl
+   027D 4E            [ 7]  479 	ld	c, (hl)
+   027E 23            [ 6]  480 	inc	hl
+   027F 66            [ 7]  481 	ld	h, (hl)
+   0280 69            [ 4]  482 	ld	l, c
+   0281 11 C6 00      [10]  483 	ld	de, #0x00c6
+   0284 19            [11]  484 	add	hl, de
+   0285 4E            [ 7]  485 	ld	c, (hl)
+   0286 23            [ 6]  486 	inc	hl
+   0287 46            [ 7]  487 	ld	b, (hl)
+   0288 79            [ 4]  488 	ld	a, c
+   0289 D6 02         [ 7]  489 	sub	a, #0x02
+   028B B0            [ 4]  490 	or	a, b
+   028C 20 0B         [12]  491 	jr	NZ,00102$
+                            492 ;e4vm.c:90: Console_WriteStrLn((CHAR*)" - ok", 6);
+   028E 21rCAr02      [10]  493 	ld	hl, #___str_11
+   0291 CDr00r00      [17]  494 	call	_Console_WriteStr_C_COMPACT
+   0294 CDr00r00      [17]  495 	call	_Console_WriteLn_COMPACT
+   0297 18 09         [12]  496 	jr	00104$
+   0299                     497 00102$:
+                            498 ;e4vm.c:92: Console_WriteStrLn((CHAR*)" - error", 9);
+   0299 21rD0r02      [10]  499 	ld	hl, #___str_12
+   029C CDr00r00      [17]  500 	call	_Console_WriteStr_C_COMPACT
+   029F CDr00r00      [17]  501 	call	_Console_WriteLn_COMPACT
+   02A2                     502 00104$:
+                            503 ;e4vm.c:94: }
+   02A2 DD F9         [10]  504 	ld	sp, ix
+   02A4 DD E1         [14]  505 	pop	ix
+   02A6 C9            [10]  506 	ret
+   02A7                     507 ___str_6:
+   02A7 54 65 73 74 20 6D   508 	.ascii "Test mem op ! "
+        65 6D 20 6F 70 20
+        21 20
+   02B5 00                  509 	.db 0x00
+   02B6                     510 ___str_7:
+   02B6 68 65 6C 6C 6F      511 	.ascii "hello"
+   02BB 00                  512 	.db 0x00
+   02BC                     513 ___str_8:
+   02BC 64 6F 6C 69 73 74   514 	.ascii "dolist"
+   02C2 00                  515 	.db 0x00
+   02C3                     516 ___str_9:
+   02C3 21                  517 	.ascii "!"
+   02C4 00                  518 	.db 0x00
+   02C5                     519 ___str_10:
+   02C5 65 78 69 74         520 	.ascii "exit"
+   02C9 00                  521 	.db 0x00
+   02CA                     522 ___str_11:
+   02CA 20 2D 20 6F 6B      523 	.ascii " - ok"
+   02CF 00                  524 	.db 0x00
+   02D0                     525 ___str_12:
+   02D0 20 2D 20 65 72 72   526 	.ascii " - error"
+        6F 72
+   02D8 00                  527 	.db 0x00
+                            528 ;e4vm.c:96: static void e4vm_test_console (e4vm_type_x4thPtr *v)
+                            529 ;	---------------------------------
+                            530 ; Function e4vm_test_console
+                            531 ; ---------------------------------
+   02D9                     532 _e4vm_test_console:
+   02D9 CDr00r00      [17]  533 	call	___sdcc_enter_ix
+                            534 ;e4vm.c:98: Console_WriteStrLn((CHAR*)"Oberon based 4th vm", 20);
+   02DC 21r52r03      [10]  535 	ld	hl, #___str_13
+   02DF CDr00r00      [17]  536 	call	_Console_WriteStr_C_COMPACT
+   02E2 CDr00r00      [17]  537 	call	_Console_WriteLn_COMPACT
+                            538 ;e4vm.c:99: Console_WriteStrLn((CHAR*)"github.com/UA3MQJ/obr_4th_vm", 29);
+   02E5 21r66r03      [10]  539 	ld	hl, #___str_14
+   02E8 CDr00r00      [17]  540 	call	_Console_WriteStr_C_COMPACT
+   02EB CDr00r00      [17]  541 	call	_Console_WriteLn_COMPACT
+                            542 ;e4vm.c:100: Console_WriteLn();
+   02EE CDr00r00      [17]  543 	call	_Console_WriteLn_COMPACT
+                            544 ;e4vm.c:101: e4vm_utils_init(v);
+   02F1 DD 6E 04      [19]  545 	ld	l, 4 (ix)
+   02F4 DD 66 05      [19]  546 	ld	h, 5 (ix)
+   02F7 E5            [11]  547 	push	hl
+   02F8 CDr00r00      [17]  548 	call	_e4vm_utils_init
+                            549 ;e4vm.c:102: e4vm_core_add_core_words(&e4vm_vm);
+   02FB 21r5Br05      [10]  550 	ld	hl, #_e4vm_vm
+   02FE E3            [19]  551 	ex	(sp),hl
+   02FF CDr00r00      [17]  552 	call	_e4vm_core_add_core_words
+                            553 ;e4vm.c:103: e4vm_core_ext_add_core_words(&e4vm_vm);
+   0302 21r5Br05      [10]  554 	ld	hl, #_e4vm_vm
+   0305 E3            [19]  555 	ex	(sp),hl
+   0306 CDr00r00      [17]  556 	call	_e4vm_core_ext_add_core_words
+                            557 ;e4vm.c:104: e4vm_stack_add_core_words(&e4vm_vm);
+   0309 21r5Br05      [10]  558 	ld	hl, #_e4vm_vm
+   030C E3            [19]  559 	ex	(sp),hl
+   030D CDr00r00      [17]  560 	call	_e4vm_stack_add_core_words
+                            561 ;e4vm.c:105: e4vm_math_add_core_words(&e4vm_vm);
+   0310 21r5Br05      [10]  562 	ld	hl, #_e4vm_vm
+   0313 E3            [19]  563 	ex	(sp),hl
+   0314 CDr00r00      [17]  564 	call	_e4vm_math_add_core_words
+                            565 ;e4vm.c:106: e4vm_boolean_add_core_words(&e4vm_vm);
+   0317 21r5Br05      [10]  566 	ld	hl, #_e4vm_vm
+   031A E3            [19]  567 	ex	(sp),hl
+   031B CDr00r00      [17]  568 	call	_e4vm_boolean_add_core_words
+                            569 ;e4vm.c:107: e4vm_comment_add_core_words(&e4vm_vm);
+   031E 21r5Br05      [10]  570 	ld	hl, #_e4vm_vm
+   0321 E3            [19]  571 	ex	(sp),hl
+   0322 CDr00r00      [17]  572 	call	_e4vm_comment_add_core_words
+                            573 ;e4vm.c:108: e4vm_mem_add_core_words(&e4vm_vm);
+   0325 21r5Br05      [10]  574 	ld	hl, #_e4vm_vm
+   0328 E3            [19]  575 	ex	(sp),hl
+   0329 CDr00r00      [17]  576 	call	_e4vm_mem_add_core_words
+                            577 ;e4vm.c:109: e4vm_rw_add_core_words(&e4vm_vm);
+   032C 21r5Br05      [10]  578 	ld	hl, #_e4vm_vm
+   032F E3            [19]  579 	ex	(sp),hl
+   0330 CDr00r00      [17]  580 	call	_e4vm_rw_add_core_words
+   0333 F1            [10]  581 	pop	af
+                            582 ;e4vm.c:110: while (1) {
+   0334                     583 00102$:
+                            584 ;e4vm.c:111: Console_WriteStr((CHAR*)">", 2);
+   0334 21r83r03      [10]  585 	ld	hl, #___str_15
+   0337 CDr00r00      [17]  586 	call	_Console_WriteStr_C_COMPACT
+                            587 ;e4vm.c:112: e4vm_utils_keyboard_read_string(&e4vm_vm);
+   033A 21r5Br05      [10]  588 	ld	hl, #_e4vm_vm
+   033D E5            [11]  589 	push	hl
+   033E CDr00r00      [17]  590 	call	_e4vm_utils_keyboard_read_string
+   0341 F1            [10]  591 	pop	af
+                            592 ;e4vm.c:113: e4vm_core_ext_interpreter(v);
+   0342 DD 6E 04      [19]  593 	ld	l, 4 (ix)
+   0345 DD 66 05      [19]  594 	ld	h, 5 (ix)
+   0348 E5            [11]  595 	push	hl
+   0349 CDr00r00      [17]  596 	call	_e4vm_core_ext_interpreter
+   034C F1            [10]  597 	pop	af
+   034D 18 E5         [12]  598 	jr	00102$
+                            599 ;e4vm.c:115: }
+   034F DD E1         [14]  600 	pop	ix
+   0351 C9            [10]  601 	ret
+   0352                     602 ___str_13:
+   0352 4F 62 65 72 6F 6E   603 	.ascii "Oberon based 4th vm"
+        20 62 61 73 65 64
+        20 34 74 68 20 76
+        6D
+   0365 00                  604 	.db 0x00
+   0366                     605 ___str_14:
+   0366 67 69 74 68 75 62   606 	.ascii "github.com/UA3MQJ/obr_4th_vm"
+        2E 63 6F 6D 2F 55
+        41 33 4D 51 4A 2F
+        6F 62 72 5F 34 74
+        68 5F 76 6D
+   0382 00                  607 	.db 0x00
+   0383                     608 ___str_15:
+   0383 3E                  609 	.ascii ">"
+   0384 00                  610 	.db 0x00
+                            611 ;e4vm.c:118: int main (int argc, char **argv)
+                            612 ;	---------------------------------
+                            613 ; Function main
+                            614 ; ---------------------------------
+   0385                     615 _main::
+                            616 ;e4vm.c:123: __IMPORT(e4vm_boolean__init);
+   0385 CDr00r00      [17]  617 	call	_e4vm_boolean__init
+                            618 ;e4vm.c:124: __IMPORT(e4vm_comment__init);
+   0388 CDr00r00      [17]  619 	call	_e4vm_comment__init
+                            620 ;e4vm.c:125: __IMPORT(e4vm_core__init);
+   038B CDr00r00      [17]  621 	call	_e4vm_core__init
+                            622 ;e4vm.c:126: __IMPORT(e4vm_core_ext__init);
+   038E CDr00r00      [17]  623 	call	_e4vm_core_ext__init
+                            624 ;e4vm.c:127: __IMPORT(e4vm_math__init);
+   0391 CDr00r00      [17]  625 	call	_e4vm_math__init
+                            626 ;e4vm.c:128: __IMPORT(e4vm_mem__init);
+   0394 CDr00r00      [17]  627 	call	_e4vm_mem__init
+                            628 ;e4vm.c:129: __IMPORT(e4vm_rw__init);
+   0397 CDr00r00      [17]  629 	call	_e4vm_rw__init
+                            630 ;e4vm.c:130: __IMPORT(e4vm_stack__init);
+   039A CDr00r00      [17]  631 	call	_e4vm_stack__init
+                            632 ;e4vm.c:131: __IMPORT(e4vm_type__init);
+   039D CDr00r00      [17]  633 	call	_e4vm_type__init
+                            634 ;e4vm.c:132: __IMPORT(e4vm_utils__init);
+   03A0 CDr00r00      [17]  635 	call	_e4vm_utils__init
+                            636 ;e4vm.c:135: Basic_Init();
+   03A3 FD CB 01 A6   [23]  637 	res	4,1(iy) 
+   03A7 CD 42 16      [17]  638 	call 0x1642 
+                            639 ;e4vm.c:136: Console_Clear(7);
+   03AA 2E 07         [ 7]  640 	ld	l, #0x07
+   03AC CDr00r00      [17]  641 	call	_Console_Clear_COMPACT
+                            642 ;e4vm.c:137: Console_SetColors(56);
+   03AF 21r00r00      [10]  643 	ld	hl, #_Console_attrib
+   03B2 36 38         [10]  644 	ld	(hl), #0x38
+                            645 ;e4vm.c:138: e4vm_vm = (e4vm_type_x4thPtr)((SYSTEM_ADRINT)&e4vm_vm_static);
+   03B4 21r00r00      [10]  646 	ld	hl, #_e4vm_vm_static
+   03B7 22r5Br05      [16]  647 	ld	(_e4vm_vm), hl
+                            648 ;e4vm.c:139: e4vm_test_console(&e4vm_vm);
+   03BA 21r5Br05      [10]  649 	ld	hl, #_e4vm_vm
+   03BD E5            [11]  650 	push	hl
+   03BE CDrD9r02      [17]  651 	call	_e4vm_test_console
+   03C1 F1            [10]  652 	pop	af
+                            653 ;e4vm.c:140: Basic_PAUSE(0);
+   03C2 21 00 00      [10]  654 	ld	hl, #0x0000
+   03C5 CDr00r00      [17]  655 	call	_Basic_PAUSE_EI
+                            656 ;e4vm.c:141: Basic_Quit();
+                            657 ;e4vm.c:142: __FINI;
+                            658 ;e4vm.c:143: }
+   03C8 C3r00r00      [10]  659 	jp  _Basic_Quit_IM1
+                            660 	.area _CODE
+                            661 	.area _INITIALIZER
+                            662 	.area _CABS (ABS)

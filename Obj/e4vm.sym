@@ -14,13 +14,30 @@ Symbol Table
     _Console_WriteStr_C_COMPACT                                    **** GX
     _Console_attrib                                                **** GX
     ___sdcc_enter_ix                                               **** GX
-  0 ___str_0                                                       007F R
+  0 ___str_0                                                       0132 R
+  0 ___str_1                                                       0141 R
+  0 ___str_10                                                      02C5 R
+  0 ___str_11                                                      02CA R
+  0 ___str_12                                                      02D0 R
+  0 ___str_13                                                      0352 R
+  0 ___str_14                                                      0366 R
+  0 ___str_15                                                      0383 R
+  0 ___str_2                                                       0148 R
+  0 ___str_3                                                       014A R
+  0 ___str_4                                                       014F R
+  0 ___str_5                                                       0155 R
+  0 ___str_6                                                       02A7 R
+  0 ___str_7                                                       02B6 R
+  0 ___str_8                                                       02BC R
+  0 ___str_9                                                       02C3 R
     _e4vm_boolean__init                                            **** GX
     _e4vm_boolean_add_core_words                                   **** GX
     _e4vm_comment__init                                            **** GX
     _e4vm_comment_add_core_words                                   **** GX
     _e4vm_core__init                                               **** GX
     _e4vm_core_add_core_words                                      **** GX
+    _e4vm_core_do_list                                             **** GX
+    _e4vm_core_do_next                                             **** GX
     _e4vm_core_ext__init                                           **** GX
     _e4vm_core_ext_add_core_words                                  **** GX
     _e4vm_core_ext_interpreter                                     **** GX
@@ -33,22 +50,34 @@ Symbol Table
     _e4vm_rw_add_core_words                                        **** GX
     _e4vm_stack__init                                              **** GX
     _e4vm_stack_add_core_words                                     **** GX
-  0 _e4vm_test_console                                             0018 R
+  0 _e4vm_test_console                                             02D9 R
+  0 _e4vm_test_read_mem                                            0018 R
+  0 _e4vm_test_write_mem                                           015E R
     _e4vm_type__init                                               **** GX
     _e4vm_utils__init                                              **** GX
+    _e4vm_utils_add_core_word                                      **** GX
+    _e4vm_utils_add_op_from_string                                 **** GX
+    _e4vm_utils_here_to_wp                                         **** GX
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
+Hexadecimal [16-Bits]
+
+Symbol Table
+
     _e4vm_utils_init                                               **** GX
     _e4vm_utils_keyboard_read_string                               **** GX
+    _e4vm_utils_stack_ds_push                                      **** GX
   1 _e4vm_vm                                                       055B R
   1 _e4vm_vm_static                                                0000 R
-  0 _main                                                          0081 GR
+  0 _main                                                          0385 GR
+    _memcpy                                                        **** GX
 
 
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 3.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size   C7   flags    0
+   0 _CODE                                      size  3CB   flags    0
    1 _DATA                                      size  55D   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

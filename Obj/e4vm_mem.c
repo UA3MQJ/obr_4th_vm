@@ -21,11 +21,14 @@ export void e4vm_mem_write_mem (e4vm_type_x4thPtr *v);
 
 void e4vm_mem_write_mem (e4vm_type_x4thPtr *v)
 {
+  (*v)->mem[(*v)->ds[(*v)->ds_p - 1]] = (*v)->ds[(*v)->ds_p - 2];
+  (*v)->ds_p = (*v)->ds_p - 2;
 }
 
 /*----------------------------------------------------------------------------*/
 void e4vm_mem_read_mem (e4vm_type_x4thPtr *v)
 {
+  (*v)->ds[(*v)->ds_p - 1] = (*v)->mem[(*v)->ds[(*v)->ds_p - 1]];
 }
 
 /*----------------------------------------------------------------------------*/

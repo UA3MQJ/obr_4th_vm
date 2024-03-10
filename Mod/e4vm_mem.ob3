@@ -5,13 +5,14 @@ IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type, e4vm_utils;
 (* запись в память ! ( x a-addr -- ) *)
 PROCEDURE write_mem* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-
+  v.mem[v.ds[v.ds_p - 1]] := v.ds[v.ds_p - 2];
+  v.ds_p := v.ds_p - 2;
 END write_mem;
 
 (* чтение из памяти @ ( a-addr -- x ) *)
 PROCEDURE read_mem* (VAR v: e4vm_type.x4thPtr);
 BEGIN
-
+  v.ds[v.ds_p-1]:=v.mem[v.ds[v.ds_p-1]];
 END read_mem;
 
 (* создает переменную ( -- a-addr ) *)
@@ -30,8 +31,8 @@ PROCEDURE add_core_words* (VAR v: e4vm_type.x4thPtr);
 BEGIN
   e4vm_utils.add_core_word(@v, "!",        write_mem,  FALSE);
   e4vm_utils.add_core_word(@v, "@",        read_mem, FALSE);
-  e4vm_utils.add_core_word(@v, "variable", variable, FALSE);
-  e4vm_utils.add_core_word(@v, "constant", constant, FALSE);
+  (*e4vm_utils.add_core_word(@v, "variable", variable, FALSE);
+  e4vm_utils.add_core_word(@v, "constant", constant, FALSE);*)
 END add_core_words;
 
 
