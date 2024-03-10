@@ -190,23 +190,20 @@ _e4vm_core_do_next::
 ;e4vm_core.c:39: while (!((*v)->ip == 0)) {
 	ld	l, c
 	ld	h, b
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-;e4vm_core.c:41: (*v)->ip = (*v)->ip + 1;
-	ld	l, e
-	ld	h, d
 	ld	a, (hl)
 	inc	hl
 	ld	h, (hl)
 	ld	l, a
+;e4vm_core.c:41: (*v)->ip = (*v)->ip + 1;
+	ld	e, (hl)
 	inc	hl
-	ex	(sp), hl
-	ld	a, -2 (ix)
-	ld	(de), a
+	ld	d, (hl)
+	dec	hl
 	inc	de
-	ld	a, -1 (ix)
-	ld	(de), a
+	ld	a, d
+	ld	(hl), e
+	inc	hl
+	ld	(hl), a
 ;e4vm_core.c:42: word_index = (*v)->mem[(*v)->wp];
 	ld	l, c
 	ld	h, b
@@ -258,7 +255,7 @@ _e4vm_core_do_next::
 	call	___sdcc_call_hl
 	pop	af
 	pop	bc
-	jp	00101$
+	jr	00101$
 00104$:
 ;e4vm_core.c:45: }
 	pop	af

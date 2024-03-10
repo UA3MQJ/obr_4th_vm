@@ -193,13 +193,15 @@ BEGIN
   REPEAT UNTIL ~(B.PEEK(23556) = 255);
   RETURN B.PEEK(23560); (* LAST_K *)
 END read_char;
+*)
 
-PROCEDURE read_string* (VAR v: e4vm_type.x4thPtr);
+PROCEDURE keyboard_read_string* (VAR v: e4vm_type.x4thPtr);
 VAR str: ARRAY 64 OF CHAR;
 BEGIN
-  C.ReadStr(@v.in_string, e4vm_type.in_str_size);
-END read_string;
-*)
+  C.ReadStr(@v.buffer, e4vm_type.buffer_size);
+  v.buffer_idx := 0;
+END keyboard_read_string;
+
 PROCEDURE read_char* (VAR v: e4vm_type.x4thPtr) : CHAR;
 VAR c:CHAR;
 BEGIN

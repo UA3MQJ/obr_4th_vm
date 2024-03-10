@@ -7,7 +7,10 @@ IMPORT SYSTEM, C := Console, Platform, B := Basic,
 				e4vm_stack,
 				e4vm_math,
 				e4vm_boolean,
-				e4vm_utils
+				e4vm_utils,
+				e4vm_mem,
+				e4vm_comment,
+				e4vm_rw
 ;
 
 
@@ -913,7 +916,7 @@ BEGIN
 	e4vm_utils.read_string(@v);
 	C.WriteStrLn(v.in_string);
 	C.WriteStr(" - ok");
-END test_read_string;*)
+END test_read_string;
 
 PROCEDURE test_read_char(VAR v: e4vm_type.x4thPtr);
 VAR t:INTEGER; ch: SYSTEM.BYTE; c: CHAR;
@@ -1063,7 +1066,56 @@ BEGIN
   v.buffer := "10 1-"; test_math_evals(@v, 9)
 END test_math_eval;
 
+PROCEDURE test_rw_eval(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStrLn("rw test ");
 
+  e4vm_utils.init(@v);
+  e4vm_core.add_core_words(@v);
+  e4vm_core_ext.add_core_words(@v);
+	e4vm_math.add_core_words(@v);
+	e4vm_rw.add_core_words(@v);
+	
+	v.buffer := "10 2 - ."; v.buffer_idx := 0;
+	e4vm_core_ext.interpreter(@v);
+	
+	v.buffer := "1 2 3 . . ."; v.buffer_idx := 0;
+	e4vm_core_ext.interpreter(@v);
+	
+	v.buffer := "10 20 30 .s"; v.buffer_idx := 0;
+	e4vm_core_ext.interpreter(@v);
+	
+	v.buffer := "cr 5 6 7 . cr . cr . cr"; v.buffer_idx := 0;
+	e4vm_core_ext.interpreter(@v);
+
+	v.buffer := "cr 5 6 7 . bl . bl . bl"; v.buffer_idx := 0;
+	e4vm_core_ext.interpreter(@v);
+
+END test_rw_eval; *)
+
+PROCEDURE test_console(VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteLn;
+
+  e4vm_utils.init(@v);
+	e4vm_core.add_core_words(@vm);
+	e4vm_core_ext.add_core_words(@vm);
+	e4vm_stack.add_core_words(@vm);
+	e4vm_math.add_core_words(@vm);
+	e4vm_boolean.add_core_words(@vm);
+	e4vm_comment.add_core_words(@vm);
+	e4vm_mem.add_core_words(@vm);
+	e4vm_rw.add_core_words(@vm);
+	
+	WHILE (TRUE) DO
+	  (*v.buffer := "10 2 - ."; v.buffer_idx := 0;*)
+	  C.WriteStr(">");
+	  e4vm_utils.keyboard_read_string(@vm);
+	  C.WriteLn;
+	  e4vm_core_ext.interpreter(@v);
+	END;
+
+END test_console;
 
 BEGIN
   B.Init;
@@ -1111,10 +1163,14 @@ BEGIN
 
   test_read_char(@vm);
   test_read_word(@vm);
-  test_interpreter(@vm); *)
+  test_interpreter(@vm);
 
   test_eval(@vm);
   test_math_eval(@vm);
+  test_rw_eval(@vm); *)
+
+	
+	test_console(@vm);
 
   B.PAUSE(0);
 	B.Quit;

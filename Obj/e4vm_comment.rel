@@ -1,0 +1,61 @@
+XL2
+H 9 areas A global symbols
+M e4vm_comment
+O -mz80
+S _e4vm_utils_add_core_word Ref0000
+S _e4vm_utils__init Ref0000
+S .__.ABS. Def0000
+S _memcpy Ref0000
+S _e4vm_type__init Ref0000
+S ___sdcc_enter_ix Ref0000
+A _CODE size 75 flags 0 addr 0
+S _e4vm_comment_comment_line Def0001
+S _e4vm_comment_add_core_words Def0002
+S _e4vm_comment__init Def006A
+S _e4vm_comment_comment Def0000
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00
+R 00 00 00 00
+T 00 00 C9
+R 00 00 00 00
+T 01 00
+R 00 00 00 00
+T 01 00 C9
+R 00 00 00 00
+T 02 00
+R 00 00 00 00
+T 02 00 CD 00 00 21 EC FF 39 F9 21 00 00 39 4D 44
+R 00 00 00 00 02 03 05 00
+T 10 00 E5 11 02 00 D5 11 65 00 D5 C5 CD 00 00 F1
+R 00 00 00 00 00 08 00 00 02 0D 03 00
+T 1E 00 F1 F1 E1 AF F5 33 01 00 00 C5 E5 DD 6E 04
+R 00 00 00 00 00 09 00 00
+T 2C 00 DD 66 05 E5 CD 00 00 F1 F1 F1 33 21 0A 00
+R 00 00 00 00 02 07 00 00
+T 3A 00 39 4D 44 E5 11 03 00 D5 11 67 00 D5 C5 CD
+R 00 00 00 00 00 0B 00 00
+T 48 00 00 00 F1 F1 F1 E1 AF F5 33 01 01 00 C5 E5
+R 00 00 00 00 02 02 03 00 00 0C 00 00
+T 56 00 DD 6E 04 DD 66 05 E5 CD 00 00 DD F9 DD E1
+R 00 00 00 00 02 0A 00 00
+T 64 00 C9
+R 00 00 00 00
+T 65 00
+R 00 00 00 00
+T 65 00 28 00
+R 00 00 00 00
+T 67 00
+R 00 00 00 00
+T 67 00 5C 5C 00
+R 00 00 00 00
+T 6A 00
+R 00 00 00 00
+T 6A 00 21 6A 00 36 C9 CD 00 00 C3 00 00
+R 00 00 00 00 00 03 00 00 02 08 04 00 02 0B 01 00

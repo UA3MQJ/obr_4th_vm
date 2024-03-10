@@ -1,0 +1,25 @@
+MODULE e4vm_comment;
+IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type, e4vm_utils;
+
+PROCEDURE comment* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+
+END comment;
+
+PROCEDURE comment_line* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+
+END comment_line;
+
+
+PROCEDURE add_core_words* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  e4vm_utils.add_core_word(@v, "(", comment,  FALSE);
+  e4vm_utils.add_core_word(@v, "\\", comment_line, FALSE);
+END add_core_words;
+
+
+BEGIN
+   
+	
+END e4vm_comment.

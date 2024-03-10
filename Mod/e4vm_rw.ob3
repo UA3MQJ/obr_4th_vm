@@ -1,0 +1,85 @@
+MODULE e4vm_rw;
+IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type, e4vm_utils;
+
+
+(*  *)
+PROCEDURE dot* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  IF (v.ds_p > 0) THEN
+    v.ds_p := v.ds_p - 1;
+    C.WriteStr(" ");
+    C.WriteInt(v.ds[v.ds_p]);
+  ELSE
+    C.WriteStr("ERROR: stack empty");
+  END
+END dot;
+
+(*  *)
+PROCEDURE dot_s* (VAR v: e4vm_type.x4thPtr);
+VAR i:INTEGER;
+BEGIN
+  C.WriteLn;
+  C.WriteStr("<");C.WriteInt(v.ds_p);C.WriteStr(">");
+  FOR i:=0 TO v.ds_p-1 DO
+    C.WriteStr(" ");
+    C.WriteInt(v.ds[i]);
+  END;
+END dot_s;
+
+(*  *)
+PROCEDURE cr* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteLn;
+END cr;
+
+(*  *)
+PROCEDURE bl* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  C.WriteStr(" ");
+END bl;
+
+(*  *)
+PROCEDURE read_word* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+
+END read_word;
+
+PROCEDURE words_list* (VAR v: e4vm_type.x4thPtr);
+VAR i:INTEGER;
+BEGIN
+  C.WriteLn;
+  FOR i:=0 TO v.words_count-1 DO
+    C.WriteStr(v.words[i].word); C.WriteStr(" ");
+  END;
+  C.WriteLn;
+END words_list;
+
+(*  *)
+PROCEDURE read_string* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+
+END read_string;
+
+(*  *)
+PROCEDURE key* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+
+END key;
+
+PROCEDURE add_core_words* (VAR v: e4vm_type.x4thPtr);
+BEGIN
+  e4vm_utils.add_core_word(@v, ".",    dot,  FALSE);
+  e4vm_utils.add_core_word(@v, ".s",   dot_s,  FALSE);
+  e4vm_utils.add_core_word(@v, "cr",   cr,  FALSE);
+  e4vm_utils.add_core_word(@v, "bl",   bl,  FALSE);
+  e4vm_utils.add_core_word(@v, "words", words_list,  FALSE);
+  e4vm_utils.add_core_word(@v, "word", read_word,  FALSE);
+  e4vm_utils.add_core_word(@v, 's"',  read_string,  FALSE);
+  e4vm_utils.add_core_word(@v, "key",  key, FALSE);
+END add_core_words;
+
+
+BEGIN
+   
+	
+END e4vm_rw.

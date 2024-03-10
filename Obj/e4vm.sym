@@ -10,89 +10,46 @@ Symbol Table
     _Basic_PAUSE_EI                                                **** GX
     _Basic_Quit_IM1                                                **** GX
     _Console_Clear_COMPACT                                         **** GX
-    _Console_WriteInt_COMPACT                                      **** GX
     _Console_WriteLn_COMPACT                                       **** GX
     _Console_WriteStr_C_COMPACT                                    **** GX
     _Console_attrib                                                **** GX
-    _SYSTEM_STRCMPCC                                               **** GX
     ___sdcc_enter_ix                                               **** GX
-  0 ___str_0                                                       0097 R
-  0 ___str_1                                                       00A7 R
-  0 ___str_10                                                      0266 R
-  0 ___str_11                                                      026D R
-  0 ___str_12                                                      0277 R
-  0 ___str_13                                                      027E R
-  0 ___str_14                                                      0285 R
-  0 ___str_15                                                      028F R
-  0 ___str_16                                                      0296 R
-  0 ___str_17                                                      0355 R
-  0 ___str_18                                                      0367 R
-  0 ___str_19                                                      036F R
-  0 ___str_2                                                       00AD R
-  0 ___str_20                                                      0375 R
-  0 ___str_21                                                      0460 R
-  0 ___str_22                                                      046B R
-  0 ___str_23                                                      0473 R
-  0 ___str_24                                                      0479 R
-  0 ___str_25                                                      04F7 R
-  0 ___str_26                                                      04FC R
-  0 ___str_27                                                      0502 R
-  0 ___str_28                                                      067A R
-  0 ___str_29                                                      068A R
-  0 ___str_3                                                       0221 R
-  0 ___str_30                                                      0691 R
-  0 ___str_31                                                      0698 R
-  0 ___str_32                                                      069F R
-  0 ___str_33                                                      06A6 R
-  0 ___str_34                                                      06AD R
-  0 ___str_35                                                      06B6 R
-  0 ___str_36                                                      06BC R
-  0 ___str_4                                                       0231 R
-  0 ___str_5                                                       024A R
-  0 ___str_6                                                       024F R
-  0 ___str_7                                                       0256 R
-  0 ___str_8                                                       0260 R
-  0 ___str_9                                                       0262 R
+  0 ___str_0                                                       007F R
     _e4vm_boolean__init                                            **** GX
+    _e4vm_boolean_add_core_words                                   **** GX
+    _e4vm_comment__init                                            **** GX
+    _e4vm_comment_add_core_words                                   **** GX
     _e4vm_core__init                                               **** GX
     _e4vm_core_add_core_words                                      **** GX
     _e4vm_core_ext__init                                           **** GX
     _e4vm_core_ext_add_core_words                                  **** GX
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
-Hexadecimal [16-Bits]
-
-Symbol Table
-
-    _e4vm_core_ext_eval                                            **** GX
     _e4vm_core_ext_interpreter                                     **** GX
   0 _e4vm_do_hello                                                 0000 R
     _e4vm_math__init                                               **** GX
     _e4vm_math_add_core_words                                      **** GX
+    _e4vm_mem__init                                                **** GX
+    _e4vm_mem_add_core_words                                       **** GX
+    _e4vm_rw__init                                                 **** GX
+    _e4vm_rw_add_core_words                                        **** GX
     _e4vm_stack__init                                              **** GX
-  0 _e4vm_test_eval                                                037E R
-  0 _e4vm_test_interpreter                                         02A0 R
-  0 _e4vm_test_math_eval                                           050B R
-  0 _e4vm_test_math_evals                                          0482 R
-  0 _e4vm_test_read_char                                           0018 R
-  0 _e4vm_test_read_word                                           00B6 R
+    _e4vm_stack_add_core_words                                     **** GX
+  0 _e4vm_test_console                                             0018 R
     _e4vm_type__init                                               **** GX
     _e4vm_utils__init                                              **** GX
     _e4vm_utils_init                                               **** GX
-    _e4vm_utils_read_char                                          **** GX
-    _e4vm_utils_read_word                                          **** GX
-  1 _e4vm_vm                                                       035B R
+    _e4vm_utils_keyboard_read_string                               **** GX
+  1 _e4vm_vm                                                       055B R
   1 _e4vm_vm_static                                                0000 R
-  0 _main                                                          06C2 GR
-    _memcpy                                                        **** GX
+  0 _main                                                          0081 GR
 
 
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 3.
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  706   flags    0
-   1 _DATA                                      size  35D   flags    0
+   0 _CODE                                      size   C7   flags    0
+   1 _DATA                                      size  55D   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8
    4 _HOME                                      size    0   flags    0

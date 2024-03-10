@@ -153,6 +153,8 @@ void e4vm_core_ext_interpreter (e4vm_type_x4thPtr *v)
     e4vm_core_ext_interpreter_word(v, (*v)->readed_word);
     t = e4vm_utils_read_word(v);
   }
+  Console_WriteStrLn((CHAR*)" ok", 4);
+  Basic_PAUSE(10);
 }
 
 /*----------------------------------------------------------------------------*/

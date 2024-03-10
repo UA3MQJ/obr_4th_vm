@@ -18,6 +18,7 @@ export void e4vm_utils_here_to_wp (e4vm_type_x4thPtr *v);
 export void e4vm_utils_init (e4vm_type_x4thPtr *v);
 export BOOLEAN e4vm_utils_is_constant (e4vm_type_word_string_type word);
 export BOOLEAN e4vm_utils_is_digit (CHAR char_);
+export void e4vm_utils_keyboard_read_string (e4vm_type_x4thPtr *v);
 export SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word);
 export SHORTINT e4vm_utils_look_up_word_idx_by_address (e4vm_type_x4thPtr *v, SHORTINT word_address);
 export CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v);
@@ -46,10 +47,10 @@ void e4vm_utils_add_core_word (e4vm_type_x4thPtr *v, e4vm_type_word_string_type 
 /*----------------------------------------------------------------------------*/
 SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word)
 {
-  SHORTINT i, _for__11;
-  _for__11 = (*v)->words_count - 1;
+  SHORTINT i, _for__13;
+  _for__13 = (*v)->words_count - 1;
   i = 0;
-  while (i <= _for__11) {
+  while (i <= _for__13) {
     if (__STRCMPCC((*v)->words[i].word, word, 10, (CHAR*)"e4vm_utils", -907) == 0) {
       return (*v)->words[i].addr;
     }
@@ -61,10 +62,10 @@ SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_s
 /*----------------------------------------------------------------------------*/
 SHORTINT e4vm_utils_look_up_word_idx_by_address (e4vm_type_x4thPtr *v, SHORTINT word_address)
 {
-  SHORTINT i, _for__13;
-  _for__13 = (*v)->words_count - 1;
+  SHORTINT i, _for__15;
+  _for__15 = (*v)->words_count - 1;
   i = 0;
-  while (i <= _for__13) {
+  while (i <= _for__15) {
     if ((*v)->words[i].addr == word_address) {
       return i;
     }
@@ -232,6 +233,16 @@ void e4vm_utils_stack_rs_push (e4vm_type_x4thPtr *v, SHORTINT x)
 {
   (*v)->rs[(*v)->rs_p] = x;
   (*v)->rs_p = (*v)->rs_p + 1;
+}
+
+/*----------------------------------------------------------------------------*/
+void e4vm_utils_keyboard_read_string (e4vm_type_x4thPtr *v)
+{
+  CHAR str[64];
+  e4vm_type_x4thPtr _ptr__11 = NIL;
+  _ptr__11 = *v;
+  Console_ReadStr((void*)_ptr__11->buffer, 64, 64);
+  (*v)->buffer_idx = 0;
 }
 
 /*----------------------------------------------------------------------------*/

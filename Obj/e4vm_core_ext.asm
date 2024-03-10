@@ -23,6 +23,7 @@
 	.globl _e4vm_utils_add_op
 	.globl _e4vm_utils_add_core_word
 	.globl _e4vm_type__init
+	.globl _Basic_PAUSE_EI
 	.globl _Console_WriteStr_C_COMPACT
 	.globl _Console_WriteLn_COMPACT
 	.globl _memcpy
@@ -393,7 +394,7 @@ _e4vm_core_ext_immediate::
 	ex	de, hl
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x02cd
+	ld	bc, #0x04cd
 	add	hl, bc
 	ld	a, (hl)
 	inc	hl
@@ -804,7 +805,7 @@ _e4vm_core_ext_interpreter::
 00101$:
 	ld	a, l
 	or	a, a
-	jr	Z,00104$
+	jr	Z,00103$
 ;e4vm_core_ext.c:153: e4vm_core_ext_interpreter_word(v, (*v)->readed_word);
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
@@ -813,7 +814,7 @@ _e4vm_core_ext_interpreter::
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
-	ld	hl, #0x0351
+	ld	hl, #0x0551
 	add	hl, de
 	push	hl
 	push	bc
@@ -827,18 +828,27 @@ _e4vm_core_ext_interpreter::
 	call	_e4vm_utils_read_word
 	pop	af
 	jr	00101$
-00104$:
-;e4vm_core_ext.c:156: }
+00103$:
+;e4vm_core_ext.c:156: Console_WriteStrLn((CHAR*)" ok", 4);
+	ld	hl, #___str_3
+	call	_Console_WriteStr_C_COMPACT
+	call	_Console_WriteLn_COMPACT
+;e4vm_core_ext.c:157: Basic_PAUSE(10);
+	ld	hl, #0x000a
+;e4vm_core_ext.c:158: }
 	pop	ix
-	ret
-;e4vm_core_ext.c:159: void e4vm_core_ext_eval (e4vm_type_x4thPtr *v, CHAR str[64])
+	jp	_Basic_PAUSE_EI
+___str_3:
+	.ascii " ok"
+	.db 0x00
+;e4vm_core_ext.c:161: void e4vm_core_ext_eval (e4vm_type_x4thPtr *v, CHAR str[64])
 ;	---------------------------------
 ; Function e4vm_core_ext_eval
 ; ---------------------------------
 _e4vm_core_ext_eval::
 	call	___sdcc_enter_ix
 	dec	sp
-;e4vm_core_ext.c:163: while (!((SHORTINT)str[i] == 0)) {
+;e4vm_core_ext.c:165: while (!((SHORTINT)str[i] == 0)) {
 	ld	c, 4 (ix)
 	ld	b, 5 (ix)
 	ld	de, #0x0000
@@ -848,28 +858,28 @@ _e4vm_core_ext_eval::
 	add	hl, de
 	ld	a, (hl)
 	ld	-1 (ix), a
-;e4vm_core_ext.c:164: (*v)->buffer[i] = str[i];
+;e4vm_core_ext.c:166: (*v)->buffer[i] = str[i];
 	ld	l, c
 	ld	h, b
 	ld	a, (hl)
 	inc	hl
 	ld	h, (hl)
 	ld	l, a
-;e4vm_core_ext.c:163: while (!((SHORTINT)str[i] == 0)) {
+;e4vm_core_ext.c:165: while (!((SHORTINT)str[i] == 0)) {
 	ld	a, -1 (ix)
 	or	a, a
 	jr	Z,00103$
-;e4vm_core_ext.c:164: (*v)->buffer[i] = str[i];
+;e4vm_core_ext.c:166: (*v)->buffer[i] = str[i];
 	push	de
-	ld	de, #0x030f
+	ld	de, #0x050f
 	add	hl, de
 	pop	de
 	add	hl, de
 	ld	a, -1 (ix)
 	ld	(hl), a
-;e4vm_core_ext.c:165: i = i + 1;
+;e4vm_core_ext.c:167: i = i + 1;
 	inc	de
-;e4vm_core_ext.c:166: (*v)->buffer[i] = 0x00;
+;e4vm_core_ext.c:168: (*v)->buffer[i] = 0x00;
 	ld	l, c
 	ld	h, b
 	ld	a, (hl)
@@ -877,29 +887,29 @@ _e4vm_core_ext_eval::
 	ld	h, (hl)
 	ld	l, a
 	push	de
-	ld	de, #0x030f
+	ld	de, #0x050f
 	add	hl, de
 	pop	de
 	add	hl, de
 	ld	(hl), #0x00
 	jr	00101$
 00103$:
-;e4vm_core_ext.c:168: (*v)->buffer_idx = 0;
-	ld	de, #0x034f
+;e4vm_core_ext.c:170: (*v)->buffer_idx = 0;
+	ld	de, #0x054f
 	add	hl, de
 	xor	a, a
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;e4vm_core_ext.c:169: e4vm_core_ext_interpreter(v);
+;e4vm_core_ext.c:171: e4vm_core_ext_interpreter(v);
 	push	bc
 	call	_e4vm_core_ext_interpreter
 	pop	af
-;e4vm_core_ext.c:170: }
+;e4vm_core_ext.c:172: }
 	inc	sp
 	pop	ix
 	ret
-;e4vm_core_ext.c:173: void e4vm_core_ext_add_core_words (e4vm_type_x4thPtr *v)
+;e4vm_core_ext.c:175: void e4vm_core_ext_add_core_words (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_core_ext_add_core_words
 ; ---------------------------------
@@ -908,7 +918,7 @@ _e4vm_core_ext_add_core_words::
 	ld	hl, #-100
 	add	hl, sp
 	ld	sp, hl
-;e4vm_core_ext.c:185: __MOVE((CHAR*)"quit", _str__11, 5);
+;e4vm_core_ext.c:187: __MOVE((CHAR*)"quit", _str__11, 5);
 	ld	hl, #0
 	add	hl, sp
 	ld	c, l
@@ -916,7 +926,7 @@ _e4vm_core_ext_add_core_words::
 	push	hl
 	ld	de, #0x0005
 	push	de
-	ld	de, #___str_3
+	ld	de, #___str_4
 	push	de
 	push	bc
 	call	_memcpy
@@ -924,7 +934,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_core_ext.c:186: e4vm_utils_add_core_word(v, (void*)_str__11, e4vm_core_ext_quit, 0);
+;e4vm_core_ext.c:188: e4vm_utils_add_core_word(v, (void*)_str__11, e4vm_core_ext_quit, 0);
 	xor	a, a
 	push	af
 	inc	sp
@@ -939,7 +949,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	inc	sp
-;e4vm_core_ext.c:187: __MOVE((CHAR*)"dolit", _str__10, 6);
+;e4vm_core_ext.c:189: __MOVE((CHAR*)"dolit", _str__10, 6);
 	ld	hl, #10
 	add	hl, sp
 	ld	c, l
@@ -947,7 +957,7 @@ _e4vm_core_ext_add_core_words::
 	push	hl
 	ld	de, #0x0006
 	push	de
-	ld	de, #___str_4
+	ld	de, #___str_5
 	push	de
 	push	bc
 	call	_memcpy
@@ -955,7 +965,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_core_ext.c:188: e4vm_utils_add_core_word(v, (void*)_str__10, e4vm_core_ext_do_lit, 0);
+;e4vm_core_ext.c:190: e4vm_utils_add_core_word(v, (void*)_str__10, e4vm_core_ext_do_lit, 0);
 	xor	a, a
 	push	af
 	inc	sp
@@ -970,7 +980,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	inc	sp
-;e4vm_core_ext.c:189: __MOVE((CHAR*)"here", _str__9, 5);
+;e4vm_core_ext.c:191: __MOVE((CHAR*)"here", _str__9, 5);
 	ld	hl, #20
 	add	hl, sp
 	ld	c, l
@@ -978,7 +988,7 @@ _e4vm_core_ext_add_core_words::
 	push	hl
 	ld	de, #0x0005
 	push	de
-	ld	de, #___str_5
+	ld	de, #___str_6
 	push	de
 	push	bc
 	call	_memcpy
@@ -986,7 +996,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_core_ext.c:190: e4vm_utils_add_core_word(v, (void*)_str__9, e4vm_core_ext_get_here_addr, 0);
+;e4vm_core_ext.c:192: e4vm_utils_add_core_word(v, (void*)_str__9, e4vm_core_ext_get_here_addr, 0);
 	xor	a, a
 	push	af
 	inc	sp
@@ -1001,7 +1011,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	inc	sp
-;e4vm_core_ext.c:191: __MOVE((CHAR*)",", _str__8, 2);
+;e4vm_core_ext.c:193: __MOVE((CHAR*)",", _str__8, 2);
 	ld	hl, #30
 	add	hl, sp
 	ld	c, l
@@ -1009,7 +1019,7 @@ _e4vm_core_ext_add_core_words::
 	push	hl
 	ld	de, #0x0002
 	push	de
-	ld	de, #___str_6
+	ld	de, #___str_7
 	push	de
 	push	bc
 	call	_memcpy
@@ -1017,7 +1027,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_core_ext.c:192: e4vm_utils_add_core_word(v, (void*)_str__8, e4vm_core_ext_comma, 0);
+;e4vm_core_ext.c:194: e4vm_utils_add_core_word(v, (void*)_str__8, e4vm_core_ext_comma, 0);
 	xor	a, a
 	push	af
 	inc	sp
@@ -1032,7 +1042,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	inc	sp
-;e4vm_core_ext.c:193: __MOVE((CHAR*)"branch", _str__7, 7);
+;e4vm_core_ext.c:195: __MOVE((CHAR*)"branch", _str__7, 7);
 	ld	hl, #40
 	add	hl, sp
 	ld	c, l
@@ -1040,7 +1050,7 @@ _e4vm_core_ext_add_core_words::
 	push	hl
 	ld	de, #0x0007
 	push	de
-	ld	de, #___str_7
+	ld	de, #___str_8
 	push	de
 	push	bc
 	call	_memcpy
@@ -1048,7 +1058,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_core_ext.c:194: e4vm_utils_add_core_word(v, (void*)_str__7, e4vm_core_ext_branch, 0);
+;e4vm_core_ext.c:196: e4vm_utils_add_core_word(v, (void*)_str__7, e4vm_core_ext_branch, 0);
 	xor	a, a
 	push	af
 	inc	sp
@@ -1063,7 +1073,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	inc	sp
-;e4vm_core_ext.c:195: __MOVE((CHAR*)"0branch", _str__6, 8);
+;e4vm_core_ext.c:197: __MOVE((CHAR*)"0branch", _str__6, 8);
 	ld	hl, #50
 	add	hl, sp
 	ld	c, l
@@ -1071,7 +1081,7 @@ _e4vm_core_ext_add_core_words::
 	push	hl
 	ld	de, #0x0008
 	push	de
-	ld	de, #___str_8
+	ld	de, #___str_9
 	push	de
 	push	bc
 	call	_memcpy
@@ -1079,7 +1089,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_core_ext.c:196: e4vm_utils_add_core_word(v, (void*)_str__6, e4vm_core_ext_zbranch, 0);
+;e4vm_core_ext.c:198: e4vm_utils_add_core_word(v, (void*)_str__6, e4vm_core_ext_zbranch, 0);
 	xor	a, a
 	push	af
 	inc	sp
@@ -1094,39 +1104,8 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	inc	sp
-;e4vm_core_ext.c:197: __MOVE((CHAR*)"[", _str__5, 2);
+;e4vm_core_ext.c:199: __MOVE((CHAR*)"[", _str__5, 2);
 	ld	hl, #60
-	add	hl, sp
-	ld	c, l
-	ld	b, h
-	push	hl
-	ld	de, #0x0002
-	push	de
-	ld	de, #___str_9
-	push	de
-	push	bc
-	call	_memcpy
-	pop	af
-	pop	af
-	pop	af
-	pop	hl
-;e4vm_core_ext.c:198: e4vm_utils_add_core_word(v, (void*)_str__5, e4vm_core_ext_lbrac, 1);
-	ld	a, #0x01
-	push	af
-	inc	sp
-	ld	bc, #_e4vm_core_ext_lbrac
-	push	bc
-	push	hl
-	ld	l, 4 (ix)
-	ld	h, 5 (ix)
-	push	hl
-	call	_e4vm_utils_add_core_word
-	pop	af
-	pop	af
-	pop	af
-	inc	sp
-;e4vm_core_ext.c:199: __MOVE((CHAR*)"]", _str__4, 2);
-	ld	hl, #70
 	add	hl, sp
 	ld	c, l
 	ld	b, h
@@ -1141,7 +1120,38 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_core_ext.c:200: e4vm_utils_add_core_word(v, (void*)_str__4, e4vm_core_ext_rbrac, 0);
+;e4vm_core_ext.c:200: e4vm_utils_add_core_word(v, (void*)_str__5, e4vm_core_ext_lbrac, 1);
+	ld	a, #0x01
+	push	af
+	inc	sp
+	ld	bc, #_e4vm_core_ext_lbrac
+	push	bc
+	push	hl
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
+	call	_e4vm_utils_add_core_word
+	pop	af
+	pop	af
+	pop	af
+	inc	sp
+;e4vm_core_ext.c:201: __MOVE((CHAR*)"]", _str__4, 2);
+	ld	hl, #70
+	add	hl, sp
+	ld	c, l
+	ld	b, h
+	push	hl
+	ld	de, #0x0002
+	push	de
+	ld	de, #___str_11
+	push	de
+	push	bc
+	call	_memcpy
+	pop	af
+	pop	af
+	pop	af
+	pop	hl
+;e4vm_core_ext.c:202: e4vm_utils_add_core_word(v, (void*)_str__4, e4vm_core_ext_rbrac, 0);
 	xor	a, a
 	push	af
 	inc	sp
@@ -1156,7 +1166,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	inc	sp
-;e4vm_core_ext.c:201: __MOVE((CHAR*)"immediate", _str__3, 10);
+;e4vm_core_ext.c:203: __MOVE((CHAR*)"immediate", _str__3, 10);
 	ld	hl, #80
 	add	hl, sp
 	ld	c, l
@@ -1164,7 +1174,7 @@ _e4vm_core_ext_add_core_words::
 	push	hl
 	ld	de, #0x000a
 	push	de
-	ld	de, #___str_11
+	ld	de, #___str_12
 	push	de
 	push	bc
 	call	_memcpy
@@ -1172,7 +1182,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_core_ext.c:202: e4vm_utils_add_core_word(v, (void*)_str__3, e4vm_core_ext_immediate, 1);
+;e4vm_core_ext.c:204: e4vm_utils_add_core_word(v, (void*)_str__3, e4vm_core_ext_immediate, 1);
 	ld	a, #0x01
 	push	af
 	inc	sp
@@ -1187,7 +1197,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	inc	sp
-;e4vm_core_ext.c:203: __MOVE((CHAR*)"execute", _str__2, 8);
+;e4vm_core_ext.c:205: __MOVE((CHAR*)"execute", _str__2, 8);
 	ld	hl, #90
 	add	hl, sp
 	ld	c, l
@@ -1195,7 +1205,7 @@ _e4vm_core_ext_add_core_words::
 	push	hl
 	ld	de, #0x0008
 	push	de
-	ld	de, #___str_12
+	ld	de, #___str_13
 	push	de
 	push	bc
 	call	_memcpy
@@ -1203,7 +1213,7 @@ _e4vm_core_ext_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_core_ext.c:204: e4vm_utils_add_core_word(v, (void*)_str__2, e4vm_core_ext_execute, 0);
+;e4vm_core_ext.c:206: e4vm_utils_add_core_word(v, (void*)_str__2, e4vm_core_ext_execute, 0);
 	xor	a, a
 	push	af
 	inc	sp
@@ -1214,54 +1224,54 @@ _e4vm_core_ext_add_core_words::
 	ld	h, 5 (ix)
 	push	hl
 	call	_e4vm_utils_add_core_word
-;e4vm_core_ext.c:205: }
+;e4vm_core_ext.c:207: }
 	ld	sp,ix
 	pop	ix
 	ret
-___str_3:
+___str_4:
 	.ascii "quit"
 	.db 0x00
-___str_4:
+___str_5:
 	.ascii "dolit"
 	.db 0x00
-___str_5:
+___str_6:
 	.ascii "here"
 	.db 0x00
-___str_6:
+___str_7:
 	.ascii ","
 	.db 0x00
-___str_7:
+___str_8:
 	.ascii "branch"
 	.db 0x00
-___str_8:
+___str_9:
 	.ascii "0branch"
 	.db 0x00
-___str_9:
+___str_10:
 	.ascii "["
 	.db 0x00
-___str_10:
+___str_11:
 	.ascii "]"
 	.db 0x00
-___str_11:
+___str_12:
 	.ascii "immediate"
 	.db 0x00
-___str_12:
+___str_13:
 	.ascii "execute"
 	.db 0x00
-;e4vm_core_ext.c:209: export void *e4vm_core_ext__init (void)
+;e4vm_core_ext.c:211: export void *e4vm_core_ext__init (void)
 ;	---------------------------------
 ; Function e4vm_core_ext__init
 ; ---------------------------------
 _e4vm_core_ext__init::
-;e4vm_core_ext.c:211: __DEFMOD;
+;e4vm_core_ext.c:213: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_core_ext.c:214: __IMPORT(e4vm_core__init);
+;e4vm_core_ext.c:216: __IMPORT(e4vm_core__init);
 	call	_e4vm_core__init
-;e4vm_core_ext.c:215: __IMPORT(e4vm_type__init);
+;e4vm_core_ext.c:217: __IMPORT(e4vm_type__init);
 	call	_e4vm_type__init
-;e4vm_core_ext.c:216: __IMPORT(e4vm_utils__init);
-;e4vm_core_ext.c:220: }
+;e4vm_core_ext.c:218: __IMPORT(e4vm_utils__init);
+;e4vm_core_ext.c:222: }
 	jp  _e4vm_utils__init
 	.area _CODE
 	.area _INITIALIZER

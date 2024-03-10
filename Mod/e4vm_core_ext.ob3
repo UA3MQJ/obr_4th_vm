@@ -145,6 +145,8 @@ BEGIN
 		interpreter_word(@v, v.readed_word);
 		t:=e4vm_utils.read_word(@v);
   END;
+  C.WriteStrLn(" ok");
+  B.PAUSE(10);
 END interpreter;
 
 (*EVAL выполнить выражение в строке*)

@@ -26,7 +26,7 @@ typedef
     SHORTINT mem[32];
     SHORTINT cell_bit_size;
     BOOLEAN is_eval_mode;
-    e4vm_type_core_word words[32];
+    e4vm_type_core_word words[64];
     SHORTINT words_count;
     CHAR in_string[64];
     CHAR buffer[64];

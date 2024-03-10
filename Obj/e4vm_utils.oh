@@ -18,6 +18,7 @@ import void e4vm_utils_here_to_wp (e4vm_type_x4thPtr *v);
 import void e4vm_utils_init (e4vm_type_x4thPtr *v);
 import BOOLEAN e4vm_utils_is_constant (e4vm_type_word_string_type word);
 import BOOLEAN e4vm_utils_is_digit (CHAR char_);
+import void e4vm_utils_keyboard_read_string (e4vm_type_x4thPtr *v);
 import SHORTINT e4vm_utils_look_up_word_address (e4vm_type_x4thPtr *v, e4vm_type_word_string_type word);
 import SHORTINT e4vm_utils_look_up_word_idx_by_address (e4vm_type_x4thPtr *v, SHORTINT word_address);
 import CHAR e4vm_utils_read_char (e4vm_type_x4thPtr *v);

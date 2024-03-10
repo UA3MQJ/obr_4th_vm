@@ -1,0 +1,241 @@
+ASxxxx Linker V03.00 + NoICE + sdld,  page 1.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  .__.ABS.                           __memcpy
+     00000000  _main                           
+     00000000  l__CABS                         
+     00000000  l__DABS                         
+     00000000  l__DATA                         
+     00000000  l__GSFINAL                      
+     00000000  l__GSINIT                       
+     00000000  l__HOME                         
+     00000000  l__INITIALIZED                  
+     00000000  l__INITIALIZER                  
+     00000000  s__CABS                         
+     00000000  s__DABS                         
+     00002CDE  l__CODE                         
+     000061A8  s__CODE                         
+     0000C350  s__DATA                         
+     0000C350  s__GSFINAL                      
+     0000C350  s__GSINIT                       
+     0000C350  s__HOME                         
+     0000C350  s__INITIALIZED                  
+     0000C350  s__INITIALIZER                  
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               000061A8    00002CDE =       11486. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00006509  _e4vm_core_do_nop                  e4vm_core
+     0000650A  _e4vm_core_do_list                 e4vm_core
+     00006565  _e4vm_core_do_next                 e4vm_core
+     000065EB  _e4vm_core_do_exit                 e4vm_core
+     00006628  _e4vm_core_add_core_words          e4vm_core
+     000066FA  _e4vm_core__init                   e4vm_core
+     00006705  _e4vm_core_ext_quit                e4vm_core_ext
+     00006706  _e4vm_core_ext_do_lit              e4vm_core_ext
+     0000673E  _e4vm_core_ext_get_here_addr       e4vm_core_ext
+     0000675E  _e4vm_core_ext_comma               e4vm_core_ext
+     0000679E  _e4vm_core_ext_branch              e4vm_core_ext
+     000067C2  _e4vm_core_ext_zbranch             e4vm_core_ext
+     00006826  _e4vm_core_ext_lbrac               e4vm_core_ext
+     00006834  _e4vm_core_ext_rbrac               e4vm_core_ext
+     00006842  _e4vm_core_ext_immediate           e4vm_core_ext
+     0000686C  _e4vm_core_ext_execute_addr        e4vm_core_ext
+     000068DD  _e4vm_core_ext_execute             e4vm_core_ext
+     0000691D  _e4vm_core_ext_interpreter_word    e4vm_core_ext
+     00006AF8  _e4vm_core_ext_interpreter         e4vm_core_ext
+     00006B42  _e4vm_core_ext_eval                e4vm_core_ext
+     00006B94  _e4vm_core_ext_add_core_words      e4vm_core_ext
+     00006D98  _e4vm_core_ext__init               e4vm_core_ext
+     00006DA6  _e4vm_mem_write_mem                e4vm_mem
+     00006DA7  _e4vm_mem_read_mem                 e4vm_mem
+     00006DA8  _e4vm_mem_variable                 e4vm_mem
+     00006DA9  _e4vm_mem_constant                 e4vm_mem
+     00006DAA  _e4vm_mem_add_core_words           e4vm_mem
+     00006E7D  _e4vm_mem__init                    e4vm_mem
+     00006E88  _e4vm_comment_comment              e4vm_comment
+     00006E89  _e4vm_comment_comment_line         e4vm_comment
+     00006E8A  _e4vm_comment_add_core_words       e4vm_comment
+     00006EF2  _e4vm_comment__init                e4vm_comment
+     00006EFD  _e4vm_rw_dot                       e4vm_rw
+     00006F89  _e4vm_rw_dot_s                     e4vm_rw
+     00007022  _e4vm_rw_cr                        e4vm_rw
+     0000702A  _e4vm_rw_bl                        e4vm_rw
+     00007037  _e4vm_rw_read_word                 e4vm_rw
+     0000703C  _e4vm_rw_words_list                e4vm_rw
+     000070B0  _e4vm_rw_read_string               e4vm_rw
+     000070B5  _e4vm_rw_key                       e4vm_rw
+     000070BA  _e4vm_rw_add_core_words            e4vm_rw
+     00007250  _e4vm_rw__init                     e4vm_rw
+     0000725B  _e4vm_utils_add_core_word          e4vm_utils
+     00007368  _e4vm_utils_look_up_word_address   e4vm_utils
+     00007402  _e4vm_utils_look_up_word_idx_by_   e4vm_utils
+     0000748D  _e4vm_utils_is_digit               e4vm_utils
+     000074A7  _e4vm_utils_is_constant            e4vm_utils
+     000074D3  _e4vm_utils_str2int                e4vm_utils
+     0000756D  _e4vm_utils_here_to_wp             e4vm_utils
+     0000758D  _e4vm_utils_add_op                 e4vm_utils
+ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               000061A8    00002CDE =       11486. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000075CD  _e4vm_utils_add_op_from_string     e4vm_utils
+     000075F8  _e4vm_utils_init                   e4vm_utils
+     00007711  _e4vm_utils_vm_stat                e4vm_utils
+     000078F3  _e4vm_utils_true_const             e4vm_utils
+     000078F7  _e4vm_utils_false_const            e4vm_utils
+     000078FB  _e4vm_utils_error                  e4vm_utils
+     0000791A  _e4vm_utils_stack_ds_push          e4vm_utils
+     0000795A  _e4vm_utils_stack_rs_push          e4vm_utils
+     0000799A  _e4vm_utils_keyboard_read_string   e4vm_utils
+     000079D2  _e4vm_utils_read_char              e4vm_utils
+     00007A00  _e4vm_utils_read_word              e4vm_utils
+     00007A7B  _e4vm_utils__init                  e4vm_utils
+     00007A83  _e4vm_stack_drop                   e4vm_stack
+     00007A9E  _e4vm_stack_swap                   e4vm_stack
+     00007B1A  _e4vm_stack_dup                    e4vm_stack
+     00007B61  _e4vm_stack_over                   e4vm_stack
+     00007BA9  _e4vm_stack_rot                    e4vm_stack
+     00007C59  _e4vm_stack_nrot                   e4vm_stack
+     00007D0B  _e4vm_stack_add_core_words         e4vm_stack
+     00007E3E  _e4vm_stack__init                  e4vm_stack
+     00007E49  _e4vm_math_minus                   e4vm_math
+     00007E96  _e4vm_math_plus                    e4vm_math
+     00007EE1  _e4vm_math_multiply                e4vm_math
+     00007F34  _e4vm_math_devide                  e4vm_math
+     00007F87  _e4vm_math_mod                     e4vm_math
+     00007FDA  _e4vm_math_inc                     e4vm_math
+     00008004  _e4vm_math_dec                     e4vm_math
+     0000802D  _e4vm_math_add_core_words          e4vm_math
+     00008183  _e4vm_math__init                   e4vm_math
+     0000818E  _e4vm_boolean_true                 e4vm_boolean
+     000081D2  _e4vm_boolean_false                e4vm_boolean
+     00008216  _e4vm_boolean_not                  e4vm_boolean
+     000082EF  _e4vm_boolean_invert               e4vm_boolean
+     0000831B  _e4vm_boolean_or                   e4vm_boolean
+     00008373  _e4vm_boolean_and                  e4vm_boolean
+     000083DA  _e4vm_boolean_xor                  e4vm_boolean
+     00008434  _e4vm_boolean_eql                  e4vm_boolean
+     000084B6  _e4vm_boolean_not_eql              e4vm_boolean
+     00008538  _e4vm_boolean_less                 e4vm_boolean
+     000085BF  _e4vm_boolean_greater              e4vm_boolean
+     00008644  _e4vm_boolean_less_eql             e4vm_boolean
+     000086C9  _e4vm_boolean_greater_eql          e4vm_boolean
+     00008750  _e4vm_boolean_add_core_words       e4vm_boolean
+     000089D2  _e4vm_boolean__init                e4vm_boolean
+     000089DD  _SYSTEM_STRCMPCC                   SYSTEM_004
+     00008A34  _Basic_PAUSE_EI                    Basic_034
+     00008A46  _SYSTEM_MODS                       SYSTEM_017
+     00008AD8  __mulint                           
+     00008ADE  __mul16                            
+     00008AF2  _SYSTEM_DIVS                       SYSTEM_014
+     00008B81  _Console_WriteStr_C_COMPACT        Console_014
+ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               000061A8    00002CDE =       11486. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00008B8C  ___sdcc_call_hl                    
+     00008B8D  _memcpy                            memcpy
+     00008BAC  _Console_ReadStr_COMPACT           Console_038
+     00008CA1  _Console_WriteCh_COMPACT           Console_005
+     00008CAC  _ATTR_ADR_C                        Console_005
+     00008CD0  _Console_WriteInt_COMPACT          Console_020
+     00008CE5  _e4vm_type__init                   e4vm_type_001
+     00008CEB  _Timer_Delay_Ex_fastcall           Timer_002
+     00008CF6  _Console_WriteLn_COMPACT           Console_012
+     00008D03  _INC_HBYTE_C                       Console_012
+     00008D14  ___sdcc_enter_ix                   
+     00008D1E  __modschar                         
+     00008D2B  __modsint                          
+     00008D37  __divsint                          
+     00008D40  __divschar                         
+     00008D47  __div8                             
+     00008D4B  __div_signexte                     
+     00008D4F  __div16                            
+     00008D75  __get_remainder                    
+     00008D7F  _Input_Read_NoRepeat               Input_003
+     00008D94  _SYSTEM_HALT_m1                    SYSTEM_001
+     00008DA0  _Input_Available_NoRepeat          Input_001
+     00008DAD  _Console_BackPos_COMPACT           Console_032
+     00008DB2  __divuint                          
+     00008DBA  __divuchar                         
+     00008DC1  __divu8                            
+     00008DC4  __divu16                           
+     00008DF3  _Console_WriteUShort_COMPACT       Console_019
+     00008E23  ___memcpy                          __memcpy
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
+
+Files Linked                              [ module(s) ]
+
+C:\xdev\ZXDev\Lib\crt0.rel                [ crt0 ]
+e4vm_rw.rel                               [ e4vm_rw ]
+e4vm_core.rel                             [ e4vm_core ]
+e4vm_core_ext.rel                         [ e4vm_core_ext ]
+e4vm_mem.rel                              [ e4vm_mem ]
+e4vm_comment.rel                          [ e4vm_comment ]
+e4vm_rw.rel                               [ e4vm_rw ]
+e4vm_utils.rel                            [ e4vm_utils ]
+e4vm_stack.rel                            [ e4vm_stack ]
+e4vm_math.rel                             [ e4vm_math ]
+e4vm_boolean.rel                          [ e4vm_boolean ]
+
+
+Libraries Linked                          [ object file ]
+
+C:\xdev\ZXDev\Lib/XDev.lib                [ SYSTEM_004.rel ]
+C:\xdev\ZXDev\Lib/Basic.lib               [ Basic_034.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ SYSTEM_017.rel ]
+C:\xdev\ZXDev\Lib/z80.lib                 [ mul.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ SYSTEM_014.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ Console_014.rel ]
+C:\xdev\ZXDev\Lib/z80.lib                 [ __sdcc_call_hl.rel ]
+C:\xdev\ZXDev\Lib/z80.lib                 [ memcpy.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ Console_038.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ Console_005.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ Console_020.rel ]
+C:\xdev\ZXDev\Lib/e4vm_type.lib           [ e4vm_type_001.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ Timer_002.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ Console_012.rel ]
+C:\xdev\ZXDev\Lib/z80.lib                 [ crtenter.rel ]
+C:\xdev\ZXDev\Lib/z80.lib                 [ modsigned.rel ]
+C:\xdev\ZXDev\Lib/z80.lib                 [ divsigned.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ Input_003.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ SYSTEM_001.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ Input_001.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ Console_032.rel ]
+C:\xdev\ZXDev\Lib/z80.lib                 [ divunsigned.rel ]
+C:\xdev\ZXDev\Lib/XDev.lib                [ Console_019.rel ]
+C:\xdev\ZXDev\Lib/z80.lib                 [ __memcpy.rel ]
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
+
+User Base Address Definitions
+
+_CODE = 0x61a8
+_DATA = 0xc350
+
+
+?ASlink-Warning-Undefined Global '_main' referenced by module 'crt0'

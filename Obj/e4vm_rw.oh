@@ -1,0 +1,24 @@
+/* Ofront+ 1.0 -sx3 -21 */
+
+#ifndef e4vm_rw__oh
+#define e4vm_rw__oh
+
+#include "SYSTEM.oh"
+#include "e4vm_type.oh"
+
+
+
+
+import void e4vm_rw_add_core_words (e4vm_type_x4thPtr *v);
+import void e4vm_rw_bl (e4vm_type_x4thPtr *v);
+import void e4vm_rw_cr (e4vm_type_x4thPtr *v);
+import void e4vm_rw_dot (e4vm_type_x4thPtr *v);
+import void e4vm_rw_dot_s (e4vm_type_x4thPtr *v);
+import void e4vm_rw_key (e4vm_type_x4thPtr *v);
+import void e4vm_rw_read_string (e4vm_type_x4thPtr *v);
+import void e4vm_rw_read_word (e4vm_type_x4thPtr *v);
+import void e4vm_rw_words_list (e4vm_type_x4thPtr *v);
+import void *e4vm_rw__init (void);
+
+
+#endif
