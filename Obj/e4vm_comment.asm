@@ -10,8 +10,10 @@
 ;--------------------------------------------------------
 	.globl _e4vm_comment__init
 	.globl _e4vm_utils__init
+	.globl _e4vm_utils_read_word
 	.globl _e4vm_utils_add_core_word
 	.globl _e4vm_type__init
+	.globl _SYSTEM_STRCMPCC
 	.globl _memcpy
 	.globl _e4vm_comment_comment
 	.globl _e4vm_comment_comment_line
@@ -52,16 +54,142 @@
 ; Function e4vm_comment_comment
 ; ---------------------------------
 _e4vm_comment_comment::
-;e4vm_comment.c:22: }
+	call	___sdcc_enter_ix
+	push	af
+	dec	sp
+;e4vm_comment.c:23: t = e4vm_utils_read_word(v);
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
+	call	_e4vm_utils_read_word
+	pop	af
+	ld	-3 (ix), l
+;e4vm_comment.c:24: t2 = 1;
+	ld	c, #0x01
+;e4vm_comment.c:25: while (t && t2) {
+	ld	a, 4 (ix)
+	ld	-2 (ix), a
+	ld	a, 5 (ix)
+	ld	-1 (ix), a
+00105$:
+	ld	a, -3 (ix)
+	or	a, a
+	jr	Z,00108$
+	ld	a, c
+	or	a, a
+	jr	Z,00108$
+;e4vm_comment.c:26: if (__STRCMPCC((*v)->readed_word, (CHAR*)")", 2, (CHAR*)"e4vm_comment", -387) == 0) {
+	ld	l, -2 (ix)
+	ld	h, -1 (ix)
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	hl, #0x0551
+	add	hl, de
+	push	bc
+	ld	de, #___str_0
+	push	de
+	push	hl
+	call	_SYSTEM_STRCMPCC
+	pop	af
+	pop	af
+	pop	bc
+	ld	a, h
+;e4vm_comment.c:27: t2 = 0;
+	or	a,l
+	jr	NZ,00102$
+	ld	c,a
+	jr	00105$
+00102$:
+;e4vm_comment.c:29: t = e4vm_utils_read_word(v);
+	push	bc
+	ld	l, -2 (ix)
+	ld	h, -1 (ix)
+	push	hl
+	call	_e4vm_utils_read_word
+	pop	af
+	pop	bc
+	ld	-3 (ix), l
+	jr	00105$
+00108$:
+;e4vm_comment.c:32: }
+	ld	sp, ix
+	pop	ix
 	ret
-;e4vm_comment.c:25: void e4vm_comment_comment_line (e4vm_type_x4thPtr *v)
+___str_0:
+	.ascii ")"
+	.db 0x00
+;e4vm_comment.c:35: void e4vm_comment_comment_line (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_comment_comment_line
 ; ---------------------------------
 _e4vm_comment_comment_line::
-;e4vm_comment.c:27: }
+	call	___sdcc_enter_ix
+	push	af
+	dec	sp
+;e4vm_comment.c:38: t = e4vm_utils_read_word(v);
+	ld	l, 4 (ix)
+	ld	h, 5 (ix)
+	push	hl
+	call	_e4vm_utils_read_word
+	pop	af
+	ld	-3 (ix), l
+;e4vm_comment.c:39: t2 = 1;
+	ld	c, #0x01
+;e4vm_comment.c:40: while (t && t2) {
+	ld	a, 4 (ix)
+	ld	-2 (ix), a
+	ld	a, 5 (ix)
+	ld	-1 (ix), a
+00105$:
+	ld	a, -3 (ix)
+	or	a, a
+	jr	Z,00108$
+	ld	a, c
+	or	a, a
+	jr	Z,00108$
+;e4vm_comment.c:41: if (__STRCMPCC((*v)->readed_word, (CHAR*)"\x0d", 2, (CHAR*)"e4vm_comment", -710) == 0) {
+	ld	l, -2 (ix)
+	ld	h, -1 (ix)
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	hl, #0x0551
+	add	hl, de
+	push	bc
+	ld	de, #___str_1
+	push	de
+	push	hl
+	call	_SYSTEM_STRCMPCC
+	pop	af
+	pop	af
+	pop	bc
+	ld	a, h
+;e4vm_comment.c:42: t2 = 0;
+	or	a,l
+	jr	NZ,00102$
+	ld	c,a
+	jr	00105$
+00102$:
+;e4vm_comment.c:44: t = e4vm_utils_read_word(v);
+	push	bc
+	ld	l, -2 (ix)
+	ld	h, -1 (ix)
+	push	hl
+	call	_e4vm_utils_read_word
+	pop	af
+	pop	bc
+	ld	-3 (ix), l
+	jr	00105$
+00108$:
+;e4vm_comment.c:47: }
+	ld	sp, ix
+	pop	ix
 	ret
-;e4vm_comment.c:30: void e4vm_comment_add_core_words (e4vm_type_x4thPtr *v)
+___str_1:
+	.db 0x0d
+	.db 0x00
+;e4vm_comment.c:50: void e4vm_comment_add_core_words (e4vm_type_x4thPtr *v)
 ;	---------------------------------
 ; Function e4vm_comment_add_core_words
 ; ---------------------------------
@@ -70,7 +198,7 @@ _e4vm_comment_add_core_words::
 	ld	hl, #-20
 	add	hl, sp
 	ld	sp, hl
-;e4vm_comment.c:34: __MOVE((CHAR*)"(", _str__3, 2);
+;e4vm_comment.c:54: __MOVE((CHAR*)"(", _str__3, 2);
 	ld	hl, #0
 	add	hl, sp
 	ld	c, l
@@ -78,7 +206,7 @@ _e4vm_comment_add_core_words::
 	push	hl
 	ld	de, #0x0002
 	push	de
-	ld	de, #___str_0
+	ld	de, #___str_2
 	push	de
 	push	bc
 	call	_memcpy
@@ -86,7 +214,7 @@ _e4vm_comment_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_comment.c:35: e4vm_utils_add_core_word(v, (void*)_str__3, e4vm_comment_comment, 0);
+;e4vm_comment.c:55: e4vm_utils_add_core_word(v, (void*)_str__3, e4vm_comment_comment, 0);
 	xor	a, a
 	push	af
 	inc	sp
@@ -101,7 +229,7 @@ _e4vm_comment_add_core_words::
 	pop	af
 	pop	af
 	inc	sp
-;e4vm_comment.c:36: __MOVE((CHAR*)"\\\\", _str__2, 3);
+;e4vm_comment.c:56: __MOVE((CHAR*)"//", _str__2, 3);
 	ld	hl, #10
 	add	hl, sp
 	ld	c, l
@@ -109,7 +237,7 @@ _e4vm_comment_add_core_words::
 	push	hl
 	ld	de, #0x0003
 	push	de
-	ld	de, #___str_1
+	ld	de, #___str_3
 	push	de
 	push	bc
 	call	_memcpy
@@ -117,7 +245,7 @@ _e4vm_comment_add_core_words::
 	pop	af
 	pop	af
 	pop	hl
-;e4vm_comment.c:37: e4vm_utils_add_core_word(v, (void*)_str__2, e4vm_comment_comment_line, 0);
+;e4vm_comment.c:57: e4vm_utils_add_core_word(v, (void*)_str__2, e4vm_comment_comment_line, 0);
 	xor	a, a
 	push	af
 	inc	sp
@@ -128,29 +256,28 @@ _e4vm_comment_add_core_words::
 	ld	h, 5 (ix)
 	push	hl
 	call	_e4vm_utils_add_core_word
-;e4vm_comment.c:38: }
+;e4vm_comment.c:58: }
 	ld	sp,ix
 	pop	ix
 	ret
-___str_0:
+___str_2:
 	.ascii "("
 	.db 0x00
-___str_1:
-	.db 0x5c
-	.db 0x5c
+___str_3:
+	.ascii "//"
 	.db 0x00
-;e4vm_comment.c:42: export void *e4vm_comment__init (void)
+;e4vm_comment.c:62: export void *e4vm_comment__init (void)
 ;	---------------------------------
 ; Function e4vm_comment__init
 ; ---------------------------------
 _e4vm_comment__init::
-;e4vm_comment.c:44: __DEFMOD;
+;e4vm_comment.c:64: __DEFMOD;
 	LD	HL,#. 
 	LD (HL),#0xC9 
-;e4vm_comment.c:47: __IMPORT(e4vm_type__init);
+;e4vm_comment.c:67: __IMPORT(e4vm_type__init);
 	call	_e4vm_type__init
-;e4vm_comment.c:48: __IMPORT(e4vm_utils__init);
-;e4vm_comment.c:52: }
+;e4vm_comment.c:68: __IMPORT(e4vm_utils__init);
+;e4vm_comment.c:72: }
 	jp  _e4vm_utils__init
 	.area _CODE
 	.area _INITIALIZER

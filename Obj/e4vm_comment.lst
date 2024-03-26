@@ -10,148 +10,275 @@
                              10 ;--------------------------------------------------------
                              11 	.globl _e4vm_comment__init
                              12 	.globl _e4vm_utils__init
-                             13 	.globl _e4vm_utils_add_core_word
-                             14 	.globl _e4vm_type__init
-                             15 	.globl _memcpy
-                             16 	.globl _e4vm_comment_comment
-                             17 	.globl _e4vm_comment_comment_line
-                             18 	.globl _e4vm_comment_add_core_words
-                             19 ;--------------------------------------------------------
-                             20 ; special function registers
+                             13 	.globl _e4vm_utils_read_word
+                             14 	.globl _e4vm_utils_add_core_word
+                             15 	.globl _e4vm_type__init
+                             16 	.globl _SYSTEM_STRCMPCC
+                             17 	.globl _memcpy
+                             18 	.globl _e4vm_comment_comment
+                             19 	.globl _e4vm_comment_comment_line
+                             20 	.globl _e4vm_comment_add_core_words
                              21 ;--------------------------------------------------------
-                             22 ;--------------------------------------------------------
-                             23 ; ram data
+                             22 ; special function registers
+                             23 ;--------------------------------------------------------
                              24 ;--------------------------------------------------------
-                             25 	.area _DATA
+                             25 ; ram data
                              26 ;--------------------------------------------------------
-                             27 ; ram data
+                             27 	.area _DATA
                              28 ;--------------------------------------------------------
-                             29 	.area _INITIALIZED
+                             29 ; ram data
                              30 ;--------------------------------------------------------
-                             31 ; absolute external ram data
+                             31 	.area _INITIALIZED
                              32 ;--------------------------------------------------------
-                             33 	.area _DABS (ABS)
+                             33 ; absolute external ram data
                              34 ;--------------------------------------------------------
-                             35 ; global & static initialisations
+                             35 	.area _DABS (ABS)
                              36 ;--------------------------------------------------------
-                             37 	.area _HOME
-                             38 	.area _GSINIT
-                             39 	.area _GSFINAL
+                             37 ; global & static initialisations
+                             38 ;--------------------------------------------------------
+                             39 	.area _HOME
                              40 	.area _GSINIT
-                             41 ;--------------------------------------------------------
-                             42 ; Home
+                             41 	.area _GSFINAL
+                             42 	.area _GSINIT
                              43 ;--------------------------------------------------------
-                             44 	.area _HOME
-                             45 	.area _HOME
-                             46 ;--------------------------------------------------------
-                             47 ; code
+                             44 ; Home
+                             45 ;--------------------------------------------------------
+                             46 	.area _HOME
+                             47 	.area _HOME
                              48 ;--------------------------------------------------------
-                             49 	.area _CODE
-                             50 ;e4vm_comment.c:20: void e4vm_comment_comment (e4vm_type_x4thPtr *v)
-                             51 ;	---------------------------------
-                             52 ; Function e4vm_comment_comment
-                             53 ; ---------------------------------
-   0000                      54 _e4vm_comment_comment::
-                             55 ;e4vm_comment.c:22: }
-   0000 C9            [10]   56 	ret
-                             57 ;e4vm_comment.c:25: void e4vm_comment_comment_line (e4vm_type_x4thPtr *v)
-                             58 ;	---------------------------------
-                             59 ; Function e4vm_comment_comment_line
-                             60 ; ---------------------------------
-   0001                      61 _e4vm_comment_comment_line::
-                             62 ;e4vm_comment.c:27: }
-   0001 C9            [10]   63 	ret
-                             64 ;e4vm_comment.c:30: void e4vm_comment_add_core_words (e4vm_type_x4thPtr *v)
-                             65 ;	---------------------------------
-                             66 ; Function e4vm_comment_add_core_words
-                             67 ; ---------------------------------
-   0002                      68 _e4vm_comment_add_core_words::
-   0002 CDr00r00      [17]   69 	call	___sdcc_enter_ix
-   0005 21 EC FF      [10]   70 	ld	hl, #-20
-   0008 39            [11]   71 	add	hl, sp
-   0009 F9            [ 6]   72 	ld	sp, hl
-                             73 ;e4vm_comment.c:34: __MOVE((CHAR*)"(", _str__3, 2);
-   000A 21 00 00      [10]   74 	ld	hl, #0
-   000D 39            [11]   75 	add	hl, sp
-   000E 4D            [ 4]   76 	ld	c, l
-   000F 44            [ 4]   77 	ld	b, h
-   0010 E5            [11]   78 	push	hl
-   0011 11 02 00      [10]   79 	ld	de, #0x0002
-   0014 D5            [11]   80 	push	de
-   0015 11r65r00      [10]   81 	ld	de, #___str_0
-   0018 D5            [11]   82 	push	de
-   0019 C5            [11]   83 	push	bc
-   001A CDr00r00      [17]   84 	call	_memcpy
-   001D F1            [10]   85 	pop	af
-   001E F1            [10]   86 	pop	af
-   001F F1            [10]   87 	pop	af
-   0020 E1            [10]   88 	pop	hl
-                             89 ;e4vm_comment.c:35: e4vm_utils_add_core_word(v, (void*)_str__3, e4vm_comment_comment, 0);
-   0021 AF            [ 4]   90 	xor	a, a
-   0022 F5            [11]   91 	push	af
-   0023 33            [ 6]   92 	inc	sp
-   0024 01r00r00      [10]   93 	ld	bc, #_e4vm_comment_comment
-   0027 C5            [11]   94 	push	bc
-   0028 E5            [11]   95 	push	hl
-   0029 DD 6E 04      [19]   96 	ld	l, 4 (ix)
-   002C DD 66 05      [19]   97 	ld	h, 5 (ix)
-   002F E5            [11]   98 	push	hl
-   0030 CDr00r00      [17]   99 	call	_e4vm_utils_add_core_word
-   0033 F1            [10]  100 	pop	af
-   0034 F1            [10]  101 	pop	af
-   0035 F1            [10]  102 	pop	af
-   0036 33            [ 6]  103 	inc	sp
-                            104 ;e4vm_comment.c:36: __MOVE((CHAR*)"\\\\", _str__2, 3);
-   0037 21 0A 00      [10]  105 	ld	hl, #10
-   003A 39            [11]  106 	add	hl, sp
-   003B 4D            [ 4]  107 	ld	c, l
-   003C 44            [ 4]  108 	ld	b, h
-   003D E5            [11]  109 	push	hl
-   003E 11 03 00      [10]  110 	ld	de, #0x0003
-   0041 D5            [11]  111 	push	de
-   0042 11r67r00      [10]  112 	ld	de, #___str_1
-   0045 D5            [11]  113 	push	de
-   0046 C5            [11]  114 	push	bc
-   0047 CDr00r00      [17]  115 	call	_memcpy
-   004A F1            [10]  116 	pop	af
-   004B F1            [10]  117 	pop	af
-   004C F1            [10]  118 	pop	af
-   004D E1            [10]  119 	pop	hl
-                            120 ;e4vm_comment.c:37: e4vm_utils_add_core_word(v, (void*)_str__2, e4vm_comment_comment_line, 0);
-   004E AF            [ 4]  121 	xor	a, a
-   004F F5            [11]  122 	push	af
-   0050 33            [ 6]  123 	inc	sp
-   0051 01r01r00      [10]  124 	ld	bc, #_e4vm_comment_comment_line
-   0054 C5            [11]  125 	push	bc
-   0055 E5            [11]  126 	push	hl
-   0056 DD 6E 04      [19]  127 	ld	l, 4 (ix)
-   0059 DD 66 05      [19]  128 	ld	h, 5 (ix)
-   005C E5            [11]  129 	push	hl
-   005D CDr00r00      [17]  130 	call	_e4vm_utils_add_core_word
-                            131 ;e4vm_comment.c:38: }
-   0060 DD F9         [10]  132 	ld	sp,ix
-   0062 DD E1         [14]  133 	pop	ix
-   0064 C9            [10]  134 	ret
-   0065                     135 ___str_0:
-   0065 28                  136 	.ascii "("
-   0066 00                  137 	.db 0x00
-   0067                     138 ___str_1:
-   0067 5C                  139 	.db 0x5c
-   0068 5C                  140 	.db 0x5c
-   0069 00                  141 	.db 0x00
-                            142 ;e4vm_comment.c:42: export void *e4vm_comment__init (void)
-                            143 ;	---------------------------------
-                            144 ; Function e4vm_comment__init
-                            145 ; ---------------------------------
-   006A                     146 _e4vm_comment__init::
-                            147 ;e4vm_comment.c:44: __DEFMOD;
-   006A 21r6Ar00      [10]  148 	LD	HL,#. 
-   006D 36 C9         [10]  149 	LD (HL),#0xC9 
-                            150 ;e4vm_comment.c:47: __IMPORT(e4vm_type__init);
-   006F CDr00r00      [17]  151 	call	_e4vm_type__init
-                            152 ;e4vm_comment.c:48: __IMPORT(e4vm_utils__init);
-                            153 ;e4vm_comment.c:52: }
-   0072 C3r00r00      [10]  154 	jp  _e4vm_utils__init
-                            155 	.area _CODE
-                            156 	.area _INITIALIZER
-                            157 	.area _CABS (ABS)
+                             49 ; code
+                             50 ;--------------------------------------------------------
+                             51 	.area _CODE
+                             52 ;e4vm_comment.c:20: void e4vm_comment_comment (e4vm_type_x4thPtr *v)
+                             53 ;	---------------------------------
+                             54 ; Function e4vm_comment_comment
+                             55 ; ---------------------------------
+   0000                      56 _e4vm_comment_comment::
+   0000 CDr00r00      [17]   57 	call	___sdcc_enter_ix
+   0003 F5            [11]   58 	push	af
+   0004 3B            [ 6]   59 	dec	sp
+                             60 ;e4vm_comment.c:23: t = e4vm_utils_read_word(v);
+   0005 DD 6E 04      [19]   61 	ld	l, 4 (ix)
+   0008 DD 66 05      [19]   62 	ld	h, 5 (ix)
+   000B E5            [11]   63 	push	hl
+   000C CDr00r00      [17]   64 	call	_e4vm_utils_read_word
+   000F F1            [10]   65 	pop	af
+   0010 DD 75 FD      [19]   66 	ld	-3 (ix), l
+                             67 ;e4vm_comment.c:24: t2 = 1;
+   0013 0E 01         [ 7]   68 	ld	c, #0x01
+                             69 ;e4vm_comment.c:25: while (t && t2) {
+   0015 DD 7E 04      [19]   70 	ld	a, 4 (ix)
+   0018 DD 77 FE      [19]   71 	ld	-2 (ix), a
+   001B DD 7E 05      [19]   72 	ld	a, 5 (ix)
+   001E DD 77 FF      [19]   73 	ld	-1 (ix), a
+   0021                      74 00105$:
+   0021 DD 7E FD      [19]   75 	ld	a, -3 (ix)
+   0024 B7            [ 4]   76 	or	a, a
+   0025 28 36         [12]   77 	jr	Z,00108$
+   0027 79            [ 4]   78 	ld	a, c
+   0028 B7            [ 4]   79 	or	a, a
+   0029 28 32         [12]   80 	jr	Z,00108$
+                             81 ;e4vm_comment.c:26: if (__STRCMPCC((*v)->readed_word, (CHAR*)")", 2, (CHAR*)"e4vm_comment", -387) == 0) {
+   002B DD 6E FE      [19]   82 	ld	l, -2 (ix)
+   002E DD 66 FF      [19]   83 	ld	h, -1 (ix)
+   0031 5E            [ 7]   84 	ld	e, (hl)
+   0032 23            [ 6]   85 	inc	hl
+   0033 56            [ 7]   86 	ld	d, (hl)
+   0034 21 51 05      [10]   87 	ld	hl, #0x0551
+   0037 19            [11]   88 	add	hl, de
+   0038 C5            [11]   89 	push	bc
+   0039 11r62r00      [10]   90 	ld	de, #___str_0
+   003C D5            [11]   91 	push	de
+   003D E5            [11]   92 	push	hl
+   003E CDr00r00      [17]   93 	call	_SYSTEM_STRCMPCC
+   0041 F1            [10]   94 	pop	af
+   0042 F1            [10]   95 	pop	af
+   0043 C1            [10]   96 	pop	bc
+   0044 7C            [ 4]   97 	ld	a, h
+                             98 ;e4vm_comment.c:27: t2 = 0;
+   0045 B5            [ 4]   99 	or	a,l
+   0046 20 03         [12]  100 	jr	NZ,00102$
+   0048 4F            [ 4]  101 	ld	c,a
+   0049 18 D6         [12]  102 	jr	00105$
+   004B                     103 00102$:
+                            104 ;e4vm_comment.c:29: t = e4vm_utils_read_word(v);
+   004B C5            [11]  105 	push	bc
+   004C DD 6E FE      [19]  106 	ld	l, -2 (ix)
+   004F DD 66 FF      [19]  107 	ld	h, -1 (ix)
+   0052 E5            [11]  108 	push	hl
+   0053 CDr00r00      [17]  109 	call	_e4vm_utils_read_word
+   0056 F1            [10]  110 	pop	af
+   0057 C1            [10]  111 	pop	bc
+   0058 DD 75 FD      [19]  112 	ld	-3 (ix), l
+   005B 18 C4         [12]  113 	jr	00105$
+   005D                     114 00108$:
+                            115 ;e4vm_comment.c:32: }
+   005D DD F9         [10]  116 	ld	sp, ix
+   005F DD E1         [14]  117 	pop	ix
+   0061 C9            [10]  118 	ret
+   0062                     119 ___str_0:
+   0062 29                  120 	.ascii ")"
+   0063 00                  121 	.db 0x00
+                            122 ;e4vm_comment.c:35: void e4vm_comment_comment_line (e4vm_type_x4thPtr *v)
+                            123 ;	---------------------------------
+                            124 ; Function e4vm_comment_comment_line
+                            125 ; ---------------------------------
+   0064                     126 _e4vm_comment_comment_line::
+   0064 CDr00r00      [17]  127 	call	___sdcc_enter_ix
+   0067 F5            [11]  128 	push	af
+   0068 3B            [ 6]  129 	dec	sp
+                            130 ;e4vm_comment.c:38: t = e4vm_utils_read_word(v);
+   0069 DD 6E 04      [19]  131 	ld	l, 4 (ix)
+   006C DD 66 05      [19]  132 	ld	h, 5 (ix)
+   006F E5            [11]  133 	push	hl
+   0070 CDr00r00      [17]  134 	call	_e4vm_utils_read_word
+   0073 F1            [10]  135 	pop	af
+   0074 DD 75 FD      [19]  136 	ld	-3 (ix), l
+                            137 ;e4vm_comment.c:39: t2 = 1;
+   0077 0E 01         [ 7]  138 	ld	c, #0x01
+                            139 ;e4vm_comment.c:40: while (t && t2) {
+   0079 DD 7E 04      [19]  140 	ld	a, 4 (ix)
+   007C DD 77 FE      [19]  141 	ld	-2 (ix), a
+   007F DD 7E 05      [19]  142 	ld	a, 5 (ix)
+   0082 DD 77 FF      [19]  143 	ld	-1 (ix), a
+   0085                     144 00105$:
+   0085 DD 7E FD      [19]  145 	ld	a, -3 (ix)
+   0088 B7            [ 4]  146 	or	a, a
+   0089 28 36         [12]  147 	jr	Z,00108$
+   008B 79            [ 4]  148 	ld	a, c
+   008C B7            [ 4]  149 	or	a, a
+   008D 28 32         [12]  150 	jr	Z,00108$
+                            151 ;e4vm_comment.c:41: if (__STRCMPCC((*v)->readed_word, (CHAR*)"\x0d", 2, (CHAR*)"e4vm_comment", -710) == 0) {
+   008F DD 6E FE      [19]  152 	ld	l, -2 (ix)
+   0092 DD 66 FF      [19]  153 	ld	h, -1 (ix)
+   0095 5E            [ 7]  154 	ld	e, (hl)
+   0096 23            [ 6]  155 	inc	hl
+   0097 56            [ 7]  156 	ld	d, (hl)
+   0098 21 51 05      [10]  157 	ld	hl, #0x0551
+   009B 19            [11]  158 	add	hl, de
+   009C C5            [11]  159 	push	bc
+   009D 11rC6r00      [10]  160 	ld	de, #___str_1
+   00A0 D5            [11]  161 	push	de
+   00A1 E5            [11]  162 	push	hl
+   00A2 CDr00r00      [17]  163 	call	_SYSTEM_STRCMPCC
+   00A5 F1            [10]  164 	pop	af
+   00A6 F1            [10]  165 	pop	af
+   00A7 C1            [10]  166 	pop	bc
+   00A8 7C            [ 4]  167 	ld	a, h
+                            168 ;e4vm_comment.c:42: t2 = 0;
+   00A9 B5            [ 4]  169 	or	a,l
+   00AA 20 03         [12]  170 	jr	NZ,00102$
+   00AC 4F            [ 4]  171 	ld	c,a
+   00AD 18 D6         [12]  172 	jr	00105$
+   00AF                     173 00102$:
+                            174 ;e4vm_comment.c:44: t = e4vm_utils_read_word(v);
+   00AF C5            [11]  175 	push	bc
+   00B0 DD 6E FE      [19]  176 	ld	l, -2 (ix)
+   00B3 DD 66 FF      [19]  177 	ld	h, -1 (ix)
+   00B6 E5            [11]  178 	push	hl
+   00B7 CDr00r00      [17]  179 	call	_e4vm_utils_read_word
+   00BA F1            [10]  180 	pop	af
+   00BB C1            [10]  181 	pop	bc
+   00BC DD 75 FD      [19]  182 	ld	-3 (ix), l
+   00BF 18 C4         [12]  183 	jr	00105$
+   00C1                     184 00108$:
+                            185 ;e4vm_comment.c:47: }
+   00C1 DD F9         [10]  186 	ld	sp, ix
+   00C3 DD E1         [14]  187 	pop	ix
+   00C5 C9            [10]  188 	ret
+   00C6                     189 ___str_1:
+   00C6 0D                  190 	.db 0x0d
+   00C7 00                  191 	.db 0x00
+                            192 ;e4vm_comment.c:50: void e4vm_comment_add_core_words (e4vm_type_x4thPtr *v)
+                            193 ;	---------------------------------
+                            194 ; Function e4vm_comment_add_core_words
+                            195 ; ---------------------------------
+   00C8                     196 _e4vm_comment_add_core_words::
+   00C8 CDr00r00      [17]  197 	call	___sdcc_enter_ix
+   00CB 21 EC FF      [10]  198 	ld	hl, #-20
+   00CE 39            [11]  199 	add	hl, sp
+   00CF F9            [ 6]  200 	ld	sp, hl
+                            201 ;e4vm_comment.c:54: __MOVE((CHAR*)"(", _str__3, 2);
+   00D0 21 00 00      [10]  202 	ld	hl, #0
+   00D3 39            [11]  203 	add	hl, sp
+   00D4 4D            [ 4]  204 	ld	c, l
+   00D5 44            [ 4]  205 	ld	b, h
+   00D6 E5            [11]  206 	push	hl
+   00D7 11 02 00      [10]  207 	ld	de, #0x0002
+   00DA D5            [11]  208 	push	de
+   00DB 11r2Br01      [10]  209 	ld	de, #___str_2
+   00DE D5            [11]  210 	push	de
+   00DF C5            [11]  211 	push	bc
+   00E0 CDr00r00      [17]  212 	call	_memcpy
+   00E3 F1            [10]  213 	pop	af
+   00E4 F1            [10]  214 	pop	af
+   00E5 F1            [10]  215 	pop	af
+   00E6 E1            [10]  216 	pop	hl
+                            217 ;e4vm_comment.c:55: e4vm_utils_add_core_word(v, (void*)_str__3, e4vm_comment_comment, 0);
+   00E7 AF            [ 4]  218 	xor	a, a
+   00E8 F5            [11]  219 	push	af
+   00E9 33            [ 6]  220 	inc	sp
+   00EA 01r00r00      [10]  221 	ld	bc, #_e4vm_comment_comment
+   00ED C5            [11]  222 	push	bc
+   00EE E5            [11]  223 	push	hl
+   00EF DD 6E 04      [19]  224 	ld	l, 4 (ix)
+   00F2 DD 66 05      [19]  225 	ld	h, 5 (ix)
+   00F5 E5            [11]  226 	push	hl
+   00F6 CDr00r00      [17]  227 	call	_e4vm_utils_add_core_word
+   00F9 F1            [10]  228 	pop	af
+   00FA F1            [10]  229 	pop	af
+   00FB F1            [10]  230 	pop	af
+   00FC 33            [ 6]  231 	inc	sp
+                            232 ;e4vm_comment.c:56: __MOVE((CHAR*)"//", _str__2, 3);
+   00FD 21 0A 00      [10]  233 	ld	hl, #10
+   0100 39            [11]  234 	add	hl, sp
+   0101 4D            [ 4]  235 	ld	c, l
+   0102 44            [ 4]  236 	ld	b, h
+   0103 E5            [11]  237 	push	hl
+   0104 11 03 00      [10]  238 	ld	de, #0x0003
+   0107 D5            [11]  239 	push	de
+   0108 11r2Dr01      [10]  240 	ld	de, #___str_3
+   010B D5            [11]  241 	push	de
+   010C C5            [11]  242 	push	bc
+   010D CDr00r00      [17]  243 	call	_memcpy
+   0110 F1            [10]  244 	pop	af
+   0111 F1            [10]  245 	pop	af
+   0112 F1            [10]  246 	pop	af
+   0113 E1            [10]  247 	pop	hl
+                            248 ;e4vm_comment.c:57: e4vm_utils_add_core_word(v, (void*)_str__2, e4vm_comment_comment_line, 0);
+   0114 AF            [ 4]  249 	xor	a, a
+   0115 F5            [11]  250 	push	af
+   0116 33            [ 6]  251 	inc	sp
+   0117 01r64r00      [10]  252 	ld	bc, #_e4vm_comment_comment_line
+   011A C5            [11]  253 	push	bc
+   011B E5            [11]  254 	push	hl
+   011C DD 6E 04      [19]  255 	ld	l, 4 (ix)
+   011F DD 66 05      [19]  256 	ld	h, 5 (ix)
+   0122 E5            [11]  257 	push	hl
+   0123 CDr00r00      [17]  258 	call	_e4vm_utils_add_core_word
+                            259 ;e4vm_comment.c:58: }
+   0126 DD F9         [10]  260 	ld	sp,ix
+   0128 DD E1         [14]  261 	pop	ix
+   012A C9            [10]  262 	ret
+   012B                     263 ___str_2:
+   012B 28                  264 	.ascii "("
+   012C 00                  265 	.db 0x00
+   012D                     266 ___str_3:
+   012D 2F 2F               267 	.ascii "//"
+   012F 00                  268 	.db 0x00
+                            269 ;e4vm_comment.c:62: export void *e4vm_comment__init (void)
+                            270 ;	---------------------------------
+                            271 ; Function e4vm_comment__init
+                            272 ; ---------------------------------
+   0130                     273 _e4vm_comment__init::
+                            274 ;e4vm_comment.c:64: __DEFMOD;
+   0130 21r30r01      [10]  275 	LD	HL,#. 
+   0133 36 C9         [10]  276 	LD (HL),#0xC9 
+                            277 ;e4vm_comment.c:67: __IMPORT(e4vm_type__init);
+   0135 CDr00r00      [17]  278 	call	_e4vm_type__init
+                            279 ;e4vm_comment.c:68: __IMPORT(e4vm_utils__init);
+                            280 ;e4vm_comment.c:72: }
+   0138 C3r00r00      [10]  281 	jp  _e4vm_utils__init
+                            282 	.area _CODE
+                            283 	.area _INITIALIZER
+                            284 	.area _CABS (ABS)

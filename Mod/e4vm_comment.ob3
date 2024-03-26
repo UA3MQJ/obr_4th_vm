@@ -2,13 +2,31 @@ MODULE e4vm_comment;
 IMPORT SYSTEM, C := Console, Platform, B := Basic, e4vm_type, e4vm_utils;
 
 PROCEDURE comment* (VAR v: e4vm_type.x4thPtr);
+VAR t, t2:BOOLEAN;
 BEGIN
-
+  t:=e4vm_utils.read_word(@v); t2:= TRUE;
+	WHILE t&t2 DO
+		(* v.readed_word ничего не делать до конца или до получения скобки *)
+		IF (v.readed_word=")") THEN
+		  t2:=FALSE;
+		ELSE
+		  t:=e4vm_utils.read_word(@v);
+		END;
+  END;
 END comment;
 
 PROCEDURE comment_line* (VAR v: e4vm_type.x4thPtr);
+VAR t, t2:BOOLEAN;
 BEGIN
-
+  t:=e4vm_utils.read_word(@v); t2:= TRUE;
+	WHILE t&t2 DO
+		(* v.readed_word ничего не делать до конца или до получения скобки *)
+		IF (v.readed_word=CHR(13)) THEN
+		  t2:=FALSE;
+		ELSE
+		  t:=e4vm_utils.read_word(@v);
+		END;
+  END;
 END comment_line;
 
 
